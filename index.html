@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,1305 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="src/style.css">
+  <style>
+/* ==========================================================================
+   Dota 2 Tournament Drafter - Styling
+   ========================================================================== */
+
+:root {
+  --bg-dark: #090c10;
+  --bg-panel: rgba(16, 21, 30, 0.85);
+  --bg-card: #151b26;
+  --bg-card-hover: #1f2737;
+
+  --color-radiant: #26e07f;
+  --color-radiant-glow: rgba(38, 224, 127, 0.35);
+  --color-dire: #ff3b30;
+  --color-dire-glow: rgba(255, 59, 48, 0.35);
+
+  --attr-str: #ec3d27;
+  --attr-str-glow: rgba(236, 61, 39, 0.3);
+  --attr-agi: #26e07f;
+  --attr-agi-glow: rgba(38, 224, 127, 0.3);
+  --attr-int: #00d5ff;
+  --attr-int-glow: rgba(0, 213, 255, 0.3);
+  --attr-all: #c36aff;
+  --attr-all-glow: rgba(195, 106, 255, 0.3);
+
+  --text-main: #f0f4fc;
+  --text-muted: #8b99ae;
+  --text-dim: #546274;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(255, 255, 255, 0.25);
+
+  --font-heading: 'Cinzel', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(38, 224, 127, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 20%, rgba(255, 59, 48, 0.07) 0%, transparent 45%),
+    linear-gradient(180deg, #090c10 0%, #06080b 100%);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.app-header {
+  background: rgba(11, 15, 22, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dota-logo {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 8px rgba(255, 60, 40, 0.4));
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-badge {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Phase Banner & Turn Indicator */
+.turn-status-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--border-subtle);
+}
+
+.phase-indicator {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.phase-ban {
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff5549;
+  border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.phase-pick {
+  background: rgba(38, 224, 127, 0.15);
+  color: #26e07f;
+  border: 1px solid rgba(38, 224, 127, 0.3);
+}
+
+.phase-completed {
+  background: rgba(245, 166, 35, 0.15);
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.active-team-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.active-team-banner.radiant {
+  color: var(--color-radiant);
+}
+.active-team-banner.dire {
+  color: var(--color-dire);
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse-ring 1.5s infinite;
+}
+
+.pulse-dot.radiant {
+  background: var(--color-radiant);
+  box-shadow: 0 0 10px var(--color-radiant);
+}
+
+.pulse-dot.dire {
+  background: var(--color-dire);
+  box-shadow: 0 0 10px var(--color-dire);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* Match Timer */
+.timer-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+}
+
+.timer-digits {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  min-width: 32px;
+  text-align: center;
+}
+
+.timer-digits.urgent {
+  color: #ff3b30;
+  animation: timer-flash 0.8s infinite;
+}
+
+@keyframes timer-flash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.timer-pause-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.timer-pause-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Header Action Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-focus);
+}
+
+.btn-icon:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   Main Arena Layout (3-Column Arena)
+   ========================================================================== */
+.arena-container {
+  display: grid;
+  grid-template-columns: 290px 1fr 290px;
+  gap: 18px;
+  padding: 18px 24px;
+  flex: 1;
+  max-width: 1920px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Team Side Panels (Radiant & Dire)
+   ========================================================================== */
+.team-panel {
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  backdrop-filter: blur(16px);
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-panel.radiant {
+  border-left: 3px solid var(--color-radiant);
+}
+.team-panel.radiant.active-panel {
+  border-color: var(--color-radiant);
+  box-shadow: 0 0 25px var(--color-radiant-glow);
+}
+
+.team-panel.dire {
+  border-right: 3px solid var(--color-dire);
+}
+.team-panel.dire.active-panel {
+  border-color: var(--color-dire);
+  box-shadow: 0 0 25px var(--color-dire-glow);
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.team-name-input {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  padding: 4px 6px;
+  width: 100%;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.team-panel.radiant .team-name-input {
+  color: var(--color-radiant);
+}
+.team-panel.dire .team-name-input {
+  color: var(--color-dire);
+}
+
+.team-name-input:hover, .team-name-input:focus {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: var(--border-focus);
+}
+
+.team-badge-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.team-panel.radiant .team-badge-tag {
+  background: rgba(38, 224, 127, 0.2);
+  color: var(--color-radiant);
+}
+.team-panel.dire .team-badge-tag {
+  background: rgba(255, 59, 48, 0.2);
+  color: var(--color-dire);
+}
+
+/* Bans Section (3 Bans per team) */
+.bans-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.ban-slot {
+  height: 52px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(255, 59, 48, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.ban-slot.filled {
+  border-style: solid;
+  border-color: rgba(255, 59, 48, 0.6);
+}
+
+.ban-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(85%) contrast(1.1) brightness(0.6);
+}
+
+.ban-slot .ban-cross {
+  position: absolute;
+  color: #ff3b30;
+  font-size: 1.4rem;
+  font-weight: 900;
+  pointer-events: none;
+  text-shadow: 0 0 6px #000;
+}
+
+.ban-slot .slot-placeholder {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+/* Picks Section (5 Picks per team) */
+.picks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.picks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.pick-slot {
+  min-height: 64px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px dashed var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.pick-slot.active-picking {
+  border: 1px solid #ffcc00;
+  background: rgba(255, 204, 0, 0.05);
+  animation: pick-slot-glow 1.5s infinite alternate;
+}
+
+@keyframes pick-slot-glow {
+  from { box-shadow: inset 0 0 8px rgba(255, 204, 0, 0.15); }
+  to { box-shadow: inset 0 0 16px rgba(255, 204, 0, 0.35); }
+}
+
+.pick-slot.filled {
+  border-style: solid;
+  background: rgba(21, 27, 38, 0.9);
+}
+
+.team-panel.radiant .pick-slot.filled {
+  border-color: rgba(38, 224, 127, 0.4);
+}
+.team-panel.dire .pick-slot.filled {
+  border-color: rgba(255, 59, 48, 0.4);
+}
+
+.pick-slot-portrait {
+  width: 76px;
+  height: 48px;
+  border-radius: 4px;
+  background: #0d1219;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pick-slot-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pick-slot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.pick-slot-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pick-slot-attr {
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.empty-slot-text {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+  padding-left: 4px;
+}
+
+/* ==========================================================================
+   Center Panel: The 20-Hero Tournament Pool
+   ========================================================================== */
+.pool-panel {
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  backdrop-filter: blur(16px);
+}
+
+.pool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pool-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pool-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.pool-stats-badge {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.pool-search-box {
+  position: relative;
+  min-width: 220px;
+}
+
+.pool-search-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 6px 12px 6px 30px;
+  font-size: 0.82rem;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.pool-search-input:focus {
+  border-color: var(--border-focus);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.pool-search-icon {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+  font-size: 0.85rem;
+}
+
+/* 4 Columns for 4 Attributes (Strength, Agility, Intelligence, Universal) */
+.pool-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  flex: 1;
+}
+
+.attr-column {
+  background: rgba(13, 17, 24, 0.75);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.attr-column.col-str { border-top: 3px solid var(--attr-str); }
+.attr-column.col-agi { border-top: 3px solid var(--attr-agi); }
+.attr-column.col-int { border-top: 3px solid var(--attr-int); }
+.attr-column.col-all { border-top: 3px solid var(--attr-all); }
+
+.attr-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.attr-col-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.col-str .attr-col-title { color: var(--attr-str); }
+.col-agi .attr-col-title { color: var(--attr-agi); }
+.col-int .attr-col-title { color: var(--attr-int); }
+.col-all .attr-col-title { color: var(--attr-all); }
+
+.attr-count-pill {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.heroes-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+/* Hero Card inside Pool */
+.hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.hero-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.hero-card.selected {
+  outline: 2px solid #ffcc00;
+  box-shadow: 0 0 16px rgba(255, 204, 0, 0.5);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.hero-img-wrap {
+  width: 100%;
+  height: 94px;
+  background: #0a0d12;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover .hero-img-wrap img {
+  transform: scale(1.05);
+}
+
+.hero-meta {
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(15, 20, 28, 0.95);
+}
+
+.hero-name-ru {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-name-en {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card States: Banned / Picked */
+.hero-card.status-banned {
+  filter: grayscale(100%);
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.hero-card.status-banned .hero-img-wrap::after {
+  content: 'ЗАБАНЕН';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 0, 0, 0.45);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 8px #000;
+  transform: rotate(-10deg);
+}
+
+.hero-card.status-picked-radiant {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-color: var(--color-radiant);
+}
+.hero-card.status-picked-radiant .hero-img-wrap::after {
+  content: 'RADIANT';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(38, 224, 127, 0.85);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.hero-card.status-picked-dire {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-color: var(--color-dire);
+}
+.hero-card.status-picked-dire .hero-img-wrap::after {
+  content: 'DIRE';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 59, 48, 0.85);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 2px 0;
+}
+
+/* Center Bottom Action Controls */
+.pool-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.selected-hero-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview-thumb {
+  width: 54px;
+  height: 34px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid var(--border-focus);
+}
+
+.preview-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.preview-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.main-lockin-btn {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.main-lockin-btn:disabled {
+  background: #2a313d;
+  color: #657386;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.main-lockin-btn.btn-ban {
+  background: linear-gradient(135deg, #ff3b30, #b81c12);
+  color: #fff;
+}
+.main-lockin-btn.btn-ban:not(:disabled):hover {
+  background: linear-gradient(135deg, #ff5549, #d6281e);
+  box-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
+  transform: translateY(-2px);
+}
+
+.main-lockin-btn.btn-pick-radiant {
+  background: linear-gradient(135deg, #26e07f, #139952);
+  color: #051c10;
+}
+.main-lockin-btn.btn-pick-radiant:not(:disabled):hover {
+  background: linear-gradient(135deg, #44f096, #18b361);
+  box-shadow: 0 0 20px rgba(38, 224, 127, 0.6);
+  transform: translateY(-2px);
+}
+
+.main-lockin-btn.btn-pick-dire {
+  background: linear-gradient(135deg, #ff3b30, #b81c12);
+  color: #fff;
+}
+.main-lockin-btn.btn-pick-dire:not(:disabled):hover {
+  background: linear-gradient(135deg, #ff5549, #d6281e);
+  box-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
+  transform: translateY(-2px);
+}
+
+.secondary-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Modals (Settings & Completed Draft Summary)
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #131822;
+  border: 1px solid var(--border-focus);
+  border-radius: 12px;
+  max-width: 820px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  animation: modal-enter 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes modal-enter {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Settings Controls Inside Modal */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.setting-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.setting-control select, .setting-control input {
+  background: #090c10;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* Draft Summary Results Display */
+.summary-teams-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.summary-team-card {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-team-card.radiant { border-top: 3px solid var(--color-radiant); }
+.summary-team-card.dire { border-top: 3px solid var(--color-dire); }
+
+.summary-team-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.summary-team-card.radiant .summary-team-title { color: var(--color-radiant); }
+.summary-team-card.dire .summary-team-title { color: var(--color-dire); }
+
+.summary-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #18202c;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.summary-hero-row img {
+  width: 44px;
+  height: 28px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.summary-hero-row .name {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.summary-bans-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.summary-ban-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 59, 48, 0.15);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.summary-ban-tag img {
+  width: 24px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  filter: grayscale(100%);
+}
+
+.unpicked-heroes-section {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px dashed var(--border-subtle);
+}
+
+.unpicked-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.unpicked-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.unpicked-tag img {
+  width: 24px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* Toast notification */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #1c2432;
+  border: 1px solid var(--border-focus);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 2000;
+}
+
+.toast-notice.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .arena-container {
+    grid-template-columns: 260px 1fr 260px;
+    gap: 12px;
+    padding: 12px;
+  }
+  .hero-img-wrap {
+    height: 80px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .arena-container {
+    grid-template-columns: 1fr;
+  }
+  .pool-columns-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .team-panel {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Online Multiplayer 2-Player UI Styles
+   ========================================================================== */
+.btn-online-badge {
+  background: rgba(0, 213, 255, 0.12);
+  border-color: rgba(0, 213, 255, 0.35);
+  color: #00d5ff;
+}
+.btn-online-badge:hover {
+  background: rgba(0, 213, 255, 0.22);
+  box-shadow: 0 0 12px rgba(0, 213, 255, 0.3);
+}
+
+.role-banner-bar {
+  background: rgba(10, 14, 20, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 6px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 0.85rem;
+}
+
+.role-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.role-badge {
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.role-badge.radiant {
+  background: rgba(38, 224, 127, 0.2);
+  color: var(--color-radiant);
+  border: 1px solid var(--color-radiant);
+}
+.role-badge.dire {
+  background: rgba(255, 59, 48, 0.2);
+  color: var(--color-dire);
+  border: 1px solid var(--color-dire);
+}
+.role-badge.spectator {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+  border: 1px solid #f5a623;
+}
+
+.online-section-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 10px 14px;
+  border-radius: 6px;
+  border-left: 3px solid #00d5ff;
+}
+
+.online-cards-choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.online-choice-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+
+.online-choice-card:hover {
+  border-color: var(--border-focus);
+}
+
+.online-choice-card h4 {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.online-choice-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  flex: 1;
+}
+
+</style>
 </head>
 <body>
 
@@ -406,10 +1704,2075 @@
   <!-- Toast Notification -->
   <div class="toast-notice" id="toastNotice">Уведомление</div>
 
-  <!-- WebRTC PeerJS Library -->
-  <script src="src/peerjs.min.js"></script>
+    <!-- WebRTC PeerJS Library (CDN with local fallback) -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script>
+// Dota 2 Tournament Drafter - Standalone Bundle with WebRTC Multiplayer
+(function() {
+  'use strict';
 
-  <!-- Application Script (Standalone bundle compatible with file:// and http/https) -->
-  <script src="src/bundle.js"></script>
+  // --- HEROES DATA ---
+  // Dota 2 Heroes Database (126 Official Heroes)
+const ATTRIBUTES = {
+  str: { id: 'str', nameRu: 'Сила', nameEn: 'Strength', color: '#ec3d27', icon: '🔴' },
+  agi: { id: 'agi', nameRu: 'Ловкость', nameEn: 'Agility', color: '#26e07f', icon: '🟢' },
+  int: { id: 'int', nameRu: 'Интеллект', nameEn: 'Intelligence', color: '#00d5ff', icon: '🔵' },
+  all: { id: 'all', nameRu: 'Универсал', nameEn: 'Universal', color: '#bf68ff', icon: '🟣' }
+};
+
+const HEROES = [
+  { id: 1, name: 'npc_dota_hero_antimage', slug: 'antimage', nameEn: 'Anti-Mage', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/antimage.png' },
+  { id: 2, name: 'npc_dota_hero_axe', slug: 'axe', nameEn: 'Axe', attr: 'str', attackType: 'Melee', roles: ["Initiator","Durable","Disabler","Carry"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/axe.png' },
+  { id: 3, name: 'npc_dota_hero_bane', slug: 'bane', nameEn: 'Bane', attr: 'all', attackType: 'Ranged', roles: ["Support","Disabler","Nuker","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/bane.png' },
+  { id: 4, name: 'npc_dota_hero_bloodseeker', slug: 'bloodseeker', nameEn: 'Bloodseeker', attr: 'agi', attackType: 'Melee', roles: ["Carry","Disabler","Nuker","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/bloodseeker.png' },
+  { id: 5, name: 'npc_dota_hero_crystal_maiden', slug: 'crystal_maiden', nameEn: 'Crystal Maiden', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/crystal_maiden.png' },
+  { id: 6, name: 'npc_dota_hero_drow_ranger', slug: 'drow_ranger', nameEn: 'Drow Ranger', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Disabler","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/drow_ranger.png' },
+  { id: 7, name: 'npc_dota_hero_earthshaker', slug: 'earthshaker', nameEn: 'Earthshaker', attr: 'str', attackType: 'Melee', roles: ["Support","Initiator","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/earthshaker.png' },
+  { id: 8, name: 'npc_dota_hero_juggernaut', slug: 'juggernaut', nameEn: 'Juggernaut', attr: 'agi', attackType: 'Melee', roles: ["Carry","Pusher","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/juggernaut.png' },
+  { id: 9, name: 'npc_dota_hero_mirana', slug: 'mirana', nameEn: 'Mirana', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Support","Escape","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/mirana.png' },
+  { id: 10, name: 'npc_dota_hero_morphling', slug: 'morphling', nameEn: 'Morphling', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Escape","Durable","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/morphling.png' },
+  { id: 11, name: 'npc_dota_hero_nevermore', slug: 'nevermore', nameEn: 'Shadow Fiend', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/nevermore.png' },
+  { id: 12, name: 'npc_dota_hero_phantom_lancer', slug: 'phantom_lancer', nameEn: 'Phantom Lancer', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Pusher","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_lancer.png' },
+  { id: 13, name: 'npc_dota_hero_puck', slug: 'puck', nameEn: 'Puck', attr: 'int', attackType: 'Ranged', roles: ["Initiator","Disabler","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/puck.png' },
+  { id: 14, name: 'npc_dota_hero_pudge', slug: 'pudge', nameEn: 'Pudge', attr: 'str', attackType: 'Melee', roles: ["Disabler","Initiator","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png' },
+  { id: 15, name: 'npc_dota_hero_razor', slug: 'razor', nameEn: 'Razor', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Durable","Nuker","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/razor.png' },
+  { id: 16, name: 'npc_dota_hero_sand_king', slug: 'sand_king', nameEn: 'Sand King', attr: 'all', attackType: 'Melee', roles: ["Initiator","Disabler","Support","Nuker","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/sand_king.png' },
+  { id: 17, name: 'npc_dota_hero_storm_spirit', slug: 'storm_spirit', nameEn: 'Storm Spirit', attr: 'int', attackType: 'Ranged', roles: ["Carry","Escape","Nuker","Initiator","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/storm_spirit.png' },
+  { id: 18, name: 'npc_dota_hero_sven', slug: 'sven', nameEn: 'Sven', attr: 'str', attackType: 'Melee', roles: ["Carry","Disabler","Initiator","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/sven.png' },
+  { id: 19, name: 'npc_dota_hero_tiny', slug: 'tiny', nameEn: 'Tiny', attr: 'str', attackType: 'Melee', roles: ["Carry","Nuker","Pusher","Initiator","Durable","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/tiny.png' },
+  { id: 20, name: 'npc_dota_hero_vengefulspirit', slug: 'vengefulspirit', nameEn: 'Vengeful Spirit', attr: 'agi', attackType: 'Ranged', roles: ["Support","Initiator","Disabler","Nuker","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/vengefulspirit.png' },
+  { id: 21, name: 'npc_dota_hero_windrunner', slug: 'windrunner', nameEn: 'Windranger', attr: 'all', attackType: 'Ranged', roles: ["Carry","Support","Disabler","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/windrunner.png' },
+  { id: 22, name: 'npc_dota_hero_zuus', slug: 'zuus', nameEn: 'Zeus', attr: 'int', attackType: 'Ranged', roles: ["Nuker","Carry"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/zuus.png' },
+  { id: 23, name: 'npc_dota_hero_kunkka', slug: 'kunkka', nameEn: 'Kunkka', attr: 'str', attackType: 'Melee', roles: ["Carry","Support","Disabler","Initiator","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/kunkka.png' },
+  { id: 25, name: 'npc_dota_hero_lina', slug: 'lina', nameEn: 'Lina', attr: 'int', attackType: 'Ranged', roles: ["Support","Carry","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/lina.png' },
+  { id: 26, name: 'npc_dota_hero_lion', slug: 'lion', nameEn: 'Lion', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/lion.png' },
+  { id: 27, name: 'npc_dota_hero_shadow_shaman', slug: 'shadow_shaman', nameEn: 'Shadow Shaman', attr: 'int', attackType: 'Ranged', roles: ["Support","Pusher","Disabler","Nuker","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_shaman.png' },
+  { id: 28, name: 'npc_dota_hero_slardar', slug: 'slardar', nameEn: 'Slardar', attr: 'str', attackType: 'Melee', roles: ["Carry","Durable","Initiator","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/slardar.png' },
+  { id: 29, name: 'npc_dota_hero_tidehunter', slug: 'tidehunter', nameEn: 'Tidehunter', attr: 'str', attackType: 'Melee', roles: ["Initiator","Durable","Disabler","Nuker","Carry"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/tidehunter.png' },
+  { id: 30, name: 'npc_dota_hero_witch_doctor', slug: 'witch_doctor', nameEn: 'Witch Doctor', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/witch_doctor.png' },
+  { id: 31, name: 'npc_dota_hero_lich', slug: 'lich', nameEn: 'Lich', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/lich.png' },
+  { id: 32, name: 'npc_dota_hero_riki', slug: 'riki', nameEn: 'Riki', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/riki.png' },
+  { id: 33, name: 'npc_dota_hero_enigma', slug: 'enigma', nameEn: 'Enigma', attr: 'all', attackType: 'Ranged', roles: ["Disabler","Initiator","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/enigma.png' },
+  { id: 34, name: 'npc_dota_hero_tinker', slug: 'tinker', nameEn: 'Tinker', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/tinker.png' },
+  { id: 35, name: 'npc_dota_hero_sniper', slug: 'sniper', nameEn: 'Sniper', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/sniper.png' },
+  { id: 36, name: 'npc_dota_hero_necrolyte', slug: 'necrolyte', nameEn: 'Necrophos', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Durable","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/necrolyte.png' },
+  { id: 37, name: 'npc_dota_hero_warlock', slug: 'warlock', nameEn: 'Warlock', attr: 'int', attackType: 'Ranged', roles: ["Support","Initiator","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/warlock.png' },
+  { id: 38, name: 'npc_dota_hero_beastmaster', slug: 'beastmaster', nameEn: 'Beastmaster', attr: 'all', attackType: 'Melee', roles: ["Initiator","Disabler","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/beastmaster.png' },
+  { id: 39, name: 'npc_dota_hero_queenofpain', slug: 'queenofpain', nameEn: 'Queen of Pain', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/queenofpain.png' },
+  { id: 40, name: 'npc_dota_hero_venomancer', slug: 'venomancer', nameEn: 'Venomancer', attr: 'all', attackType: 'Ranged', roles: ["Support","Nuker","Initiator","Pusher","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/venomancer.png' },
+  { id: 41, name: 'npc_dota_hero_faceless_void', slug: 'faceless_void', nameEn: 'Faceless Void', attr: 'agi', attackType: 'Melee', roles: ["Carry","Initiator","Disabler","Escape","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/faceless_void.png' },
+  { id: 42, name: 'npc_dota_hero_skeleton_king', slug: 'skeleton_king', nameEn: 'Wraith King', attr: 'str', attackType: 'Melee', roles: ["Carry","Support","Durable","Disabler","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/skeleton_king.png' },
+  { id: 43, name: 'npc_dota_hero_death_prophet', slug: 'death_prophet', nameEn: 'Death Prophet', attr: 'all', attackType: 'Ranged', roles: ["Carry","Pusher","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/death_prophet.png' },
+  { id: 44, name: 'npc_dota_hero_phantom_assassin', slug: 'phantom_assassin', nameEn: 'Phantom Assassin', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_assassin.png' },
+  { id: 45, name: 'npc_dota_hero_pugna', slug: 'pugna', nameEn: 'Pugna', attr: 'int', attackType: 'Ranged', roles: ["Nuker","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/pugna.png' },
+  { id: 46, name: 'npc_dota_hero_templar_assassin', slug: 'templar_assassin', nameEn: 'Templar Assassin', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/templar_assassin.png' },
+  { id: 47, name: 'npc_dota_hero_viper', slug: 'viper', nameEn: 'Viper', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Durable","Initiator","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/viper.png' },
+  { id: 48, name: 'npc_dota_hero_luna', slug: 'luna', nameEn: 'Luna', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Nuker","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/luna.png' },
+  { id: 49, name: 'npc_dota_hero_dragon_knight', slug: 'dragon_knight', nameEn: 'Dragon Knight', attr: 'str', attackType: 'Melee', roles: ["Carry","Pusher","Durable","Disabler","Initiator","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/dragon_knight.png' },
+  { id: 50, name: 'npc_dota_hero_dazzle', slug: 'dazzle', nameEn: 'Dazzle', attr: 'all', attackType: 'Ranged', roles: ["Support","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/dazzle.png' },
+  { id: 51, name: 'npc_dota_hero_rattletrap', slug: 'rattletrap', nameEn: 'Clockwerk', attr: 'str', attackType: 'Melee', roles: ["Initiator","Disabler","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/rattletrap.png' },
+  { id: 52, name: 'npc_dota_hero_leshrac', slug: 'leshrac', nameEn: 'Leshrac', attr: 'int', attackType: 'Ranged', roles: ["Carry","Support","Nuker","Pusher","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/leshrac.png' },
+  { id: 53, name: 'npc_dota_hero_furion', slug: 'furion', nameEn: 'Nature\'s Prophet', attr: 'all', attackType: 'Ranged', roles: ["Carry","Pusher","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/furion.png' },
+  { id: 54, name: 'npc_dota_hero_life_stealer', slug: 'life_stealer', nameEn: 'Lifestealer', attr: 'str', attackType: 'Melee', roles: ["Carry","Durable","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/life_stealer.png' },
+  { id: 55, name: 'npc_dota_hero_dark_seer', slug: 'dark_seer', nameEn: 'Dark Seer', attr: 'int', attackType: 'Melee', roles: ["Initiator","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_seer.png' },
+  { id: 56, name: 'npc_dota_hero_clinkz', slug: 'clinkz', nameEn: 'Clinkz', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Escape","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/clinkz.png' },
+  { id: 57, name: 'npc_dota_hero_omniknight', slug: 'omniknight', nameEn: 'Omniknight', attr: 'str', attackType: 'Melee', roles: ["Support","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/omniknight.png' },
+  { id: 58, name: 'npc_dota_hero_enchantress', slug: 'enchantress', nameEn: 'Enchantress', attr: 'int', attackType: 'Ranged', roles: ["Support","Pusher","Durable","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/enchantress.png' },
+  { id: 59, name: 'npc_dota_hero_huskar', slug: 'huskar', nameEn: 'Huskar', attr: 'str', attackType: 'Ranged', roles: ["Carry","Durable","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/huskar.png' },
+  { id: 60, name: 'npc_dota_hero_night_stalker', slug: 'night_stalker', nameEn: 'Night Stalker', attr: 'str', attackType: 'Melee', roles: ["Carry","Initiator","Durable","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/night_stalker.png' },
+  { id: 61, name: 'npc_dota_hero_broodmother', slug: 'broodmother', nameEn: 'Broodmother', attr: 'agi', attackType: 'Melee', roles: ["Carry","Pusher","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/broodmother.png' },
+  { id: 62, name: 'npc_dota_hero_bounty_hunter', slug: 'bounty_hunter', nameEn: 'Bounty Hunter', attr: 'agi', attackType: 'Melee', roles: ["Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/bounty_hunter.png' },
+  { id: 63, name: 'npc_dota_hero_weaver', slug: 'weaver', nameEn: 'Weaver', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/weaver.png' },
+  { id: 64, name: 'npc_dota_hero_jakiro', slug: 'jakiro', nameEn: 'Jakiro', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Pusher","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/jakiro.png' },
+  { id: 65, name: 'npc_dota_hero_batrider', slug: 'batrider', nameEn: 'Batrider', attr: 'all', attackType: 'Ranged', roles: ["Initiator","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/batrider.png' },
+  { id: 66, name: 'npc_dota_hero_chen', slug: 'chen', nameEn: 'Chen', attr: 'int', attackType: 'Ranged', roles: ["Support","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/chen.png' },
+  { id: 67, name: 'npc_dota_hero_spectre', slug: 'spectre', nameEn: 'Spectre', attr: 'agi', attackType: 'Melee', roles: ["Carry","Durable","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/spectre.png' },
+  { id: 68, name: 'npc_dota_hero_ancient_apparition', slug: 'ancient_apparition', nameEn: 'Ancient Apparition', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/ancient_apparition.png' },
+  { id: 69, name: 'npc_dota_hero_doom_bringer', slug: 'doom_bringer', nameEn: 'Doom', attr: 'str', attackType: 'Melee', roles: ["Carry","Disabler","Initiator","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/doom_bringer.png' },
+  { id: 70, name: 'npc_dota_hero_ursa', slug: 'ursa', nameEn: 'Ursa', attr: 'agi', attackType: 'Melee', roles: ["Carry","Durable","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/ursa.png' },
+  { id: 71, name: 'npc_dota_hero_spirit_breaker', slug: 'spirit_breaker', nameEn: 'Spirit Breaker', attr: 'str', attackType: 'Melee', roles: ["Carry","Initiator","Disabler","Durable","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/spirit_breaker.png' },
+  { id: 72, name: 'npc_dota_hero_gyrocopter', slug: 'gyrocopter', nameEn: 'Gyrocopter', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/gyrocopter.png' },
+  { id: 73, name: 'npc_dota_hero_alchemist', slug: 'alchemist', nameEn: 'Alchemist', attr: 'str', attackType: 'Melee', roles: ["Carry","Support","Durable","Disabler","Initiator","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/alchemist.png' },
+  { id: 74, name: 'npc_dota_hero_invoker', slug: 'invoker', nameEn: 'Invoker', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Disabler","Escape","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/invoker.png' },
+  { id: 75, name: 'npc_dota_hero_silencer', slug: 'silencer', nameEn: 'Silencer', attr: 'int', attackType: 'Ranged', roles: ["Carry","Support","Disabler","Initiator","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/silencer.png' },
+  { id: 76, name: 'npc_dota_hero_obsidian_destroyer', slug: 'obsidian_destroyer', nameEn: 'Outworld Destroyer', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/obsidian_destroyer.png' },
+  { id: 77, name: 'npc_dota_hero_lycan', slug: 'lycan', nameEn: 'Lycan', attr: 'str', attackType: 'Melee', roles: ["Carry","Pusher","Durable","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/lycan.png' },
+  { id: 78, name: 'npc_dota_hero_brewmaster', slug: 'brewmaster', nameEn: 'Brewmaster', attr: 'all', attackType: 'Melee', roles: ["Carry","Initiator","Durable","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/brewmaster.png' },
+  { id: 79, name: 'npc_dota_hero_shadow_demon', slug: 'shadow_demon', nameEn: 'Shadow Demon', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Initiator","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_demon.png' },
+  { id: 80, name: 'npc_dota_hero_lone_druid', slug: 'lone_druid', nameEn: 'Lone Druid', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Pusher","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/lone_druid.png' },
+  { id: 81, name: 'npc_dota_hero_chaos_knight', slug: 'chaos_knight', nameEn: 'Chaos Knight', attr: 'str', attackType: 'Melee', roles: ["Carry","Disabler","Durable","Pusher","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/chaos_knight.png' },
+  { id: 82, name: 'npc_dota_hero_meepo', slug: 'meepo', nameEn: 'Meepo', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Nuker","Disabler","Initiator","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/meepo.png' },
+  { id: 83, name: 'npc_dota_hero_treant', slug: 'treant', nameEn: 'Treant Protector', attr: 'str', attackType: 'Melee', roles: ["Support","Initiator","Durable","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/treant.png' },
+  { id: 84, name: 'npc_dota_hero_ogre_magi', slug: 'ogre_magi', nameEn: 'Ogre Magi', attr: 'str', attackType: 'Melee', roles: ["Support","Nuker","Disabler","Durable","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/ogre_magi.png' },
+  { id: 85, name: 'npc_dota_hero_undying', slug: 'undying', nameEn: 'Undying', attr: 'str', attackType: 'Melee', roles: ["Support","Durable","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/undying.png' },
+  { id: 86, name: 'npc_dota_hero_rubick', slug: 'rubick', nameEn: 'Rubick', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/rubick.png' },
+  { id: 87, name: 'npc_dota_hero_disruptor', slug: 'disruptor', nameEn: 'Disruptor', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/disruptor.png' },
+  { id: 88, name: 'npc_dota_hero_nyx_assassin', slug: 'nyx_assassin', nameEn: 'Nyx Assassin', attr: 'all', attackType: 'Melee', roles: ["Disabler","Nuker","Initiator","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/nyx_assassin.png' },
+  { id: 89, name: 'npc_dota_hero_naga_siren', slug: 'naga_siren', nameEn: 'Naga Siren', attr: 'agi', attackType: 'Melee', roles: ["Carry","Support","Pusher","Disabler","Initiator","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/naga_siren.png' },
+  { id: 90, name: 'npc_dota_hero_keeper_of_the_light', slug: 'keeper_of_the_light', nameEn: 'Keeper of the Light', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/keeper_of_the_light.png' },
+  { id: 91, name: 'npc_dota_hero_wisp', slug: 'wisp', nameEn: 'Io', attr: 'all', attackType: 'Ranged', roles: ["Support","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/wisp.png' },
+  { id: 92, name: 'npc_dota_hero_visage', slug: 'visage', nameEn: 'Visage', attr: 'all', attackType: 'Ranged', roles: ["Support","Nuker","Durable","Disabler","Pusher"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/visage.png' },
+  { id: 93, name: 'npc_dota_hero_slark', slug: 'slark', nameEn: 'Slark', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/slark.png' },
+  { id: 94, name: 'npc_dota_hero_medusa', slug: 'medusa', nameEn: 'Medusa', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Disabler","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/medusa.png' },
+  { id: 95, name: 'npc_dota_hero_troll_warlord', slug: 'troll_warlord', nameEn: 'Troll Warlord', attr: 'agi', attackType: 'Ranged', roles: ["Carry","Pusher","Disabler","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/troll_warlord.png' },
+  { id: 96, name: 'npc_dota_hero_centaur', slug: 'centaur', nameEn: 'Centaur Warrunner', attr: 'str', attackType: 'Melee', roles: ["Durable","Initiator","Disabler","Nuker","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/centaur.png' },
+  { id: 97, name: 'npc_dota_hero_magnataur', slug: 'magnataur', nameEn: 'Magnus', attr: 'all', attackType: 'Melee', roles: ["Initiator","Disabler","Nuker","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/magnataur.png' },
+  { id: 98, name: 'npc_dota_hero_shredder', slug: 'shredder', nameEn: 'Timbersaw', attr: 'str', attackType: 'Melee', roles: ["Nuker","Durable","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/shredder.png' },
+  { id: 99, name: 'npc_dota_hero_bristleback', slug: 'bristleback', nameEn: 'Bristleback', attr: 'str', attackType: 'Melee', roles: ["Carry","Durable","Initiator","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/bristleback.png' },
+  { id: 100, name: 'npc_dota_hero_tusk', slug: 'tusk', nameEn: 'Tusk', attr: 'str', attackType: 'Melee', roles: ["Initiator","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/tusk.png' },
+  { id: 101, name: 'npc_dota_hero_skywrath_mage', slug: 'skywrath_mage', nameEn: 'Skywrath Mage', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/skywrath_mage.png' },
+  { id: 102, name: 'npc_dota_hero_abaddon', slug: 'abaddon', nameEn: 'Abaddon', attr: 'all', attackType: 'Melee', roles: ["Support","Carry","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/abaddon.png' },
+  { id: 103, name: 'npc_dota_hero_elder_titan', slug: 'elder_titan', nameEn: 'Elder Titan', attr: 'str', attackType: 'Melee', roles: ["Initiator","Disabler","Nuker","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/elder_titan.png' },
+  { id: 104, name: 'npc_dota_hero_legion_commander', slug: 'legion_commander', nameEn: 'Legion Commander', attr: 'str', attackType: 'Melee', roles: ["Carry","Disabler","Initiator","Durable","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/legion_commander.png' },
+  { id: 105, name: 'npc_dota_hero_techies', slug: 'techies', nameEn: 'Techies', attr: 'all', attackType: 'Ranged', roles: ["Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/techies.png' },
+  { id: 106, name: 'npc_dota_hero_ember_spirit', slug: 'ember_spirit', nameEn: 'Ember Spirit', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Nuker","Disabler","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/ember_spirit.png' },
+  { id: 107, name: 'npc_dota_hero_earth_spirit', slug: 'earth_spirit', nameEn: 'Earth Spirit', attr: 'str', attackType: 'Melee', roles: ["Nuker","Escape","Disabler","Initiator","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/earth_spirit.png' },
+  { id: 108, name: 'npc_dota_hero_abyssal_underlord', slug: 'abyssal_underlord', nameEn: 'Underlord', attr: 'str', attackType: 'Melee', roles: ["Support","Nuker","Disabler","Durable","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/abyssal_underlord.png' },
+  { id: 109, name: 'npc_dota_hero_terrorblade', slug: 'terrorblade', nameEn: 'Terrorblade', attr: 'agi', attackType: 'Melee', roles: ["Carry","Pusher","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/terrorblade.png' },
+  { id: 110, name: 'npc_dota_hero_phoenix', slug: 'phoenix', nameEn: 'Phoenix', attr: 'str', attackType: 'Ranged', roles: ["Support","Nuker","Initiator","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/phoenix.png' },
+  { id: 111, name: 'npc_dota_hero_oracle', slug: 'oracle', nameEn: 'Oracle', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/oracle.png' },
+  { id: 112, name: 'npc_dota_hero_winter_wyvern', slug: 'winter_wyvern', nameEn: 'Winter Wyvern', attr: 'int', attackType: 'Ranged', roles: ["Support","Disabler","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/winter_wyvern.png' },
+  { id: 113, name: 'npc_dota_hero_arc_warden', slug: 'arc_warden', nameEn: 'Arc Warden', attr: 'all', attackType: 'Ranged', roles: ["Carry","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/arc_warden.png' },
+  { id: 114, name: 'npc_dota_hero_monkey_king', slug: 'monkey_king', nameEn: 'Monkey King', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Disabler","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/monkey_king.png' },
+  { id: 119, name: 'npc_dota_hero_dark_willow', slug: 'dark_willow', nameEn: 'Dark Willow', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_willow.png' },
+  { id: 120, name: 'npc_dota_hero_pangolier', slug: 'pangolier', nameEn: 'Pangolier', attr: 'all', attackType: 'Melee', roles: ["Carry","Nuker","Disabler","Durable","Escape","Initiator"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/pangolier.png' },
+  { id: 121, name: 'npc_dota_hero_grimstroke', slug: 'grimstroke', nameEn: 'Grimstroke', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/grimstroke.png' },
+  { id: 123, name: 'npc_dota_hero_hoodwink', slug: 'hoodwink', nameEn: 'Hoodwink', attr: 'agi', attackType: 'Ranged', roles: ["Support","Nuker","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/hoodwink.png' },
+  { id: 126, name: 'npc_dota_hero_void_spirit', slug: 'void_spirit', nameEn: 'Void Spirit', attr: 'all', attackType: 'Melee', roles: ["Carry","Escape","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/void_spirit.png' },
+  { id: 128, name: 'npc_dota_hero_snapfire', slug: 'snapfire', nameEn: 'Snapfire', attr: 'all', attackType: 'Ranged', roles: ["Support","Nuker","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/snapfire.png' },
+  { id: 129, name: 'npc_dota_hero_mars', slug: 'mars', nameEn: 'Mars', attr: 'str', attackType: 'Melee', roles: ["Carry","Initiator","Disabler","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/mars.png' },
+  { id: 131, name: 'npc_dota_hero_ringmaster', slug: 'ringmaster', nameEn: 'Ringmaster', attr: 'int', attackType: 'Ranged', roles: ["Support","Nuker","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png' },
+  { id: 135, name: 'npc_dota_hero_dawnbreaker', slug: 'dawnbreaker', nameEn: 'Dawnbreaker', attr: 'str', attackType: 'Melee', roles: ["Carry","Durable"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/dawnbreaker.png' },
+  { id: 136, name: 'npc_dota_hero_marci', slug: 'marci', nameEn: 'Marci', attr: 'all', attackType: 'Melee', roles: ["Support","Carry","Initiator","Disabler","Escape"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/marci.png' },
+  { id: 137, name: 'npc_dota_hero_primal_beast', slug: 'primal_beast', nameEn: 'Primal Beast', attr: 'str', attackType: 'Melee', roles: ["Initiator","Durable","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/primal_beast.png' },
+  { id: 138, name: 'npc_dota_hero_muerta', slug: 'muerta', nameEn: 'Muerta', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png' },
+  { id: 145, name: 'npc_dota_hero_kez', slug: 'kez', nameEn: 'Kez', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png' }
+];
+
+const HERO_MAP = new Map(HEROES.map(h => [h.id, h]));
+
+const RU_HERO_NAMES = {
+  "Anti-Mage": "Антимаг", "Axe": "Акс", "Bane": "Бейн", "Bloodseeker": "Бладсикер",
+  "Crystal Maiden": "Кристал Мейден", "Drow Ranger": "Дроу Рейнджер (Тракса)", "Earthshaker": "Шейкер",
+  "Juggernaut": "Джаггернаут", "Mirana": "Мирана", "Morphling": "Морфлинг",
+  "Shadow Fiend": "Шэдоу Финд (СФ)", "Phantom Lancer": "Фантом Лансер (ПЛ)", "Puck": "Пак",
+  "Pudge": "Падж", "Razor": "Рейзор", "Sand King": "Сэнд Кинг (СК)",
+  "Storm Spirit": "Шторм Спирит", "Sven": "Свен", "Tiny": "Тини",
+  "Vengeful Spirit": "Венга", "Windranger": "Виндрейнджер (ВР)", "Zeus": "Зевс",
+  "Kunkka": "Кунка", "Lina": "Лина", "Lion": "Лион", "Shadow Shaman": "Шаман (Раста)",
+  "Slardar": "Слардар", "Tidehunter": "Тайдхантер", "Witch Doctor": "Витч Доктор (ВД)",
+  "Lich": "Лич", "Riki": "Рики", "Enigma": "Энигма", "Tinker": "Тинкер",
+  "Sniper": "Снайпер", "Necrophos": "Некрофос", "Warlock": "Варлок",
+  "Beastmaster": "Бистмастер", "Queen of Pain": "Квопа (QoP)", "Venomancer": "Веномансер",
+  "Faceless Void": "Войд", "Wraith King": "ВК (Леорик)", "Death Prophet": "Банша",
+  "Phantom Assassin": "Фантомка (ПА)", "Pugna": "Пугна", "Templar Assassin": "Темплярка (ТА)",
+  "Viper": "Вайпер", "Luna": "Луна", "Dragon Knight": "Драгон Найт (ДК)",
+  "Dazzle": "Даззл", "Clockwerk": "Клокверк", "Leshrac": "Лешрак",
+  "Nature's Prophet": "Фурион", "Lifestealer": "Гуля (Лайфстилер)", "Dark Seer": "Дарк Сир",
+  "Clinkz": "Клинкз", "Omniknight": "Омникнайт", "Enchantress": "Коза (Энча)",
+  "Huskar": "Хускар", "Night Stalker": "Баланар", "Broodmother": "Бруда",
+  "Bounty Hunter": "Бонтик (БХ)", "Weaver": "Вивер", "Jakiro": "Джакиро",
+  "Batrider": "Бэтрайдер", "Chen": "Чен", "Spectre": "Спектра",
+  "Ancient Apparition": "Аппарат", "Doom": "Дум", "Ursa": "Урса",
+  "Spirit Breaker": "Бара (Баратрум)", "Gyrocopter": "Гирокоптер", "Alchemist": "Алхимик",
+  "Invoker": "Инвокер", "Silencer": "Сайленсер", "Outworld Destroyer": "ОД",
+  "Lycan": "Ликан", "Brewmaster": "Панда", "Shadow Demon": "Шэдоу Демон",
+  "Lone Druid": "Друид (Силла)", "Chaos Knight": "ЦК (Хаос Найт)", "Meepo": "Мипо",
+  "Treant Protector": "Дерево (Трент)", "Ogre Magi": "Огр Маг", "Undying": "Андаинг (Зомби)",
+  "Rubick": "Рубик", "Disruptor": "Дизраптор", "Nyx Assassin": "Никс",
+  "Naga Siren": "Нага Сирена", "Keeper of the Light": "Котл", "Io": "Висп (Ио)",
+  "Visage": "Визаж", "Slark": "Сларк", "Medusa": "Медуза",
+  "Troll Warlord": "Тролль", "Centaur Warrunner": "Кентавр", "Magnus": "Магнус",
+  "Timbersaw": "Тимбер", "Bristleback": "Бристлбек", "Tusk": "Туск",
+  "Skywrath Mage": "Скаймаг", "Abaddon": "Абаддон", "Elder Titan": "Титан",
+  "Legion Commander": "Легионка", "Techies": "Течис (Минёр)", "Ember Spirit": "Эмбер Спирит",
+  "Earth Spirit": "Земеля (Earth Spirit)", "Underlord": "Питлорд (Андерлорд)", "Terrorblade": "Террорблейд",
+  "Phoenix": "Феникс", "Oracle": "Оракул", "Winter Wyvern": "Виверна",
+  "Arc Warden": "Арк Варден", "Monkey King": "МК (Monkey King)", "Dark Willow": "Дарк Виллоу",
+  "Pangolier": "Пангольер", "Grimstroke": "Гримстроук", "Hoodwink": "Белка (Худвинк)",
+  "Void Spirit": "Войд Спирит", "Snapfire": "Бабка (Снэпфайр)", "Mars": "Марс",
+  "Ringmaster": "Рингмастер", "Dawnbreaker": "Валькирия (Донбрейкер)", "Marci": "Марси",
+  "Primal Beast": "Праймал Бист", "Muerta": "Муэрта", "Kez": "Кез"
+};
+
+// Populate localized Russian names
+for (const hero of HEROES) {
+  hero.nameRu = RU_HERO_NAMES[hero.nameEn] || hero.nameEn;
+}
+
+// Seeded PRNG (Mulberry32)
+function createRng(seed) {
+  let h = 0;
+  if (typeof seed === 'string') {
+    for (let i = 0; i < seed.length; i++) {
+      h = (Math.imul(31, h) + seed.charCodeAt(i)) | 0;
+    }
+  } else if (typeof seed === 'number') {
+    h = seed | 0;
+  } else {
+    h = Math.floor(Math.random() * 0xFFFFFFFF);
+  }
+
+  return function() {
+    let t = (h += 0x6D2B79F5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Generate unique readable tournament seed (e.g. DOTA-7X9K)
+function generateRandomSeed() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let res = 'DOTA-';
+  for (let i = 0; i < 4; i++) {
+    res += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return res;
+}
+
+// Fisher-Yates shuffle with RNG
+function shuffle(array, rng) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/**
+ * Generates tournament pool: exactly 5 heroes per attribute (Strength, Agility, Intelligence, Universal).
+ * Total: 20 heroes.
+ */
+function generatePool(seed = null) {
+  const finalSeed = seed || generateRandomSeed();
+  const rng = createRng(finalSeed);
+
+  const byAttr = {
+    str: shuffle(HEROES.filter(h => h.attr === 'str'), rng).slice(0, 5),
+    agi: shuffle(HEROES.filter(h => h.attr === 'agi'), rng).slice(0, 5),
+    int: shuffle(HEROES.filter(h => h.attr === 'int'), rng).slice(0, 5),
+    all: shuffle(HEROES.filter(h => h.attr === 'all'), rng).slice(0, 5)
+  };
+
+  const pool = [
+    ...byAttr.str,
+    ...byAttr.agi,
+    ...byAttr.int,
+    ...byAttr.all
+  ];
+
+  return {
+    seed: finalSeed,
+    pool,
+    byAttr
+  };
+}
+
+
+  // --- SOUND EFFECTS (Web Audio API) ---
+  // Web Audio API Sound Effects Synthesizer for Dota 2 Drafter
+
+class SoundFX {
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+    this.volume = 0.6;
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        this.ctx = new AudioContext();
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  toggle(enable) {
+    if (enable !== undefined) {
+      this.enabled = enable;
+    } else {
+      this.enabled = !this.enabled;
+    }
+    return this.enabled;
+  }
+
+  setVolume(val) {
+    this.volume = Math.max(0, Math.min(1, val));
+  }
+
+  playClick() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.04);
+
+    gain.gain.setValueAtTime(0.15 * this.volume, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.04);
+  }
+
+  // Dota 2 Start / Horn Gong
+  playGong() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const freqs = [110, 164.8, 220, 277.2, 330];
+
+    freqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = idx === 0 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.96, now + 2.5);
+
+      const peak = (0.28 / (idx + 1)) * this.volume;
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(peak, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 2.5);
+    });
+  }
+
+  // Ban Sound: Heavy impact with low-frequency sweep
+  playBan() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(35, now + 0.6);
+
+    gain.gain.setValueAtTime(0.45 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(450, now);
+    filter.frequency.exponentialRampToValueAtTime(90, now + 0.6);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.6);
+  }
+
+  // Pick Sound: Heroic chord
+  playPick() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const notes = [261.63, 329.63, 392.00, 523.25];
+
+    notes.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+      const delay = idx * 0.04;
+      gain.gain.setValueAtTime(0.001, now + delay);
+      gain.gain.linearRampToValueAtTime(0.22 * this.volume, now + delay + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.8);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.85);
+    });
+  }
+
+  // Countdown warning tick (e.g. at 5, 4, 3, 2, 1)
+  playAlert() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(920, now);
+
+    gain.gain.setValueAtTime(0.2 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  // Timer runout buzzer
+  playTimeExpired() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.setValueAtTime(130, now + 0.15);
+
+    gain.gain.setValueAtTime(0.3 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.45);
+  }
+
+  // Draft completion victory fanfare
+  playComplete() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const melody = [
+      { f: 392.00, t: 0.0, d: 0.2 },
+      { f: 523.25, t: 0.18, d: 0.25 },
+      { f: 659.25, t: 0.38, d: 0.25 },
+      { f: 783.99, t: 0.60, d: 0.7 }
+    ];
+
+    melody.forEach(note => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(note.f, now + note.t);
+
+      gain.gain.setValueAtTime(0.001, now + note.t);
+      gain.gain.linearRampToValueAtTime(0.25 * this.volume, now + note.t + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + note.t + note.d);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + note.t);
+      osc.stop(now + note.t + note.d + 0.05);
+    });
+  }
+
+  // Coin flip spin
+  playCoinFlip() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    for (let i = 0; i < 7; i++) {
+      const t = now + i * 0.07;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1400 + (i % 2) * 400, t);
+
+      gain.gain.setValueAtTime(0.12 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.05);
+    }
+  }
+}
+
+const sounds = new SoundFX();
+
+
+  // --- DRAFT ENGINE ---
+  // Tournament Draft Engine for Dota 2
+
+
+const PHASE = {
+  SETUP: 'SETUP',
+  BAN: 'BAN',
+  PICK: 'PICK',
+  COMPLETED: 'COMPLETED'
+};
+
+const DEFAULT_BAN_STEPS = [
+  { step: 0, phase: PHASE.BAN, team: 'radiant', label: 'Бан 1' },
+  { step: 1, phase: PHASE.BAN, team: 'dire',    label: 'Бан 1' },
+  { step: 2, phase: PHASE.BAN, team: 'radiant', label: 'Бан 2' },
+  { step: 3, phase: PHASE.BAN, team: 'dire',    label: 'Бан 2' },
+  { step: 4, phase: PHASE.BAN, team: 'radiant', label: 'Бан 3' },
+  { step: 5, phase: PHASE.BAN, team: 'dire',    label: 'Бан 3' },
+];
+
+const PICK_FORMATS = {
+  SNAKE: [ // 1-2-2-2-2-1
+    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 1' },
+    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 1' },
+    { step: 8,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 2' },
+    { step: 9,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 2' },
+    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Пик 3' },
+    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Пик 3' },
+    { step: 12, phase: PHASE.PICK, team: 'dire',    label: 'Пик 4' },
+    { step: 13, phase: PHASE.PICK, team: 'radiant', label: 'Пик 4' },
+    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Пик 5' },
+    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Пик 5' },
+  ],
+  ALTERNATING: [ // 1-1-1-1...
+    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 1' },
+    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 1' },
+    { step: 8,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 2' },
+    { step: 9,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 2' },
+    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Пик 3' },
+    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Пик 3' },
+    { step: 12, phase: PHASE.PICK, team: 'radiant', label: 'Пик 4' },
+    { step: 13, phase: PHASE.PICK, team: 'dire',    label: 'Пик 4' },
+    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Пик 5' },
+    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Пик 5' },
+  ]
+};
+
+class DraftEngine {
+  constructor(options = {}) {
+    this.options = {
+      turnTimerSeconds: options.turnTimerSeconds || 30,
+      pickFormat: options.pickFormat || 'SNAKE', // 'SNAKE' or 'ALTERNATING'
+      firstTurnTeam: options.firstTurnTeam || 'radiant', // 'radiant' or 'dire'
+      ...options
+    };
+
+    this.teams = {
+      radiant: {
+        id: 'radiant',
+        name: options.radiantName || 'Radiant (Силы Света)',
+        color: '#26e07f',
+        bans: [],
+        picks: []
+      },
+      dire: {
+        id: 'dire',
+        name: options.direName || 'Dire (Силы Тьмы)',
+        color: '#ec3d27',
+        bans: [],
+        picks: []
+      }
+    };
+
+    this.currentStepIndex = 0;
+    this.history = [];
+    this.seed = null;
+    this.pool = [];
+    this.byAttr = { str: [], agi: [], int: [], all: [] };
+    this.heroStatus = new Map(); // heroId -> { status: 'available'|'banned'|'picked', team, step }
+    this.selectedHeroId = null;
+
+    this.timer = {
+      secondsLeft: this.options.turnTimerSeconds,
+      isActive: false,
+      isPaused: false,
+      intervalId: null
+    };
+
+    this.listeners = new Set();
+    this.initPool(options.seed);
+    this.buildStepsSequence();
+  }
+
+  // Build full 16-step sequence (6 bans + 10 picks)
+  buildStepsSequence() {
+    const isDireFirst = this.options.firstTurnTeam === 'dire';
+    const swapTeam = (t) => (t === 'radiant' ? 'dire' : 'radiant');
+
+    // 6 bans (3 each)
+    const bans = DEFAULT_BAN_STEPS.map(s => ({
+      ...s,
+      team: isDireFirst ? swapTeam(s.team) : s.team
+    }));
+
+    // 10 picks (5 each)
+    const pickTemplate = PICK_FORMATS[this.options.pickFormat] || PICK_FORMATS.SNAKE;
+    const picks = pickTemplate.map(s => ({
+      ...s,
+      team: isDireFirst ? swapTeam(s.team) : s.team
+    }));
+
+    this.steps = [...bans, ...picks];
+  }
+
+  initPool(seed = null) {
+    const generated = generatePool(seed);
+    this.seed = generated.seed;
+    this.pool = generated.pool;
+    this.byAttr = generated.byAttr;
+    this.heroStatus.clear();
+
+    for (const hero of this.pool) {
+      this.heroStatus.set(hero.id, {
+        status: 'available',
+        team: null,
+        step: null
+      });
+    }
+  }
+
+  subscribe(callback) {
+    this.listeners.add(callback);
+    return () => this.listeners.delete(callback);
+  }
+
+  emit() {
+    for (const listener of this.listeners) {
+      listener(this.getState());
+    }
+  }
+
+  getState() {
+    const isCompleted = this.currentStepIndex >= this.steps.length;
+    const currentStep = !isCompleted ? this.steps[this.currentStepIndex] : null;
+
+    return {
+      seed: this.seed,
+      options: { ...this.options },
+      teams: {
+        radiant: {
+          ...this.teams.radiant,
+          bans: [...this.teams.radiant.bans],
+          picks: [...this.teams.radiant.picks]
+        },
+        dire: {
+          ...this.teams.dire,
+          bans: [...this.teams.dire.bans],
+          picks: [...this.teams.dire.picks]
+        }
+      },
+      pool: this.pool.map(hero => ({
+        ...hero,
+        ...(this.heroStatus.get(hero.id) || { status: 'available', team: null })
+      })),
+      byAttr: {
+        str: this.byAttr.str.map(h => ({ ...h, ...(this.heroStatus.get(h.id) || {}) })),
+        agi: this.byAttr.agi.map(h => ({ ...h, ...(this.heroStatus.get(h.id) || {}) })),
+        int: this.byAttr.int.map(h => ({ ...h, ...(this.heroStatus.get(h.id) || {}) })),
+        all: this.byAttr.all.map(h => ({ ...h, ...(this.heroStatus.get(h.id) || {}) }))
+      },
+      currentStepIndex: this.currentStepIndex,
+      currentStep,
+      phase: isCompleted ? PHASE.COMPLETED : currentStep.phase,
+      currentTeam: currentStep ? currentStep.team : null,
+      selectedHeroId: this.selectedHeroId,
+      isCompleted,
+      history: [...this.history],
+      timer: { ...this.timer }
+    };
+  }
+
+  selectHero(heroId) {
+    if (this.currentStepIndex >= this.steps.length) return false;
+    const status = this.heroStatus.get(heroId);
+    if (!status || status.status !== 'available') return false;
+
+    this.selectedHeroId = heroId;
+    this.emit();
+    return true;
+  }
+
+  lockInHero(heroId = null) {
+    const targetId = heroId || this.selectedHeroId;
+    if (!targetId) return false;
+    if (this.currentStepIndex >= this.steps.length) return false;
+
+    const status = this.heroStatus.get(targetId);
+    if (!status || status.status !== 'available') return false;
+
+    const step = this.steps[this.currentStepIndex];
+    const hero = HERO_MAP.get(targetId);
+    if (!hero) return false;
+
+    const action = {
+      stepIndex: this.currentStepIndex,
+      phase: step.phase,
+      team: step.team,
+      heroId: targetId,
+      hero
+    };
+
+    this.heroStatus.set(targetId, {
+      status: step.phase === PHASE.BAN ? 'banned' : 'picked',
+      team: step.team,
+      step: this.currentStepIndex
+    });
+
+    if (step.phase === PHASE.BAN) {
+      this.teams[step.team].bans.push(hero);
+    } else {
+      this.teams[step.team].picks.push(hero);
+    }
+
+    this.history.push(action);
+    this.selectedHeroId = null;
+    this.currentStepIndex++;
+
+    this.resetTimer();
+    this.emit();
+
+    return action;
+  }
+
+  // Undo last ban or pick
+  undo() {
+    if (this.history.length === 0) return false;
+
+    const lastAction = this.history.pop();
+    this.currentStepIndex--;
+
+    this.heroStatus.set(lastAction.heroId, {
+      status: 'available',
+      team: null,
+      step: null
+    });
+
+    if (lastAction.phase === PHASE.BAN) {
+      this.teams[lastAction.team].bans.pop();
+    } else {
+      this.teams[lastAction.team].picks.pop();
+    }
+
+    this.selectedHeroId = lastAction.heroId;
+    this.resetTimer();
+    this.emit();
+    return true;
+  }
+
+  // Reset entire draft with same pool
+  resetDraft() {
+    this.currentStepIndex = 0;
+    this.history = [];
+    this.teams.radiant.bans = [];
+    this.teams.radiant.picks = [];
+    this.teams.dire.bans = [];
+    this.teams.dire.picks = [];
+    this.selectedHeroId = null;
+
+    for (const hero of this.pool) {
+      this.heroStatus.set(hero.id, {
+        status: 'available',
+        team: null,
+        step: null
+      });
+    }
+
+    this.resetTimer();
+    this.emit();
+  }
+
+  // Reroll new random 20-hero pool and restart
+  rerollPool(newSeed = null) {
+    this.initPool(newSeed);
+    this.resetDraft();
+  }
+
+  setTeamName(teamId, name) {
+    if (this.teams[teamId]) {
+      this.teams[teamId].name = name.trim() || (teamId === 'radiant' ? 'Radiant' : 'Dire');
+      this.emit();
+    }
+  }
+
+  setFirstTurn(teamId) {
+    if (this.currentStepIndex > 0) return false; // only allowed before drafting starts
+    this.options.firstTurnTeam = teamId;
+    this.buildStepsSequence();
+    this.emit();
+    return true;
+  }
+
+  setPickFormat(format) {
+    if (this.currentStepIndex > 0) return false;
+    if (PICK_FORMATS[format]) {
+      this.options.pickFormat = format;
+      this.buildStepsSequence();
+      this.emit();
+      return true;
+    }
+    return false;
+  }
+
+  // Timer controls
+  startTimer(onTick, onExpired) {
+    this.stopTimer();
+    this.timer.isActive = true;
+    this.timer.isPaused = false;
+    this.timer.secondsLeft = this.options.turnTimerSeconds;
+
+    this.timer.intervalId = setInterval(() => {
+      if (this.timer.isPaused) return;
+
+      if (this.timer.secondsLeft > 0) {
+        this.timer.secondsLeft--;
+        if (onTick) onTick(this.timer.secondsLeft);
+        this.emit();
+      }
+
+      if (this.timer.secondsLeft === 0) {
+        if (onExpired) onExpired();
+        // Auto-pick a random available hero if time expires
+        this.autoPickRandom();
+      }
+    }, 1000);
+  }
+
+  pauseTimer() {
+    this.timer.isPaused = !this.timer.isPaused;
+    this.emit();
+    return this.timer.isPaused;
+  }
+
+  resetTimer() {
+    this.timer.secondsLeft = this.options.turnTimerSeconds;
+  }
+
+  stopTimer() {
+    if (this.timer.intervalId) {
+      clearInterval(this.timer.intervalId);
+      this.timer.intervalId = null;
+    }
+    this.timer.isActive = false;
+  }
+
+  // Auto-pick first available or random available hero upon timer expiration
+  autoPickRandom() {
+    if (this.currentStepIndex >= this.steps.length) return null;
+    const available = this.pool.filter(h => {
+      const s = this.heroStatus.get(h.id);
+      return s && s.status === 'available';
+    });
+    if (available.length === 0) return null;
+
+    const randomHero = available[Math.floor(Math.random() * available.length)];
+    return this.lockInHero(randomHero.id);
+  }
+}
+
+
+  // --- WEBRTC NETWORK MULTIPLAYER ---
+  // WebRTC Peer-to-Peer Multiplayer for Dota 2 Drafter using PeerJS
+
+class DrafterNetwork {
+  constructor(engine, onStatusChange) {
+    this.engine = engine;
+    this.onStatusChange = onStatusChange || (() => {});
+    this.peer = null;
+    this.conn = null;
+    this.connections = new Set(); // if host, multiple peers (opponent + spectators)
+    this.isHost = false;
+    this.myRole = 'local'; // 'local' | 'radiant' | 'dire' | 'spectator'
+    this.roomId = null;
+    this.connected = false;
+  }
+
+  getPrefix() {
+    return 'dota2draft-';
+  }
+
+  // Host creates a room (Default: Radiant)
+  createRoom(customRoomId = null) {
+    const code = customRoomId || Math.random().toString(36).substring(2, 7).toUpperCase();
+    this.roomId = code;
+    this.isHost = true;
+    this.myRole = 'radiant';
+
+    const fullPeerId = this.getPrefix() + code;
+
+    if (this.peer) this.peer.destroy();
+
+    const PeerClass = window.Peer || Peer;
+    this.peer = new PeerClass(fullPeerId, {
+      debug: 1
+    });
+
+    this.onStatusChange({
+      status: 'creating',
+      roomId: this.roomId,
+      myRole: this.myRole,
+      message: 'Создание комнаты...'
+    });
+
+    this.peer.on('open', (id) => {
+      this.onStatusChange({
+        status: 'waiting',
+        roomId: this.roomId,
+        myRole: this.myRole,
+        message: 'Ожидание подключения соперника...'
+      });
+    });
+
+    this.peer.on('connection', (conn) => {
+      this.connections.add(conn);
+
+      conn.on('open', () => {
+        this.connected = true;
+        this.onStatusChange({
+          status: 'connected',
+          roomId: this.roomId,
+          myRole: this.myRole,
+          opponentConnected: true,
+          message: 'Соперник подключен!'
+        });
+
+        // Send initial complete state to joined client
+        this.sendToConn(conn, {
+          type: 'FULL_STATE',
+          state: this.engine.getState(),
+          seed: this.engine.seed
+        });
+      });
+
+      conn.on('data', (data) => {
+        this.handleIncomingData(data, conn);
+      });
+
+      conn.on('close', () => {
+        this.connections.delete(conn);
+        this.onStatusChange({
+          status: 'disconnected',
+          roomId: this.roomId,
+          myRole: this.myRole,
+          message: 'Соперник отключился'
+        });
+      });
+    });
+
+    this.peer.on('error', (err) => {
+      console.warn('Peer error:', err);
+      if (err.type === 'unavailable-id') {
+        // Retry with another ID
+        this.createRoom();
+      } else {
+        this.onStatusChange({
+          status: 'error',
+          message: 'Ошибка подключения: ' + err.message
+        });
+      }
+    });
+
+    return this.roomId;
+  }
+
+  // Join existing room (as Dire or Spectator)
+  joinRoom(roomId, role = 'dire') {
+    this.roomId = roomId.toUpperCase();
+    this.isHost = false;
+    this.myRole = role;
+
+    const fullPeerId = this.getPrefix() + this.roomId;
+
+    if (this.peer) this.peer.destroy();
+
+    const PeerClass = window.Peer || Peer;
+    this.peer = new PeerClass({
+      debug: 1
+    });
+
+    this.onStatusChange({
+      status: 'connecting',
+      roomId: this.roomId,
+      myRole: this.myRole,
+      message: `Подключение к комнате ${this.roomId}...`
+    });
+
+    this.peer.on('open', () => {
+      const conn = this.peer.connect(fullPeerId, {
+        reliable: true
+      });
+      this.conn = conn;
+
+      conn.on('open', () => {
+        this.connected = true;
+        this.onStatusChange({
+          status: 'connected',
+          roomId: this.roomId,
+          myRole: this.myRole,
+          opponentConnected: true,
+          message: 'Успешно подключено к комнате!'
+        });
+
+        // Announce joined role
+        conn.send({
+          type: 'JOIN_ANNOUNCE',
+          role: this.myRole
+        });
+      });
+
+      conn.on('data', (data) => {
+        this.handleIncomingData(data, conn);
+      });
+
+      conn.on('close', () => {
+        this.connected = false;
+        this.onStatusChange({
+          status: 'disconnected',
+          roomId: this.roomId,
+          myRole: this.myRole,
+          message: 'Хост отключился'
+        });
+      });
+
+      conn.on('error', (err) => {
+        this.onStatusChange({
+          status: 'error',
+          message: 'Ошибка соединения: ' + err.message
+        });
+      });
+    });
+
+    this.peer.on('error', (err) => {
+      this.onStatusChange({
+        status: 'error',
+        message: 'Комната не найдена или ошибка сети'
+      });
+    });
+  }
+
+  // Broadcast data to peer(s)
+  broadcast(data) {
+    if (this.isHost) {
+      for (const conn of this.connections) {
+        if (conn.open) conn.send(data);
+      }
+    } else if (this.conn && this.conn.open) {
+      this.conn.send(data);
+    }
+  }
+
+  sendToConn(conn, data) {
+    if (conn && conn.open) {
+      conn.send(data);
+    }
+  }
+
+  // Handle incoming actions
+  handleIncomingData(data, fromConn) {
+    if (!data || !data.type) return;
+
+    switch (data.type) {
+      case 'FULL_STATE':
+        // Overwrite local engine state with host's state
+        if (!this.isHost) {
+          if (data.seed && data.seed !== this.engine.seed) {
+            this.engine.initPool(data.seed);
+          }
+          this.syncFromState(data.state);
+        }
+        break;
+
+      case 'ACTION_LOCKIN':
+        // Apply remote lock in
+        this.engine.lockInHero(data.heroId);
+        // If host, forward to other spectators
+        if (this.isHost) {
+          for (const conn of this.connections) {
+            if (conn !== fromConn && conn.open) {
+              conn.send(data);
+            }
+          }
+        }
+        break;
+
+      case 'ACTION_UNDO':
+        this.engine.undo();
+        if (this.isHost) this.broadcast(data);
+        break;
+
+      case 'ACTION_RESET':
+        this.engine.resetDraft();
+        if (this.isHost) this.broadcast(data);
+        break;
+
+      case 'ACTION_REROLL':
+        this.engine.rerollPool(data.seed);
+        if (this.isHost) this.broadcast(data);
+        break;
+
+      case 'ACTION_SET_NAME':
+        this.engine.setTeamName(data.team, data.name);
+        if (this.isHost) this.broadcast(data);
+        break;
+    }
+  }
+
+  // Sync client engine to full state payload
+  syncFromState(s) {
+    this.engine.currentStepIndex = s.currentStepIndex;
+    this.engine.teams.radiant.bans = s.teams.radiant.bans;
+    this.engine.teams.radiant.picks = s.teams.radiant.picks;
+    this.engine.teams.dire.bans = s.teams.dire.bans;
+    this.engine.teams.dire.picks = s.teams.dire.picks;
+    this.engine.teams.radiant.name = s.teams.radiant.name;
+    this.engine.teams.dire.name = s.teams.dire.name;
+
+    for (const h of s.pool) {
+      this.engine.heroStatus.set(h.id, {
+        status: h.status,
+        team: h.team,
+        step: h.step
+      });
+    }
+
+    this.engine.emit();
+  }
+
+  // Player action wrappers
+  sendLockIn(heroId) {
+    this.broadcast({
+      type: 'ACTION_LOCKIN',
+      heroId
+    });
+  }
+
+  sendUndo() {
+    this.broadcast({
+      type: 'ACTION_UNDO'
+    });
+  }
+
+  sendReset() {
+    this.broadcast({
+      type: 'ACTION_RESET'
+    });
+  }
+
+  sendReroll(seed) {
+    this.broadcast({
+      type: 'ACTION_REROLL',
+      seed
+    });
+  }
+
+  sendTeamName(team, name) {
+    this.broadcast({
+      type: 'ACTION_SET_NAME',
+      team,
+      name
+    });
+  }
+}
+
+
+  // Expose to window
+  if (typeof window !== 'undefined') {
+    window.DraftEngine = DraftEngine;
+    window.PHASE = PHASE;
+    window.sounds = sounds;
+    window.generatePool = generatePool;
+    window.HEROES = HEROES;
+    window.ATTRIBUTES = ATTRIBUTES;
+    window.DrafterNetwork = DrafterNetwork;
+  }
+
+  // --- APPLICATION CONTROLLER ---
+  function initApp() {
+    if (typeof document === 'undefined') return;
+    const rootEl = document.getElementById('turnStatusContainer');
+    if (!rootEl) return;
+
+    // Dota 2 Tournament Drafter - Controller
+
+
+
+
+
+// Read seed and room parameters from URL hash
+function getUrlParams() {
+  const hash = window.location.hash.replace('#', '');
+  const params = new URLSearchParams(hash);
+  return {
+    seed: params.get('seed') || null,
+    room: params.get('room') || null,
+    role: params.get('role') || 'dire' // default joining role is dire
+  };
+}
+
+function updateUrlHash(seed, room = null, role = null) {
+  const params = new URLSearchParams();
+  if (seed) params.set('seed', seed);
+  if (room) params.set('room', room);
+  if (role && role !== 'local') params.set('role', role);
+  window.location.hash = params.toString();
+}
+
+// Toast notification helper
+function showToast(message) {
+  const toast = document.getElementById('toastNotice');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2400);
+}
+
+// Initialize engine
+const urlParams = getUrlParams();
+const engine = new DraftEngine({
+  turnTimerSeconds: 30,
+  pickFormat: 'SNAKE',
+  firstTurnTeam: 'radiant',
+  seed: urlParams.seed
+});
+
+if (engine.seed && !urlParams.room) {
+  updateUrlHash(engine.seed);
+}
+
+// DOM Elements
+const radiantNameInput = document.getElementById('radiantNameInput');
+const direNameInput = document.getElementById('direNameInput');
+const radiantPanel = document.getElementById('radiantPanel');
+const direPanel = document.getElementById('direPanel');
+const radiantBansGrid = document.getElementById('radiantBansGrid');
+const direBansGrid = document.getElementById('direBansGrid');
+const radiantPicksList = document.getElementById('radiantPicksList');
+const direPicksList = document.getElementById('direPicksList');
+const radiantBanCount = document.getElementById('radiantBanCount');
+const direBanCount = document.getElementById('direBanCount');
+const radiantPickCount = document.getElementById('radiantPickCount');
+const direPickCount = document.getElementById('direPickCount');
+
+const phaseIndicator = document.getElementById('phaseIndicator');
+const phaseLabel = document.getElementById('phaseLabel');
+const activeTeamBanner = document.getElementById('activeTeamBanner');
+const activePulseDot = document.getElementById('activePulseDot');
+const activeTurnLabel = document.getElementById('activeTurnLabel');
+const timerDigits = document.getElementById('timerDigits');
+const timerPauseBtn = document.getElementById('timerPauseBtn');
+
+const poolStatsBadge = document.getElementById('poolStatsBadge');
+const poolSearchInput = document.getElementById('poolSearchInput');
+const stackStr = document.getElementById('stack-str');
+const stackAgi = document.getElementById('stack-agi');
+const stackInt = document.getElementById('stack-int');
+const stackAll = document.getElementById('stack-all');
+
+const strCountPill = document.getElementById('strCountPill');
+const agiCountPill = document.getElementById('agiCountPill');
+const intCountPill = document.getElementById('intCountPill');
+const allCountPill = document.getElementById('allCountPill');
+
+const lockInBtn = document.getElementById('lockInBtn');
+const lockInActionIcon = document.getElementById('lockInActionIcon');
+const lockInBtnText = document.getElementById('lockInBtnText');
+const previewThumb = document.getElementById('previewThumb');
+const previewName = document.getElementById('previewName');
+const previewHint = document.getElementById('previewHint');
+
+const undoBtn = document.getElementById('undoBtn');
+const randomPickBtn = document.getElementById('randomPickBtn');
+const resetDraftBtn = document.getElementById('resetDraftBtn');
+const rerollPoolBtn = document.getElementById('rerollPoolBtn');
+const coinFlipBtn = document.getElementById('coinFlipBtn');
+const shareBtn = document.getElementById('shareBtn');
+const soundToggleBtn = document.getElementById('soundToggleBtn');
+const soundIcon = document.getElementById('soundIcon');
+const settingsBtn = document.getElementById('settingsBtn');
+
+// Online Role & Banner elements
+const roleBannerBar = document.getElementById('roleBannerBar');
+const myRoleBadge = document.getElementById('myRoleBadge');
+const networkStatusIndicator = document.getElementById('networkStatusIndicator');
+const onlineModalBtn = document.getElementById('onlineModalBtn');
+const onlineBtnText = document.getElementById('onlineBtnText');
+
+// Online Modal elements
+const onlineModal = document.getElementById('onlineModal');
+const closeOnlineBtn = document.getElementById('closeOnlineBtn');
+const closeOnlineFooterBtn = document.getElementById('closeOnlineFooterBtn');
+const createRoomBtn = document.getElementById('createRoomBtn');
+const joinRoomInput = document.getElementById('joinRoomInput');
+const joinRoomBtn = document.getElementById('joinRoomBtn');
+const onlineChoices = document.getElementById('onlineChoices');
+const activeRoomInfo = document.getElementById('activeRoomInfo');
+const displayRoomCode = document.getElementById('displayRoomCode');
+const displayConnStatus = document.getElementById('displayConnStatus');
+const direInviteLink = document.getElementById('direInviteLink');
+const copyDireLinkBtn = document.getElementById('copyDireLinkBtn');
+const specInviteLink = document.getElementById('specInviteLink');
+const copySpecLinkBtn = document.getElementById('copySpecLinkBtn');
+const disconnectOnlineBtn = document.getElementById('disconnectOnlineBtn');
+
+// Modals
+const summaryModal = document.getElementById('summaryModal');
+const closeSummaryBtn = document.getElementById('closeSummaryBtn');
+const summaryRadiantTitle = document.getElementById('summaryRadiantTitle');
+const summaryDireTitle = document.getElementById('summaryDireTitle');
+const summaryRadiantPicks = document.getElementById('summaryRadiantPicks');
+const summaryDirePicks = document.getElementById('summaryDirePicks');
+const summaryRadiantBans = document.getElementById('summaryRadiantBans');
+const summaryDireBans = document.getElementById('summaryDireBans');
+const summaryUnpicked = document.getElementById('summaryUnpicked');
+const copySummaryBtn = document.getElementById('copySummaryBtn');
+const restartSamePoolBtn = document.getElementById('restartSamePoolBtn');
+const newPoolModalBtn = document.getElementById('newPoolModalBtn');
+
+const settingsModal = document.getElementById('settingsModal');
+const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+const settingTimerSec = document.getElementById('settingTimerSec');
+const settingPickFormat = document.getElementById('settingPickFormat');
+const settingFirstTurn = document.getElementById('settingFirstTurn');
+const settingSeedInput = document.getElementById('settingSeedInput');
+const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+
+// Network Instance
+const network = new DrafterNetwork(engine, handleNetworkStatus);
+
+function handleNetworkStatus(statusObj) {
+  if (statusObj.status === 'creating' || statusObj.status === 'waiting' || statusObj.status === 'connected') {
+    roleBannerBar.style.display = 'flex';
+    onlineChoices.style.display = 'none';
+    activeRoomInfo.style.display = 'flex';
+    displayRoomCode.textContent = statusObj.roomId;
+    disconnectOnlineBtn.style.display = 'inline-flex';
+    onlineBtnText.textContent = `Комната: ${statusObj.roomId}`;
+
+    const baseUrl = `${window.location.origin}${window.location.pathname}`;
+    direInviteLink.value = `${baseUrl}#room=${statusObj.roomId}&role=dire`;
+    specInviteLink.value = `${baseUrl}#room=${statusObj.roomId}&role=spectator`;
+
+    // Role badge
+    if (network.myRole === 'radiant') {
+      myRoleBadge.className = 'role-badge radiant';
+      myRoleBadge.textContent = 'Вы: Капитан Radiant';
+    } else if (network.myRole === 'dire') {
+      myRoleBadge.className = 'role-badge dire';
+      myRoleBadge.textContent = 'Вы: Капитан Dire';
+    } else {
+      myRoleBadge.className = 'role-badge spectator';
+      myRoleBadge.textContent = 'Режим: Зритель';
+    }
+
+    if (statusObj.status === 'connected') {
+      displayConnStatus.textContent = '🟢 Соперник подключен!';
+      displayConnStatus.style.color = '#26e07f';
+      networkStatusIndicator.textContent = '🟢 В сети (соперник подключен)';
+      showToast('🟢 Соперник подключен к комнате!');
+      sounds.playPick();
+    } else {
+      displayConnStatus.textContent = '🟡 Ожидание подключения соперника...';
+      displayConnStatus.style.color = '#ffcc00';
+      networkStatusIndicator.textContent = '🟡 Ожидание соперника...';
+    }
+  } else if (statusObj.status === 'disconnected') {
+    displayConnStatus.textContent = '🔴 Соперник отключился';
+    displayConnStatus.style.color = '#ff3b30';
+    networkStatusIndicator.textContent = '🔴 Соперник отключился';
+    showToast('⚠️ Соперник отключился от комнаты');
+  } else if (statusObj.status === 'error') {
+    showToast(`⚠️ ${statusObj.message}`);
+  }
+
+  render(engine.getState());
+}
+
+// Auto join if URL has #room=XYZ
+if (urlParams.room) {
+  network.joinRoom(urlParams.room, urlParams.role);
+}
+
+// Check if current user has control to pick/ban right now
+function isMyTurn(state) {
+  if (network.myRole === 'local') return true;
+  if (network.myRole === 'spectator') return false;
+  return network.myRole === state.currentTeam;
+}
+
+// Render UI based on Engine State
+function render(state) {
+  // Update Team Names
+  if (document.activeElement !== radiantNameInput) {
+    radiantNameInput.value = state.teams.radiant.name;
+  }
+  if (document.activeElement !== direNameInput) {
+    direNameInput.value = state.teams.dire.name;
+  }
+
+  // Disable name inputs if not local or not team captain
+  if (network.myRole !== 'local') {
+    radiantNameInput.readOnly = network.myRole !== 'radiant';
+    direNameInput.readOnly = network.myRole !== 'dire';
+  }
+
+  // Update Turn Status Bar
+  const isCompleted = state.isCompleted;
+  const currentStep = state.currentStep;
+
+  if (isCompleted) {
+    phaseIndicator.className = 'phase-indicator phase-completed';
+    phaseIndicator.innerHTML = '<span>🏆</span> <span>ДРАФТ ЗАВЕРШЁН</span>';
+    activeTeamBanner.className = 'active-team-banner';
+    activeTurnLabel.textContent = 'Все пики и баны совершены';
+    activePulseDot.style.display = 'none';
+    radiantPanel.classList.remove('active-panel');
+    direPanel.classList.remove('active-panel');
+  } else if (state.phase === PHASE.BAN) {
+    const banIndex = state.currentStepIndex + 1;
+    phaseIndicator.className = 'phase-indicator phase-ban';
+    phaseIndicator.innerHTML = `<span>🛡️</span> <span>ФАЗА БАНОВ (${banIndex}/6)</span>`;
+    
+    const isRadiant = state.currentTeam === 'radiant';
+    activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
+    activePulseDot.className = `pulse-dot ${state.currentTeam}`;
+    activePulseDot.style.display = 'block';
+    activeTurnLabel.textContent = `Ход: ${isRadiant ? state.teams.radiant.name : state.teams.dire.name}`;
+
+    radiantPanel.classList.toggle('active-panel', isRadiant);
+    direPanel.classList.toggle('active-panel', !isRadiant);
+  } else {
+    // Pick Phase
+    const pickIndex = state.currentStepIndex - 6 + 1;
+    phaseIndicator.className = 'phase-indicator phase-pick';
+    phaseIndicator.innerHTML = `<span>⚔️</span> <span>ФАЗА ПИКОВ (${pickIndex}/10)</span>`;
+    
+    const isRadiant = state.currentTeam === 'radiant';
+    activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
+    activePulseDot.className = `pulse-dot ${state.currentTeam}`;
+    activePulseDot.style.display = 'block';
+    activeTurnLabel.textContent = `Ход: ${isRadiant ? state.teams.radiant.name : state.teams.dire.name}`;
+
+    radiantPanel.classList.toggle('active-panel', isRadiant);
+    direPanel.classList.toggle('active-panel', !isRadiant);
+  }
+
+  // Update Timer display
+  if (state.options.turnTimerSeconds === 0 || isCompleted) {
+    timerDigits.textContent = '--';
+    timerDigits.classList.remove('urgent');
+    timerPauseBtn.style.display = 'none';
+  } else {
+    timerDigits.textContent = state.timer.secondsLeft;
+    timerDigits.classList.toggle('urgent', state.timer.secondsLeft <= 5);
+    timerPauseBtn.style.display = network.myRole === 'spectator' ? 'none' : 'inline-flex';
+    timerPauseBtn.textContent = state.timer.isPaused ? '▶️' : '⏸️';
+  }
+
+  // Update Bans & Picks counts
+  radiantBanCount.textContent = `${state.teams.radiant.bans.length} / 3`;
+  direBanCount.textContent = `${state.teams.dire.bans.length} / 3`;
+  radiantPickCount.textContent = `${state.teams.radiant.picks.length} / 5`;
+  direPickCount.textContent = `${state.teams.dire.picks.length} / 5`;
+
+  // Render Radiant Bans
+  renderBansSlots(radiantBansGrid, state.teams.radiant.bans, 'Radiant');
+  // Render Dire Bans
+  renderBansSlots(direBansGrid, state.teams.dire.bans, 'Dire');
+
+  // Render Radiant Picks
+  renderPicksSlots(radiantPicksList, state.teams.radiant.picks, !isCompleted && state.currentTeam === 'radiant' && state.phase === PHASE.PICK);
+  // Render Dire Picks
+  renderPicksSlots(direPicksList, state.teams.dire.picks, !isCompleted && state.currentTeam === 'dire' && state.phase === PHASE.PICK);
+
+  // Render 4 Attribute Stacks
+  renderAttributeStack(stackStr, state.byAttr.str, state.selectedHeroId, state);
+  renderAttributeStack(stackAgi, state.byAttr.agi, state.selectedHeroId, state);
+  renderAttributeStack(stackInt, state.byAttr.int, state.selectedHeroId, state);
+  renderAttributeStack(stackAll, state.byAttr.all, state.selectedHeroId, state);
+
+  // Attribute pill counts (available / total)
+  strCountPill.textContent = `${state.byAttr.str.filter(h => h.status === 'available').length} / 5`;
+  agiCountPill.textContent = `${state.byAttr.agi.filter(h => h.status === 'available').length} / 5`;
+  intCountPill.textContent = `${state.byAttr.int.filter(h => h.status === 'available').length} / 5`;
+  allCountPill.textContent = `${state.byAttr.all.filter(h => h.status === 'available').length} / 5`;
+
+  const totalAvailable = state.pool.filter(h => h.status === 'available').length;
+  poolStatsBadge.textContent = `Доступно: ${totalAvailable} / 20`;
+
+  // Selected Hero Preview & Action Lock-in Button
+  renderActionControls(state);
+
+  // Undo Button
+  undoBtn.disabled = state.history.length === 0 || !isMyTurn(state);
+
+  // If draft just completed, open summary modal
+  if (isCompleted && !summaryModal.classList.contains('open')) {
+    openSummaryModal(state);
+  }
+}
+
+// Render Bans Slots helper
+function renderBansSlots(container, bansList, teamLabel) {
+  const slots = container.querySelectorAll('.ban-slot');
+  slots.forEach((slot, idx) => {
+    const hero = bansList[idx];
+    if (hero) {
+      slot.className = 'ban-slot filled';
+      slot.innerHTML = `
+        <img src="${hero.img}" alt="${hero.nameRu}" title="${hero.nameRu} (Забанен)">
+        <span class="ban-cross">✕</span>
+      `;
+    } else {
+      slot.className = 'ban-slot';
+      slot.innerHTML = `<span class="slot-placeholder">БАН ${idx + 1}</span>`;
+    }
+  });
+}
+
+// Render Picks Slots helper
+function renderPicksSlots(container, picksList, isActiveTeam) {
+  const slots = container.querySelectorAll('.pick-slot');
+  slots.forEach((slot, idx) => {
+    const hero = picksList[idx];
+    if (hero) {
+      const attrInfo = ATTRIBUTES[hero.attr] || { nameRu: '', icon: '' };
+      slot.className = 'pick-slot filled';
+      slot.innerHTML = `
+        <div class="pick-slot-portrait">
+          <img src="${hero.img}" alt="${hero.nameRu}">
+        </div>
+        <div class="pick-slot-info">
+          <div class="pick-slot-name" title="${hero.nameRu}">${hero.nameRu}</div>
+          <div class="pick-slot-attr">
+            <span>${attrInfo.icon}</span>
+            <span style="color:${attrInfo.color}; font-size:0.75rem;">${attrInfo.nameRu}</span>
+            <span style="color:var(--text-dim); margin-left:4px;">• ${hero.attackType}</span>
+          </div>
+        </div>
+      `;
+    } else {
+      const isNext = isActiveTeam && idx === picksList.length;
+      slot.className = `pick-slot ${isNext ? 'active-picking' : ''}`;
+      slot.innerHTML = `<span class="empty-slot-text">Пик ${idx + 1} ${isNext ? '(Ожидание выбора...)' : ''}</span>`;
+    }
+  });
+}
+
+// Render one of the 4 Attribute stacks (5 cards each)
+function renderAttributeStack(container, heroes, selectedId, state) {
+  const searchQuery = poolSearchInput.value.trim().toLowerCase();
+  const allowedToPick = isMyTurn(state);
+
+  container.innerHTML = '';
+  heroes.forEach(hero => {
+    const matchesSearch = !searchQuery || 
+      hero.nameEn.toLowerCase().includes(searchQuery) ||
+      hero.nameRu.toLowerCase().includes(searchQuery);
+
+    const card = document.createElement('div');
+    let statusClass = '';
+    if (hero.status === 'banned') {
+      statusClass = 'status-banned';
+    } else if (hero.status === 'picked') {
+      statusClass = hero.team === 'radiant' ? 'status-picked-radiant' : 'status-picked-dire';
+    }
+
+    const isSelected = selectedId === hero.id;
+    card.className = `hero-card ${statusClass} ${isSelected ? 'selected' : ''}`;
+    if (!matchesSearch) {
+      card.style.opacity = '0.15';
+    }
+
+    card.dataset.heroId = hero.id;
+
+    card.innerHTML = `
+      <div class="hero-img-wrap">
+        <img src="${hero.img}" alt="${hero.nameRu}" loading="lazy">
+      </div>
+      <div class="hero-meta">
+        <div class="hero-name-ru" title="${hero.nameRu}">${hero.nameRu}</div>
+        <div class="hero-name-en">${hero.nameEn}</div>
+      </div>
+    `;
+
+    // Click handler: Select hero
+    card.addEventListener('click', () => {
+      if (hero.status === 'available' && !engine.getState().isCompleted && allowedToPick) {
+        sounds.playClick();
+        engine.selectHero(hero.id);
+      }
+    });
+
+    // Double-click handler: Instant Lock-In!
+    card.addEventListener('dblclick', () => {
+      if (hero.status === 'available' && !engine.getState().isCompleted && allowedToPick) {
+        handleLockIn(hero.id);
+      }
+    });
+
+    container.appendChild(card);
+  });
+}
+
+// Render Selected Hero preview & Action Button
+function renderActionControls(state) {
+  const selectedHero = state.selectedHeroId 
+    ? state.pool.find(h => h.id === state.selectedHeroId)
+    : null;
+
+  const allowedToAct = isMyTurn(state);
+
+  if (state.isCompleted) {
+    lockInBtn.disabled = true;
+    lockInBtn.className = 'main-lockin-btn';
+    lockInBtnText.textContent = 'Драфт завершён';
+    lockInActionIcon.textContent = '🏆';
+    previewThumb.style.display = 'none';
+    previewName.textContent = 'Матч готов к началу';
+    previewHint.textContent = 'Ознакомьтесь с результатами в итоговом окне';
+    return;
+  }
+
+  if (selectedHero) {
+    previewThumb.src = selectedHero.img;
+    previewThumb.style.display = 'block';
+    previewName.textContent = selectedHero.nameRu;
+    previewHint.textContent = `${selectedHero.nameEn} • ${ATTRIBUTES[selectedHero.attr].nameRu} • ${selectedHero.attackType}`;
+  } else {
+    previewThumb.style.display = 'none';
+    previewName.textContent = allowedToAct ? 'Выберите героя из пула' : 'Ожидание хода соперника';
+    previewHint.textContent = allowedToAct ? 'Кликните на карточку или нажмите "Случайно"' : 'Сейчас выбирает противоположная команда';
+  }
+
+  // In online mode, lock button if not your turn
+  if (!allowedToAct) {
+    lockInBtn.disabled = true;
+    lockInBtn.className = 'main-lockin-btn';
+    lockInActionIcon.textContent = '⏳';
+    lockInBtnText.textContent = network.myRole === 'spectator' ? 'Режим зрителя' : 'Ход соперника...';
+    return;
+  }
+
+  lockInBtn.disabled = !selectedHero;
+
+  // Update button style & label depending on Ban or Pick
+  if (state.phase === PHASE.BAN) {
+    lockInBtn.className = 'main-lockin-btn btn-ban';
+    lockInActionIcon.textContent = '🛡️';
+    lockInBtnText.textContent = selectedHero ? `Забанить: ${selectedHero.nameRu}` : 'Забанить героя';
+  } else {
+    // Pick Phase
+    const isRadiant = state.currentTeam === 'radiant';
+    lockInBtn.className = `main-lockin-btn ${isRadiant ? 'btn-pick-radiant' : 'btn-pick-dire'}`;
+    lockInActionIcon.textContent = '⚔️';
+    lockInBtnText.textContent = selectedHero ? `Выбрать: ${selectedHero.nameRu}` : 'Выбрать героя';
+  }
+}
+
+// Lock-In action execution
+function handleLockIn(heroId = null) {
+  const state = engine.getState();
+  if (state.isCompleted) return;
+  if (!isMyTurn(state)) return;
+
+  const targetId = heroId || state.selectedHeroId;
+  if (!targetId) return;
+
+  const phaseBefore = state.phase;
+  const action = engine.lockInHero(targetId);
+
+  if (action) {
+    // Broadcast to remote peer if online
+    network.sendLockIn(targetId);
+
+    if (phaseBefore === PHASE.BAN) {
+      sounds.playBan();
+      showToast(`🛡️ ${action.hero.nameRu} забанен!`);
+    } else {
+      sounds.playPick();
+      const teamName = action.team === 'radiant' ? engine.teams.radiant.name : engine.teams.dire.name;
+      showToast(`⚔️ ${teamName} выбирает ${action.hero.nameRu}!`);
+    }
+
+    if (engine.getState().isCompleted) {
+      sounds.playComplete();
+    }
+  }
+}
+
+// Summary Modal Logic
+function openSummaryModal(state) {
+  summaryRadiantTitle.textContent = state.teams.radiant.name;
+  summaryDireTitle.textContent = state.teams.dire.name;
+
+  // Picks Radiant
+  summaryRadiantPicks.innerHTML = state.teams.radiant.picks.map(h => `
+    <div class="summary-hero-row">
+      <img src="${h.img}" alt="${h.nameRu}">
+      <span class="name">${h.nameRu}</span>
+      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].icon} ${ATTRIBUTES[h.attr].nameRu}</span>
+    </div>
+  `).join('');
+
+  // Picks Dire
+  summaryDirePicks.innerHTML = state.teams.dire.picks.map(h => `
+    <div class="summary-hero-row">
+      <img src="${h.img}" alt="${h.nameRu}">
+      <span class="name">${h.nameRu}</span>
+      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].icon} ${ATTRIBUTES[h.attr].nameRu}</span>
+    </div>
+  `).join('');
+
+  // Bans Radiant
+  summaryRadiantBans.innerHTML = state.teams.radiant.bans.map(h => `
+    <div class="summary-ban-tag">
+      <img src="${h.img}" alt="${h.nameRu}">
+      <span>${h.nameRu}</span>
+    </div>
+  `).join('');
+
+  // Bans Dire
+  summaryDireBans.innerHTML = state.teams.dire.bans.map(h => `
+    <div class="summary-ban-tag">
+      <img src="${h.img}" alt="${h.nameRu}">
+      <span>${h.nameRu}</span>
+    </div>
+  `).join('');
+
+  // Unpicked heroes (out of 20)
+  const unpicked = state.pool.filter(h => h.status === 'available');
+  summaryUnpicked.innerHTML = unpicked.map(h => `
+    <div class="unpicked-tag">
+      <img src="${h.img}" alt="${h.nameRu}">
+      <span>${h.nameRu}</span>
+      <span style="font-size:0.7rem; color:${ATTRIBUTES[h.attr].color};">${ATTRIBUTES[h.attr].icon}</span>
+    </div>
+  `).join('');
+
+  summaryModal.classList.add('open');
+}
+
+// Copy Markdown Text Summary for Discord / Telegram
+function copyDraftSummary() {
+  const state = engine.getState();
+  const radiantPicks = state.teams.radiant.picks.map(h => `• ${h.nameRu} (${h.nameEn})`).join('\n');
+  const direPicks = state.teams.dire.picks.map(h => `• ${h.nameRu} (${h.nameEn})`).join('\n');
+  const radiantBans = state.teams.radiant.bans.map(h => h.nameRu).join(', ') || 'Нет';
+  const direBans = state.teams.dire.bans.map(h => h.nameRu).join(', ') || 'Нет';
+
+  const text = `🏆 **Dota 2 Tournament Draft Results** (Сид: ${state.seed})
+  
+🟢 **${state.teams.radiant.name}** (Radiant):
+${radiantPicks}
+*Баны:* ${radiantBans}
+
+🔴 **${state.teams.dire.name}** (Dire):
+${direPicks}
+*Баны:* ${direBans}
+`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('📋 Результаты скопированы в буфер обмена!');
+  }).catch(() => {
+    showToast('Не удалось скопировать, используйте выделение текста');
+  });
+}
+
+// Event Listeners
+lockInBtn.addEventListener('click', () => handleLockIn());
+
+undoBtn.addEventListener('click', () => {
+  if (engine.undo()) {
+    network.sendUndo();
+    sounds.playClick();
+    showToast('↩️ Отмена последнего действия');
+  }
+});
+
+randomPickBtn.addEventListener('click', () => {
+  if (!isMyTurn(engine.getState())) return;
+  sounds.playClick();
+  const available = engine.getState().pool.filter(h => h.status === 'available');
+  if (available.length > 0) {
+    const rand = available[Math.floor(Math.random() * available.length)];
+    engine.selectHero(rand.id);
+  }
+});
+
+resetDraftBtn.addEventListener('click', () => {
+  if (confirm('Сбросить текущий драфт и начать заново с тем же пулом героев?')) {
+    engine.resetDraft();
+    network.sendReset();
+    sounds.playGong();
+    showToast('🔄 Драфт сброшен');
+  }
+});
+
+rerollPoolBtn.addEventListener('click', () => {
+  if (confirm('Сгенерировать полностью новый случайный пул из 20 героев (по 5 на каждый атрибут)?')) {
+    engine.rerollPool();
+    network.sendReroll(engine.seed);
+    updateUrlHash(engine.seed, network.roomId, network.myRole);
+    sounds.playGong();
+    showToast(`🎲 Новый пул сгенерирован (Сид: ${engine.seed})`);
+  }
+});
+
+// Coin Flip
+coinFlipBtn.addEventListener('click', () => {
+  if (engine.getState().currentStepIndex > 0) {
+    showToast('⚠️ Жеребьевка возможна только до первого бана');
+    return;
+  }
+  sounds.playCoinFlip();
+  const first = Math.random() < 0.5 ? 'radiant' : 'dire';
+  engine.setFirstTurn(first);
+  const teamName = first === 'radiant' ? engine.teams.radiant.name : engine.teams.dire.name;
+  showToast(`🪙 Монетка решила: первый ход у ${teamName}!`);
+});
+
+// Share button
+shareBtn.addEventListener('click', () => {
+  const url = `${window.location.origin}${window.location.pathname}#seed=${engine.seed}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast(`🔗 Ссылка с сидом ${engine.seed} скопирована!`);
+  });
+});
+
+// Online Modal Controls
+onlineModalBtn.addEventListener('click', () => {
+  onlineModal.classList.add('open');
+});
+
+closeOnlineBtn.addEventListener('click', () => {
+  onlineModal.classList.remove('open');
+});
+
+closeOnlineFooterBtn.addEventListener('click', () => {
+  onlineModal.classList.remove('open');
+});
+
+createRoomBtn.addEventListener('click', () => {
+  const room = network.createRoom();
+  showToast(`🌐 Комната ${room} создана! Скопируйте ссылку для соперника.`);
+});
+
+joinRoomBtn.addEventListener('click', () => {
+  const code = joinRoomInput.value.trim().toUpperCase();
+  if (code) {
+    network.joinRoom(code, 'dire');
+    onlineModal.classList.remove('open');
+    showToast(`🔄 Подключение к комнате ${code}...`);
+  } else {
+    showToast('Введите корректный код комнаты');
+  }
+});
+
+copyDireLinkBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(direInviteLink.value).then(() => {
+    showToast('📋 Ссылка для Капитана Dire скопирована!');
+  });
+});
+
+copySpecLinkBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(specInviteLink.value).then(() => {
+    showToast('📋 Ссылка для зрителей скопирована!');
+  });
+});
+
+disconnectOnlineBtn.addEventListener('click', () => {
+  if (confirm('Отключиться от онлайн-комнаты и вернуться в локальный режим?')) {
+    if (network.peer) network.peer.destroy();
+    network.myRole = 'local';
+    network.roomId = null;
+    roleBannerBar.style.display = 'none';
+    onlineChoices.style.display = 'grid';
+    activeRoomInfo.style.display = 'none';
+    disconnectOnlineBtn.style.display = 'none';
+    onlineBtnText.textContent = 'Онлайн (2 капитана)';
+    onlineModal.classList.remove('open');
+    showToast('Локальный режим восстановлен');
+    render(engine.getState());
+  }
+});
+
+// Sound Toggle
+soundToggleBtn.addEventListener('click', () => {
+  const enabled = sounds.toggle();
+  soundIcon.textContent = enabled ? '🔊' : '🔇';
+  showToast(enabled ? 'Звуковые эффекты включены' : 'Звуковые эффекты выключены');
+});
+
+// Timer Pause / Resume
+timerPauseBtn.addEventListener('click', () => {
+  const isPaused = engine.pauseTimer();
+  showToast(isPaused ? '⏸️ Таймер на паузе' : '▶️ Таймер запущен');
+});
+
+// Team Name Inputs
+radiantNameInput.addEventListener('change', (e) => {
+  engine.setTeamName('radiant', e.target.value);
+  network.sendTeamName('radiant', e.target.value);
+});
+direNameInput.addEventListener('change', (e) => {
+  engine.setTeamName('dire', e.target.value);
+  network.sendTeamName('dire', e.target.value);
+});
+
+// Search filter
+poolSearchInput.addEventListener('input', () => {
+  render(engine.getState());
+});
+
+// Keyboard shortcuts
+window.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+  if (e.code === 'Space' || e.code === 'Enter') {
+    e.preventDefault();
+    handleLockIn();
+  } else if ((e.ctrlKey || e.metaKey) && e.code === 'KeyZ') {
+    e.preventDefault();
+    if (engine.undo()) {
+      network.sendUndo();
+      sounds.playClick();
+      showToast('↩️ Отмена последнего действия');
+    }
+  }
+});
+
+// Settings Modal
+settingsBtn.addEventListener('click', () => {
+  const state = engine.getState();
+  settingTimerSec.value = state.options.turnTimerSeconds;
+  settingPickFormat.value = state.options.pickFormat;
+  settingFirstTurn.value = state.options.firstTurnTeam;
+  settingSeedInput.value = state.seed;
+  settingsModal.classList.add('open');
+});
+
+closeSettingsBtn.addEventListener('click', () => {
+  settingsModal.classList.remove('open');
+});
+
+saveSettingsBtn.addEventListener('click', () => {
+  const sec = parseInt(settingTimerSec.value, 10);
+  const format = settingPickFormat.value;
+  const first = settingFirstTurn.value;
+  const seedInput = settingSeedInput.value.trim();
+
+  engine.options.turnTimerSeconds = sec;
+  engine.setPickFormat(format);
+  engine.setFirstTurn(first);
+
+  if (seedInput && seedInput !== engine.seed) {
+    engine.rerollPool(seedInput);
+    network.sendReroll(engine.seed);
+    updateUrlHash(engine.seed, network.roomId, network.myRole);
+  }
+
+  settingsModal.classList.remove('open');
+  showToast('⚙️ Настройки сохранены');
+});
+
+// Summary Modal Actions
+closeSummaryBtn.addEventListener('click', () => {
+  summaryModal.classList.remove('open');
+});
+
+copySummaryBtn.addEventListener('click', copyDraftSummary);
+
+restartSamePoolBtn.addEventListener('click', () => {
+  summaryModal.classList.remove('open');
+  engine.resetDraft();
+  network.sendReset();
+  sounds.playGong();
+  showToast('🔄 Драфт начат заново');
+});
+
+newPoolModalBtn.addEventListener('click', () => {
+  summaryModal.classList.remove('open');
+  engine.rerollPool();
+  network.sendReroll(engine.seed);
+  updateUrlHash(engine.seed, network.roomId, network.myRole);
+  sounds.playGong();
+  showToast(`🎲 Новый пул сгенерирован (Сид: ${engine.seed})`);
+});
+
+// Close modals when clicking backdrop
+window.addEventListener('click', (e) => {
+  if (e.target === summaryModal) summaryModal.classList.remove('open');
+  if (e.target === settingsModal) settingsModal.classList.remove('open');
+  if (e.target === onlineModal) onlineModal.classList.remove('open');
+});
+
+// Start Engine & Timer callbacks
+engine.subscribe((state) => render(state));
+
+// Sound timer alerts
+engine.startTimer(
+  (secondsLeft) => {
+    if (secondsLeft <= 5 && secondsLeft > 0) {
+      sounds.playAlert();
+    }
+  },
+  () => {
+    sounds.playTimeExpired();
+    showToast('⏰ Время вышло! Герой выбран автоматически.');
+  }
+);
+
+// Initial Gong sound on first user gesture
+let initializedAudio = false;
+window.addEventListener('click', () => {
+  if (!initializedAudio) {
+    sounds.playGong();
+    initializedAudio = true;
+  }
+}, { once: true });
+
+// Initial render
+render(engine.getState());
+
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  }
+})();
+  </script>
 </body>
 </html>
