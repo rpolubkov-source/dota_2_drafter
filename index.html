@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dota 2 Drafter</title>
+  <title>Dota 2 Tournament Drafter</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -592,30 +592,21 @@ html, body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 50%, rgba(0, 0, 0, 0.98) 100%);
-  padding: 4px 5px 2px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.82) 45%, rgba(0, 0, 0, 0.98) 100%);
+  padding: 3px 5px 2px;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
   pointer-events: none;
 }
 
-.hero-name-overlay .ru {
+.hero-name-overlay .hero-name-text {
   font-size: 0.68rem;
   font-weight: 600;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.hero-name-overlay .en {
-  font-size: 0.58rem;
-  color: var(--text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-left: 2px;
+  letter-spacing: 0.2px;
 }
 
 /* Banned / Picked states */
@@ -995,25 +986,25 @@ html, body {
     <!-- Center Turn & Timer HUD -->
     <div class="center-hud-bar" id="turnStatusContainer">
       <div class="phase-pill phase-ban" id="phaseIndicator">
-        <span id="phaseLabel">БАНЫ (1/6)</span>
+        <span id="phaseLabel">BANS (1/6)</span>
       </div>
-      <div class="turn-team-text radiant" id="activeTurnLabel">ХОД: RADIANT</div>
+      <div class="turn-team-text radiant" id="activeTurnLabel">TURN: RADIANT</div>
       <div class="timer-box">
         <span class="timer-num" id="timerDigits">30</span>
-        <button class="timer-pause-icon" id="timerPauseBtn" title="Пауза таймера">⏸</button>
+        <button class="timer-pause-icon" id="timerPauseBtn" title="Pause / Resume Timer">⏸</button>
       </div>
     </div>
 
     <!-- Right Header Controls -->
     <div class="header-actions">
-      <button class="hud-btn" id="soundToggleBtn" title="Звук">
+      <button class="hud-btn" id="soundToggleBtn" title="Toggle Sound">
         <span id="soundIcon">🔊</span>
       </button>
-      <button class="hud-btn" id="coinFlipBtn">ЖЕРЕБЬЕВКА</button>
-      <button class="hud-btn" id="rerollPoolBtn">НОВЫЙ ПУЛ</button>
-      <button class="hud-btn" id="shareBtn">СИД</button>
+      <button class="hud-btn" id="coinFlipBtn">COIN TOSS</button>
+      <button class="hud-btn" id="rerollPoolBtn">NEW POOL</button>
+      <button class="hud-btn" id="shareBtn">SEED</button>
       <button class="hud-btn btn-accent" id="onlineModalBtn">
-        <span id="onlineBtnText">ОНЛАЙН</span>
+        <span id="onlineBtnText">ONLINE</span>
       </button>
       <button class="hud-btn" id="settingsBtn">⚙</button>
     </div>
@@ -1021,8 +1012,8 @@ html, body {
 
   <!-- Player Online Role Ribbon -->
   <div class="role-banner-bar" id="roleBannerBar" style="display:none;">
-    <span class="role-badge" id="myRoleBadge">ЛОКАЛЬНЫЙ РЕЖИМ</span>
-    <span id="networkStatusIndicator" style="color:var(--text-dim); font-size:0.65rem;">В СЕТИ</span>
+    <span class="role-badge" id="myRoleBadge">LOCAL DRAFT</span>
+    <span id="networkStatusIndicator" style="color:var(--text-dim); font-size:0.65rem;">ONLINE</span>
   </div>
 
   <!-- Main 3-Column Arena -->
@@ -1037,28 +1028,28 @@ html, body {
       <!-- 3 Ban Slots -->
       <div>
         <div class="panel-subheading">
-          <span>БАНЫ</span>
+          <span>BANS</span>
           <span id="radiantBanCount">0 / 3</span>
         </div>
         <div class="bans-grid" id="radiantBansGrid" style="margin-top:3px;">
-          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
-          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
-          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
+          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">BAN 1</span></div>
+          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">BAN 2</span></div>
+          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">BAN 3</span></div>
         </div>
       </div>
 
       <!-- 5 Pick Slots -->
       <div style="flex:1; display:flex; flex-direction:column; gap:3px; overflow:hidden;">
         <div class="panel-subheading">
-          <span>ПИКИ</span>
+          <span>PICKS</span>
           <span id="radiantPickCount">0 / 5</span>
         </div>
         <div class="picks-list" id="radiantPicksList">
-          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">СЛОТ 1</span></div>
-          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">СЛОТ 2</span></div>
-          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">СЛОТ 3</span></div>
-          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">СЛОТ 4</span></div>
-          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">СЛОТ 5</span></div>
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">SLOT 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">SLOT 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">SLOT 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">SLOT 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">SLOT 5</span></div>
         </div>
       </div>
     </section>
@@ -1067,17 +1058,17 @@ html, body {
     <section class="pool-panel">
       <div class="pool-header">
         <div style="display:flex; align-items:center;">
-          <span class="pool-title">ТУРНИРНЫЙ ПУЛ</span>
+          <span class="pool-title">TOURNAMENT POOL</span>
           <span class="pool-stats-badge" id="poolStatsBadge">20 / 20</span>
         </div>
-        <input type="text" class="pool-search-input" id="poolSearchInput" placeholder="Поиск героя...">
+        <input type="text" class="pool-search-input" id="poolSearchInput" placeholder="Search hero...">
       </div>
 
       <!-- 4 Attribute Columns (5 heroes each) -->
       <div class="pool-columns-grid">
         <div class="attr-column col-str">
           <div class="attr-col-header">
-            <span class="attr-col-title">СИЛА</span>
+            <span class="attr-col-title">STRENGTH</span>
             <span class="attr-count-pill" id="strCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-str"></div>
@@ -1085,7 +1076,7 @@ html, body {
 
         <div class="attr-column col-agi">
           <div class="attr-col-header">
-            <span class="attr-col-title">ЛОВКОСТЬ</span>
+            <span class="attr-col-title">AGILITY</span>
             <span class="attr-count-pill" id="agiCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-agi"></div>
@@ -1093,7 +1084,7 @@ html, body {
 
         <div class="attr-column col-int">
           <div class="attr-col-header">
-            <span class="attr-col-title">ИНТЕЛЛЕКТ</span>
+            <span class="attr-col-title">INTELLIGENCE</span>
             <span class="attr-count-pill" id="intCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-int"></div>
@@ -1101,7 +1092,7 @@ html, body {
 
         <div class="attr-column col-all">
           <div class="attr-col-header">
-            <span class="attr-col-title">УНИВЕРСАЛ</span>
+            <span class="attr-col-title">UNIVERSAL</span>
             <span class="attr-count-pill" id="allCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-all"></div>
@@ -1113,19 +1104,19 @@ html, body {
         <div class="selected-hero-preview" id="selectedHeroPreview">
           <img src="" class="preview-thumb" id="previewThumb" style="display:none;" alt="">
           <div>
-            <div class="preview-name" id="previewName">ВЫБЕРИТЕ ГЕРОЯ</div>
-            <div class="preview-hint" id="previewHint">Кликните на карточку или нажмите Случайно</div>
+            <div class="preview-name" id="previewName">SELECT A HERO</div>
+            <div class="preview-hint" id="previewHint">Click a portrait or click Random</div>
           </div>
         </div>
 
         <button class="main-lockin-btn btn-ban" id="lockInBtn" disabled>
-          <span id="lockInBtnText">ПОДТВЕРДИТЬ БАН</span>
+          <span id="lockInBtnText">LOCK IN BAN</span>
         </button>
 
         <div class="secondary-actions">
-          <button class="hud-btn" id="randomPickBtn">СЛУЧАЙНО</button>
-          <button class="hud-btn" id="undoBtn" disabled>ОТМЕНА</button>
-          <button class="hud-btn" id="resetDraftBtn">СБРОС</button>
+          <button class="hud-btn" id="randomPickBtn">RANDOM</button>
+          <button class="hud-btn" id="undoBtn" disabled>UNDO</button>
+          <button class="hud-btn" id="resetDraftBtn">RESET</button>
         </div>
       </div>
     </section>
@@ -1139,28 +1130,28 @@ html, body {
       <!-- 3 Ban Slots -->
       <div>
         <div class="panel-subheading">
-          <span>БАНЫ</span>
+          <span>BANS</span>
           <span id="direBanCount">0 / 3</span>
         </div>
         <div class="bans-grid" id="direBansGrid" style="margin-top:3px;">
-          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
-          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
-          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
+          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">BAN 1</span></div>
+          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">BAN 2</span></div>
+          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">BAN 3</span></div>
         </div>
       </div>
 
       <!-- 5 Pick Slots -->
       <div style="flex:1; display:flex; flex-direction:column; gap:3px; overflow:hidden;">
         <div class="panel-subheading">
-          <span>ПИКИ</span>
+          <span>PICKS</span>
           <span id="direPickCount">0 / 5</span>
         </div>
         <div class="picks-list" id="direPicksList">
-          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">СЛОТ 1</span></div>
-          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">СЛОТ 2</span></div>
-          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">СЛОТ 3</span></div>
-          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">СЛОТ 4</span></div>
-          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">СЛОТ 5</span></div>
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">SLOT 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">SLOT 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">SLOT 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">SLOT 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">SLOT 5</span></div>
         </div>
       </div>
     </section>
@@ -1171,37 +1162,37 @@ html, body {
   <div class="modal-backdrop" id="summaryModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title">ИТОГИ ДРАФТА МАТЧА</h3>
+        <h3 class="modal-title">MATCH DRAFT SUMMARY</h3>
         <button class="modal-close-btn" id="closeSummaryBtn">&times;</button>
       </div>
       <div class="modal-body">
         <div class="summary-teams-grid">
           <div class="summary-team-card radiant">
             <h4 class="summary-team-title" id="summaryRadiantTitle" style="color:var(--color-radiant); font-size:0.85rem; font-weight:700;">TEAM RADIANT</h4>
-            <div class="panel-subheading">ВЫБРАННЫЕ ГЕРОИ:</div>
+            <div class="panel-subheading">PICKED HEROES:</div>
             <div id="summaryRadiantPicks" style="display:flex; flex-direction:column; gap:3px;"></div>
-            <div class="panel-subheading" style="margin-top:4px;">БАНЫ:</div>
+            <div class="panel-subheading" style="margin-top:4px;">BANS:</div>
             <div class="summary-bans-list" id="summaryRadiantBans"></div>
           </div>
 
           <div class="summary-team-card dire">
             <h4 class="summary-team-title" id="summaryDireTitle" style="color:var(--color-dire); font-size:0.85rem; font-weight:700;">TEAM DIRE</h4>
-            <div class="panel-subheading">ВЫБРАННЫЕ ГЕРОИ:</div>
+            <div class="panel-subheading">PICKED HEROES:</div>
             <div id="summaryDirePicks" style="display:flex; flex-direction:column; gap:3px;"></div>
-            <div class="panel-subheading" style="margin-top:4px;">БАНЫ:</div>
+            <div class="panel-subheading" style="margin-top:4px;">BANS:</div>
             <div class="summary-bans-list" id="summaryDireBans"></div>
           </div>
         </div>
 
         <div class="unpicked-heroes-section">
-          <div class="panel-subheading">НЕВЫБРАННЫЕ ГЕРОИ ИЗ ПУЛА (4):</div>
+          <div class="panel-subheading">REMAINING HEROES (4):</div>
           <div class="unpicked-tags" id="summaryUnpicked"></div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="hud-btn" id="copySummaryBtn">СКОПИРОВАТЬ ТЕКСТ</button>
-        <button class="hud-btn" id="restartSamePoolBtn">ЗАНОВО</button>
-        <button class="main-lockin-btn btn-pick-radiant" id="newPoolModalBtn">НОВЫЙ ПУЛ</button>
+        <button class="hud-btn" id="copySummaryBtn">COPY SUMMARY</button>
+        <button class="hud-btn" id="restartSamePoolBtn">RESTART</button>
+        <button class="main-lockin-btn btn-pick-radiant" id="newPoolModalBtn">NEW POOL</button>
       </div>
     </div>
   </div>
@@ -1210,56 +1201,56 @@ html, body {
   <div class="modal-backdrop" id="settingsModal">
     <div class="modal-card" style="max-width: 440px;">
       <div class="modal-header">
-        <h3 class="modal-title">НАСТРОЙКИ ДРАФТА</h3>
+        <h3 class="modal-title">DRAFT SETTINGS</h3>
         <button class="modal-close-btn" id="closeSettingsBtn">&times;</button>
       </div>
       <div class="modal-body">
         <div class="setting-row">
           <div>
-            <div class="setting-title">Таймер на ход</div>
-            <div class="setting-desc">Секунд на каждый бан или пик</div>
+            <div class="setting-title">Turn Timer</div>
+            <div class="setting-desc">Seconds allocated per pick or ban</div>
           </div>
           <div class="setting-control">
             <select id="settingTimerSec">
-              <option value="15">15 сек (Быстрый)</option>
-              <option value="30" selected>30 сек (Стандартный)</option>
-              <option value="45">45 сек (Турнирный)</option>
-              <option value="60">60 сек (Комфортный)</option>
-              <option value="0">Без таймера</option>
+              <option value="15">15s (Blitz)</option>
+              <option value="30" selected>30s (Standard)</option>
+              <option value="45">45s (Tournament)</option>
+              <option value="60">60s (Casual)</option>
+              <option value="0">No Timer</option>
             </select>
           </div>
         </div>
 
         <div class="setting-row">
           <div>
-            <div class="setting-title">Порядок пиков</div>
-            <div class="setting-desc">Формат после 6 банов</div>
+            <div class="setting-title">Pick Format</div>
+            <div class="setting-desc">Format following the 6 ban steps</div>
           </div>
           <div class="setting-control">
             <select id="settingPickFormat">
-              <option value="SNAKE" selected>Змейка (1-2-2-2-2-1)</option>
-              <option value="ALTERNATING">Чередование (1-1-1-1...)</option>
+              <option value="SNAKE" selected>Snake (1-2-2-2-2-1)</option>
+              <option value="ALTERNATING">Alternating (1-1-1-1...)</option>
             </select>
           </div>
         </div>
 
         <div class="setting-row">
           <div>
-            <div class="setting-title">Первый ход</div>
-            <div class="setting-desc">Кто начинает фазу банов</div>
+            <div class="setting-title">First Pick / Ban</div>
+            <div class="setting-desc">Team that begins draft ban phase</div>
           </div>
           <div class="setting-control">
             <select id="settingFirstTurn">
-              <option value="radiant" selected>Radiant (Светлые)</option>
-              <option value="dire">Dire (Тёмные)</option>
+              <option value="radiant" selected>Radiant</option>
+              <option value="dire">Dire</option>
             </select>
           </div>
         </div>
 
         <div class="setting-row">
           <div>
-            <div class="setting-title">Сид пула (Seed)</div>
-            <div class="setting-desc">Код пула героев</div>
+            <div class="setting-title">Pool Seed</div>
+            <div class="setting-desc">Unique hero pool seed</div>
           </div>
           <div class="setting-control">
             <input type="text" id="settingSeedInput" style="width: 110px;" placeholder="DOTA-XXXX">
@@ -1267,7 +1258,7 @@ html, body {
         </div>
       </div>
       <div class="modal-footer">
-        <button class="hud-btn btn-accent" id="saveSettingsBtn">ПРИМЕНИТЬ</button>
+        <button class="hud-btn btn-accent" id="saveSettingsBtn">APPLY</button>
       </div>
     </div>
   </div>
@@ -1276,29 +1267,29 @@ html, body {
   <div class="modal-backdrop" id="onlineModal">
     <div class="modal-card" style="max-width: 500px;">
       <div class="modal-header">
-        <h3 class="modal-title">ОНЛАЙН МАТЧ (2 КАПИТАНА)</h3>
+        <h3 class="modal-title">ONLINE MULTIPLAYER (2 CAPTAINS)</h3>
         <button class="modal-close-btn" id="closeOnlineBtn">&times;</button>
       </div>
       <div class="modal-body">
         <div style="font-size:0.75rem; color:var(--text-dim); line-height:1.4;">
-          Создайте комнату и отправьте ссылку сопернику. Выбирать можно только в свой ход со своего устройства.
+          Host a room and share the invite link with your opponent. Captains can only act on their turn.
         </div>
 
         <div class="online-cards-choice" id="onlineChoices" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
           <div class="online-choice-card" style="background:#05070a; padding:10px; border-radius:3px; border:1px solid var(--border-hairline);">
-            <div style="font-weight:700; font-size:0.8rem; color:#fff;">СОЗДАТЬ КОМНАТУ</div>
-            <div style="font-size:0.68rem; color:var(--text-dim); margin:3px 0 8px;">Вы будете Капитаном Radiant.</div>
+            <div style="font-weight:700; font-size:0.8rem; color:#fff;">HOST ROOM</div>
+            <div style="font-size:0.68rem; color:var(--text-dim); margin:3px 0 8px;">You will draft as Radiant Captain.</div>
             <button class="main-lockin-btn btn-pick-radiant" id="createRoomBtn" style="width:100%; justify-content:center; font-size:0.72rem; padding:5px;">
-              СОЗДАТЬ
+              CREATE
             </button>
           </div>
 
           <div class="online-choice-card" style="background:#05070a; padding:10px; border-radius:3px; border:1px solid var(--border-hairline);">
-            <div style="font-weight:700; font-size:0.8rem; color:#fff;">ВОЙТИ ПО КОДУ</div>
-            <div style="font-size:0.68rem; color:var(--text-dim); margin:3px 0 6px;">Код комнаты:</div>
+            <div style="font-weight:700; font-size:0.8rem; color:#fff;">JOIN BY CODE</div>
+            <div style="font-size:0.68rem; color:var(--text-dim); margin:3px 0 6px;">Room Code:</div>
             <div style="display:flex; gap:4px;">
-              <input type="text" id="joinRoomInput" placeholder="КОД" style="flex:1; padding:4px 6px; background:#000; border:1px solid var(--border-hairline); color:#fff; border-radius:2px; font-weight:700; font-size:0.75rem; text-transform:uppercase;">
-              <button class="hud-btn" id="joinRoomBtn">ВОЙТИ</button>
+              <input type="text" id="joinRoomInput" placeholder="ROOM CODE" style="flex:1; padding:4px 6px; background:#000; border:1px solid var(--border-hairline); color:#fff; border-radius:2px; font-weight:700; font-size:0.75rem; text-transform:uppercase;">
+              <button class="hud-btn" id="joinRoomBtn">JOIN</button>
             </div>
           </div>
         </div>
@@ -1306,38 +1297,38 @@ html, body {
         <!-- Active Room Info -->
         <div id="activeRoomInfo" style="display:none; flex-direction:column; gap:8px; background:#05070a; padding:10px; border-radius:3px; border:1px solid var(--border-hairline);">
           <div style="display:flex; align-items:center; justify-content:space-between;">
-            <div><strong>КОМНАТА:</strong> <span id="displayRoomCode" style="color:var(--text-main); font-weight:700; letter-spacing:1px;"></span></div>
-            <div id="displayConnStatus" style="font-size:0.7rem; color:var(--text-dim);">Ожидание...</div>
+            <div><strong>ROOM:</strong> <span id="displayRoomCode" style="color:var(--text-main); font-weight:700; letter-spacing:1px;"></span></div>
+            <div id="displayConnStatus" style="font-size:0.7rem; color:var(--text-dim);">Waiting...</div>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:6px;">
             <div>
-              <label style="font-size:0.68rem; color:var(--text-dim); display:block; margin-bottom:2px;">Ссылка для Капитана Dire:</label>
+              <label style="font-size:0.68rem; color:var(--text-dim); display:block; margin-bottom:2px;">Invite Link for Dire Captain:</label>
               <div style="display:flex; gap:4px;">
                 <input type="text" id="direInviteLink" readonly style="flex:1; background:#000; border:1px solid var(--border-hairline); color:#fff; padding:3px 6px; border-radius:2px; font-size:0.72rem;">
-                <button class="hud-btn" id="copyDireLinkBtn">КОПИРОВАТЬ</button>
+                <button class="hud-btn" id="copyDireLinkBtn">COPY</button>
               </div>
             </div>
 
             <div>
-              <label style="font-size:0.68rem; color:var(--text-dim); display:block; margin-bottom:2px;">Ссылка для зрителей:</label>
+              <label style="font-size:0.68rem; color:var(--text-dim); display:block; margin-bottom:2px;">Spectator Link:</label>
               <div style="display:flex; gap:4px;">
                 <input type="text" id="specInviteLink" readonly style="flex:1; background:#000; border:1px solid var(--border-hairline); color:#fff; padding:3px 6px; border-radius:2px; font-size:0.72rem;">
-                <button class="hud-btn" id="copySpecLinkBtn">КОПИРОВАТЬ</button>
+                <button class="hud-btn" id="copySpecLinkBtn">COPY</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="hud-btn" id="disconnectOnlineBtn" style="display:none; color:#ff5549;">ОТКЛЮЧИТЬСЯ</button>
-        <button class="hud-btn" id="closeOnlineFooterBtn">ЗАКРЫТЬ</button>
+        <button class="hud-btn" id="disconnectOnlineBtn" style="display:none; color:#ff5549;">DISCONNECT</button>
+        <button class="hud-btn" id="closeOnlineFooterBtn">CLOSE</button>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast-notice" id="toastNotice">Уведомление</div>
+  <div class="toast-notice" id="toastNotice">Notice</div>
 
   <!-- WebRTC PeerJS Library -->
   <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -1349,14 +1340,13 @@ html, body {
   'use strict';
 
   // --- HEROES DATA ---
-  // Dota 2 Heroes Database (126 Official Heroes)
+// Dota 2 Heroes Database (126 Official Heroes)
 const ATTRIBUTES = {
-  str: { id: 'str', nameRu: 'Сила', nameEn: 'Strength', color: '#ec3d27', icon: '🔴' },
-  agi: { id: 'agi', nameRu: 'Ловкость', nameEn: 'Agility', color: '#26e07f', icon: '🟢' },
-  int: { id: 'int', nameRu: 'Интеллект', nameEn: 'Intelligence', color: '#00d5ff', icon: '🔵' },
-  all: { id: 'all', nameRu: 'Универсал', nameEn: 'Universal', color: '#bf68ff', icon: '🟣' }
+  str: { id: 'str', nameEn: 'Strength', color: '#ec3d27', icon: '🔴' },
+  agi: { id: 'agi', nameEn: 'Agility', color: '#26e07f', icon: '🟢' },
+  int: { id: 'int', nameEn: 'Intelligence', color: '#00d5ff', icon: '🔵' },
+  all: { id: 'all', nameEn: 'Universal', color: '#bf68ff', icon: '🟣' }
 };
-
 const HEROES = [
   { id: 1, name: 'npc_dota_hero_antimage', slug: 'antimage', nameEn: 'Anti-Mage', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Nuker"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/antimage.png' },
   { id: 2, name: 'npc_dota_hero_axe', slug: 'axe', nameEn: 'Axe', attr: 'str', attackType: 'Melee', roles: ["Initiator","Durable","Disabler","Carry"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/axe.png' },
@@ -1485,56 +1475,15 @@ const HEROES = [
   { id: 138, name: 'npc_dota_hero_muerta', slug: 'muerta', nameEn: 'Muerta', attr: 'int', attackType: 'Ranged', roles: ["Carry","Nuker","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png' },
   { id: 145, name: 'npc_dota_hero_kez', slug: 'kez', nameEn: 'Kez', attr: 'agi', attackType: 'Melee', roles: ["Carry","Escape","Disabler"], img: 'https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png' }
 ];
+const HERO_MAP = new Map(HEROES.map(h => {
+  h.displayName = h.nameEn;
+  h.name = h.nameEn;
+  return [h.id, h];
+}));
 
-const HERO_MAP = new Map(HEROES.map(h => [h.id, h]));
-
-const RU_HERO_NAMES = {
-  "Anti-Mage": "Антимаг", "Axe": "Акс", "Bane": "Бейн", "Bloodseeker": "Бладсикер",
-  "Crystal Maiden": "Кристал Мейден", "Drow Ranger": "Дроу Рейнджер (Тракса)", "Earthshaker": "Шейкер",
-  "Juggernaut": "Джаггернаут", "Mirana": "Мирана", "Morphling": "Морфлинг",
-  "Shadow Fiend": "Шэдоу Финд (СФ)", "Phantom Lancer": "Фантом Лансер (ПЛ)", "Puck": "Пак",
-  "Pudge": "Падж", "Razor": "Рейзор", "Sand King": "Сэнд Кинг (СК)",
-  "Storm Spirit": "Шторм Спирит", "Sven": "Свен", "Tiny": "Тини",
-  "Vengeful Spirit": "Венга", "Windranger": "Виндрейнджер (ВР)", "Zeus": "Зевс",
-  "Kunkka": "Кунка", "Lina": "Лина", "Lion": "Лион", "Shadow Shaman": "Шаман (Раста)",
-  "Slardar": "Слардар", "Tidehunter": "Тайдхантер", "Witch Doctor": "Витч Доктор (ВД)",
-  "Lich": "Лич", "Riki": "Рики", "Enigma": "Энигма", "Tinker": "Тинкер",
-  "Sniper": "Снайпер", "Necrophos": "Некрофос", "Warlock": "Варлок",
-  "Beastmaster": "Бистмастер", "Queen of Pain": "Квопа (QoP)", "Venomancer": "Веномансер",
-  "Faceless Void": "Войд", "Wraith King": "ВК (Леорик)", "Death Prophet": "Банша",
-  "Phantom Assassin": "Фантомка (ПА)", "Pugna": "Пугна", "Templar Assassin": "Темплярка (ТА)",
-  "Viper": "Вайпер", "Luna": "Луна", "Dragon Knight": "Драгон Найт (ДК)",
-  "Dazzle": "Даззл", "Clockwerk": "Клокверк", "Leshrac": "Лешрак",
-  "Nature's Prophet": "Фурион", "Lifestealer": "Гуля (Лайфстилер)", "Dark Seer": "Дарк Сир",
-  "Clinkz": "Клинкз", "Omniknight": "Омникнайт", "Enchantress": "Коза (Энча)",
-  "Huskar": "Хускар", "Night Stalker": "Баланар", "Broodmother": "Бруда",
-  "Bounty Hunter": "Бонтик (БХ)", "Weaver": "Вивер", "Jakiro": "Джакиро",
-  "Batrider": "Бэтрайдер", "Chen": "Чен", "Spectre": "Спектра",
-  "Ancient Apparition": "Аппарат", "Doom": "Дум", "Ursa": "Урса",
-  "Spirit Breaker": "Бара (Баратрум)", "Gyrocopter": "Гирокоптер", "Alchemist": "Алхимик",
-  "Invoker": "Инвокер", "Silencer": "Сайленсер", "Outworld Destroyer": "ОД",
-  "Lycan": "Ликан", "Brewmaster": "Панда", "Shadow Demon": "Шэдоу Демон",
-  "Lone Druid": "Друид (Силла)", "Chaos Knight": "ЦК (Хаос Найт)", "Meepo": "Мипо",
-  "Treant Protector": "Дерево (Трент)", "Ogre Magi": "Огр Маг", "Undying": "Андаинг (Зомби)",
-  "Rubick": "Рубик", "Disruptor": "Дизраптор", "Nyx Assassin": "Никс",
-  "Naga Siren": "Нага Сирена", "Keeper of the Light": "Котл", "Io": "Висп (Ио)",
-  "Visage": "Визаж", "Slark": "Сларк", "Medusa": "Медуза",
-  "Troll Warlord": "Тролль", "Centaur Warrunner": "Кентавр", "Magnus": "Магнус",
-  "Timbersaw": "Тимбер", "Bristleback": "Бристлбек", "Tusk": "Туск",
-  "Skywrath Mage": "Скаймаг", "Abaddon": "Абаддон", "Elder Titan": "Титан",
-  "Legion Commander": "Легионка", "Techies": "Течис (Минёр)", "Ember Spirit": "Эмбер Спирит",
-  "Earth Spirit": "Земеля (Earth Spirit)", "Underlord": "Питлорд (Андерлорд)", "Terrorblade": "Террорблейд",
-  "Phoenix": "Феникс", "Oracle": "Оракул", "Winter Wyvern": "Виверна",
-  "Arc Warden": "Арк Варден", "Monkey King": "МК (Monkey King)", "Dark Willow": "Дарк Виллоу",
-  "Pangolier": "Пангольер", "Grimstroke": "Гримстроук", "Hoodwink": "Белка (Худвинк)",
-  "Void Spirit": "Войд Спирит", "Snapfire": "Бабка (Снэпфайр)", "Mars": "Марс",
-  "Ringmaster": "Рингмастер", "Dawnbreaker": "Валькирия (Донбрейкер)", "Marci": "Марси",
-  "Primal Beast": "Праймал Бист", "Muerta": "Муэрта", "Kez": "Кез"
-};
-
-// Populate localized Russian names
 for (const hero of HEROES) {
-  hero.nameRu = RU_HERO_NAMES[hero.nameEn] || hero.nameEn;
+  hero.displayName = hero.nameEn;
+  hero.name = hero.nameEn;
 }
 
 // Seeded PRNG (Mulberry32)
@@ -1608,310 +1557,48 @@ function generatePool(seed = null) {
 }
 
 
-  // --- SOUND EFFECTS (Web Audio API) ---
-  // Web Audio API Sound Effects Synthesizer for Dota 2 Drafter
-
-class SoundFX {
-  constructor() {
-    this.ctx = null;
-    this.enabled = true;
-    this.volume = 0.6;
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        this.ctx = new AudioContext();
-      }
-    }
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  }
-
-  toggle(enable) {
-    if (enable !== undefined) {
-      this.enabled = enable;
-    } else {
-      this.enabled = !this.enabled;
-    }
-    return this.enabled;
-  }
-
-  setVolume(val) {
-    this.volume = Math.max(0, Math.min(1, val));
-  }
-
-  playClick() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.04);
-
-    gain.gain.setValueAtTime(0.15 * this.volume, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start();
-    osc.stop(this.ctx.currentTime + 0.04);
-  }
-
-  // Dota 2 Start / Horn Gong
-  playGong() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    const freqs = [110, 164.8, 220, 277.2, 330];
-
-    freqs.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = idx === 0 ? 'triangle' : 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-      osc.frequency.exponentialRampToValueAtTime(freq * 0.96, now + 2.5);
-
-      const peak = (0.28 / (idx + 1)) * this.volume;
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(peak, now + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 2.5);
-    });
-  }
-
-  // Ban Sound: Heavy impact with low-frequency sweep
-  playBan() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(140, now);
-    osc.frequency.exponentialRampToValueAtTime(35, now + 0.6);
-
-    gain.gain.setValueAtTime(0.45 * this.volume, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-
-    const filter = this.ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(450, now);
-    filter.frequency.exponentialRampToValueAtTime(90, now + 0.6);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.6);
-  }
-
-  // Pick Sound: Heroic chord
-  playPick() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    const notes = [261.63, 329.63, 392.00, 523.25];
-
-    notes.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
-
-      const delay = idx * 0.04;
-      gain.gain.setValueAtTime(0.001, now + delay);
-      gain.gain.linearRampToValueAtTime(0.22 * this.volume, now + delay + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.8);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now + delay);
-      osc.stop(now + delay + 0.85);
-    });
-  }
-
-  // Countdown warning tick (e.g. at 5, 4, 3, 2, 1)
-  playAlert() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(920, now);
-
-    gain.gain.setValueAtTime(0.2 * this.volume, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.12);
-  }
-
-  // Timer runout buzzer
-  playTimeExpired() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(180, now);
-    osc.frequency.setValueAtTime(130, now + 0.15);
-
-    gain.gain.setValueAtTime(0.3 * this.volume, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.45);
-  }
-
-  // Draft completion victory fanfare
-  playComplete() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    const melody = [
-      { f: 392.00, t: 0.0, d: 0.2 },
-      { f: 523.25, t: 0.18, d: 0.25 },
-      { f: 659.25, t: 0.38, d: 0.25 },
-      { f: 783.99, t: 0.60, d: 0.7 }
-    ];
-
-    melody.forEach(note => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(note.f, now + note.t);
-
-      gain.gain.setValueAtTime(0.001, now + note.t);
-      gain.gain.linearRampToValueAtTime(0.25 * this.volume, now + note.t + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + note.t + note.d);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now + note.t);
-      osc.stop(now + note.t + note.d + 0.05);
-    });
-  }
-
-  // Coin flip spin
-  playCoinFlip() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    const now = this.ctx.currentTime;
-    for (let i = 0; i < 7; i++) {
-      const t = now + i * 0.07;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1400 + (i % 2) * 400, t);
-
-      gain.gain.setValueAtTime(0.12 * this.volume, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(t);
-      osc.stop(t + 0.05);
-    }
-  }
-}
-
-const sounds = new SoundFX();
-
-
   // --- DRAFT ENGINE ---
-  // Tournament Draft Engine for Dota 2
-
-
+// Tournament Draft Engine for Dota 2
 const PHASE = {
   SETUP: 'SETUP',
   BAN: 'BAN',
   PICK: 'PICK',
   COMPLETED: 'COMPLETED'
 };
-
 const DEFAULT_BAN_STEPS = [
-  { step: 0, phase: PHASE.BAN, team: 'radiant', label: 'Бан 1' },
-  { step: 1, phase: PHASE.BAN, team: 'dire',    label: 'Бан 1' },
-  { step: 2, phase: PHASE.BAN, team: 'radiant', label: 'Бан 2' },
-  { step: 3, phase: PHASE.BAN, team: 'dire',    label: 'Бан 2' },
-  { step: 4, phase: PHASE.BAN, team: 'radiant', label: 'Бан 3' },
-  { step: 5, phase: PHASE.BAN, team: 'dire',    label: 'Бан 3' },
+  { step: 0, phase: PHASE.BAN, team: 'radiant', label: 'Ban 1' },
+  { step: 1, phase: PHASE.BAN, team: 'dire',    label: 'Ban 1' },
+  { step: 2, phase: PHASE.BAN, team: 'radiant', label: 'Ban 2' },
+  { step: 3, phase: PHASE.BAN, team: 'dire',    label: 'Ban 2' },
+  { step: 4, phase: PHASE.BAN, team: 'radiant', label: 'Ban 3' },
+  { step: 5, phase: PHASE.BAN, team: 'dire',    label: 'Ban 3' },
 ];
-
 const PICK_FORMATS = {
   SNAKE: [ // 1-2-2-2-2-1
-    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 1' },
-    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 1' },
-    { step: 8,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 2' },
-    { step: 9,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 2' },
-    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Пик 3' },
-    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Пик 3' },
-    { step: 12, phase: PHASE.PICK, team: 'dire',    label: 'Пик 4' },
-    { step: 13, phase: PHASE.PICK, team: 'radiant', label: 'Пик 4' },
-    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Пик 5' },
-    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Пик 5' },
+    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Pick 1' },
+    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Pick 1' },
+    { step: 8,  phase: PHASE.PICK, team: 'dire',    label: 'Pick 2' },
+    { step: 9,  phase: PHASE.PICK, team: 'radiant', label: 'Pick 2' },
+    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Pick 3' },
+    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Pick 3' },
+    { step: 12, phase: PHASE.PICK, team: 'dire',    label: 'Pick 4' },
+    { step: 13, phase: PHASE.PICK, team: 'radiant', label: 'Pick 4' },
+    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Pick 5' },
+    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Pick 5' },
   ],
   ALTERNATING: [ // 1-1-1-1...
-    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 1' },
-    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 1' },
-    { step: 8,  phase: PHASE.PICK, team: 'radiant', label: 'Пик 2' },
-    { step: 9,  phase: PHASE.PICK, team: 'dire',    label: 'Пик 2' },
-    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Пик 3' },
-    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Пик 3' },
-    { step: 12, phase: PHASE.PICK, team: 'radiant', label: 'Пик 4' },
-    { step: 13, phase: PHASE.PICK, team: 'dire',    label: 'Пик 4' },
-    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Пик 5' },
-    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Пик 5' },
+    { step: 6,  phase: PHASE.PICK, team: 'radiant', label: 'Pick 1' },
+    { step: 7,  phase: PHASE.PICK, team: 'dire',    label: 'Pick 1' },
+    { step: 8,  phase: PHASE.PICK, team: 'radiant', label: 'Pick 2' },
+    { step: 9,  phase: PHASE.PICK, team: 'dire',    label: 'Pick 2' },
+    { step: 10, phase: PHASE.PICK, team: 'radiant', label: 'Pick 3' },
+    { step: 11, phase: PHASE.PICK, team: 'dire',    label: 'Pick 3' },
+    { step: 12, phase: PHASE.PICK, team: 'radiant', label: 'Pick 4' },
+    { step: 13, phase: PHASE.PICK, team: 'dire',    label: 'Pick 4' },
+    { step: 14, phase: PHASE.PICK, team: 'radiant', label: 'Pick 5' },
+    { step: 15, phase: PHASE.PICK, team: 'dire',    label: 'Pick 5' },
   ]
 };
-
 class DraftEngine {
   constructor(options = {}) {
     this.options = {
@@ -1924,14 +1611,14 @@ class DraftEngine {
     this.teams = {
       radiant: {
         id: 'radiant',
-        name: options.radiantName || 'Radiant (Силы Света)',
+        name: options.radiantName || 'TEAM RADIANT',
         color: '#26e07f',
         bans: [],
         picks: []
       },
       dire: {
         id: 'dire',
-        name: options.direName || 'Dire (Силы Тьмы)',
+        name: options.direName || 'TEAM DIRE',
         color: '#ec3d27',
         bans: [],
         picks: []
@@ -2234,9 +1921,325 @@ class DraftEngine {
 }
 
 
-  // --- WEBRTC NETWORK MULTIPLAYER ---
-  // WebRTC Peer-to-Peer Multiplayer for Dota 2 Drafter using PeerJS
+  // --- SOUND EFFECTS ---
+// Sound Effects Engine for Dota 2 Drafter
+// Authentic Audio SFX with Web Audio API Fallback
 
+const AUDIO_DATA = {
+  click: 'data:audio/mp3;base64,SUQzAwAAAAAwB1RZRVIAAAAGAAAAMjAyMABUREFUAAAABgAAADE0MDMAVElNRQAAAAYAAAAxMDUwAFBSSVYAAA/NAABYTVAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6eG1wRE09Imh0dHA6Ly9ucy5hZG9iZS5jb20veG1wLzEuMC9EeW5hbWljTWVkaWEvIgogICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bXA6TWV0YWRhdGFEYXRlPSIyMDIwLTAzLTE0VDEwOjUwOjA3LTA0OjAwIgogICB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIEF1ZGl0aW9uIENDIDIwMTguMCAoTWFjaW50b3NoKSIKICAgeG1wOkNyZWF0ZURhdGU9IjIwMjAtMDMtMTRUMTA6NTA6MDctMDQ6MDAiCiAgIHhtcDpNb2RpZnlEYXRlPSIyMDIwLTAzLTE0VDEwOjUwOjA3LTA0OjAwIgogICB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOmJiMTlkODU3LWQ0NDAtNDczZS04NDU4LWQzNzljMTM3MjcyOSIKICAgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozYzU2ZTdhMS1hY2MxLTRmZWYtOWQ4Ni0zZTk0ZDk4ZjZjMmMiCiAgIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDozYzU2ZTdhMS1hY2MxLTRmZWYtOWQ4Ni0zZTk0ZDk4ZjZjMmMiCiAgIGRjOmZvcm1hdD0iYXVkaW8vbXBlZyI+CiAgIDx4bXBETTpUcmFja3M+CiAgICA8cmRmOkJhZz4KICAgICA8cmRmOmxpCiAgICAgIHhtcERNOnRyYWNrTmFtZT0iQ3VlUG9pbnQgTWFya2VycyIKICAgICAgeG1wRE06dHJhY2tUeXBlPSJDdWUiCiAgICAgIHhtcERNOmZyYW1lUmF0ZT0iZjE2MDAwIi8+CiAgICAgPHJkZjpsaQogICAgICB4bXBETTp0cmFja05hbWU9IkNEIFRyYWNrIE1hcmtlcnMiCiAgICAgIHhtcERNOnRyYWNrVHlwZT0iVHJhY2siCiAgICAgIHhtcERNOmZyYW1lUmF0ZT0iZjE2MDAwIi8+CiAgICAgPHJkZjpsaQogICAgICB4bXBETTp0cmFja05hbWU9IlN1YmNsaXAgTWFya2VycyIKICAgICAgeG1wRE06dHJhY2tUeXBlPSJJbk91dCIKICAgICAgeG1wRE06ZnJhbWVSYXRlPSJmMTYwMDAiLz4KICAgIDwvcmRmOkJhZz4KICAgPC94bXBETTpUcmFja3M+CiAgIDx4bXBNTTpIaXN0b3J5PgogICAgPHJkZjpTZXE+CiAgICAgPHJkZjpsaQogICAgICBzdEV2dDphY3Rpb249InNhdmVkIgogICAgICBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjNjNTZlN2ExLWFjYzEtNGZlZi05ZDg2LTNlOTRkOThmNmMyYyIKICAgICAgc3RFdnQ6d2hlbj0iMjAyMC0wMy0xNFQxMDo1MDowNy0wNDowMCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgQXVkaXRpb24gQ0MgMjAxOC4wIChNYWNpbnRvc2gpIgogICAgICBzdEV2dDpjaGFuZ2VkPSIvbWV0YWRhdGEiLz4KICAgICA8cmRmOmxpCiAgICAgIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIKICAgICAgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpiYjE5ZDg1Ny1kNDQwLTQ3M2UtODQ1OC1kMzc5YzEzNzI3MjkiCiAgICAgIHN0RXZ0OndoZW49IjIwMjAtMDMtMTRUMTA6NTA6MDctMDQ6MDAiCiAgICAgIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIEF1ZGl0aW9uIENDIDIwMTguMCAoTWFjaW50b3NoKSIvPgogICAgPC9yZGY6U2VxPgogICA8L3htcE1NOkhpc3Rvcnk+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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wAH/9CoCIYRQ4B9b0BCn+3+221BgIABdEu1SrqLiw0DgWQVMAA7Mk7P/82hwvBJhl0UvdedtAwAymnwIHgRMGgBXVS00pjX1qWJVW2U6dSRQND7qQLBIyWQxyzaoq0TnML7zzk72rWltG06QMAdantSCXSqSRuT2IRJXWg6Xw9gca8hEepwiwPPlyxQ8Xsfj7kWBqllyeIg4schQtA6CnoYWPW5uDLju9Oki54/4//vjvn5+f////v47HN/xNkAP/8MAEAhZvXWFGwCMEqWySSS22GSDRjgkNBAXAzDRMxEFhtjqRBjJWZxTGsiZbNPuIImIONMWCMECjCgZAYmWZVn/82hw4BOVb0MvdwhdAyAynnwIWgSsqSbIDCEDDXusAWkLiQh92JsskENs7a/I4g1hrkjiDkO5ORN237n5t23/tyh/IcsU7+Q5elb/w/flEYh+/MQxGL1eNxuxXjYrbUFAoYUFAocuRk7cBWTtqEBIwujJHLkZO2oQEjagIAgYLhcEydMLgmbUCgIGFwoGDC4XDZtQUBs2oFAwSJhcNkiYrDZOkKAwSSFAoJExWKyeiMVk9EAoJLIxQSWRisnogFBPRAKCSJGKyeJGKyeRAKCTEAoJIkYrJ5L/82hw+SOKC08vbwltAoAyrcwITAQBWTyIBQSRIxWSRRisn1AgY2CBjJo29mjb2CBjJoGMmjb2CD4H/gAAATGP2ITA/q9tuSSSadpnTXp5uKdPtoZKgYBzUtddq7XVuPs12KzTtBo0mKRS0qQksZBYNNLCoVNKiklcshQ4siRaqQotVQockiRZJEi2KFDlqs5JE1sZS1QqkwZSZmOqphQEBVgICFQCAmUBAVgUBWAQEygIEagICsAgJYBATUKAiaFAVgYCasBNQoCsDKsDATUKAtQoCsYCbYD/82hwlReN90x/YSNtgRgCrKwAAACaqJXVV2FNVZtQFdgJdmbUBXVV2ZjZmNVXZVJmY1CsaqpMGGBQ0FFDwAD1pP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/82hQlwsAAS4AAAAAAKgCXKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUQUcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyMDIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+  tick: 'data:audio/mp3;base64,SUQzAwAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+7DAAAAcZg8dNZmAA4JBK7M3IABmWq6/7ueTQMYoyAF4mOqd+J0miAw8dTvhDlwoUajBrIGQAx0veBoMAwASsGw4WzEqAAEAcQOGB0wB0QG0ByYYrE7mxFDxMEUIoTiJNjnkTKAguLLNiKE4dIGQcoCtxmz5cNDMgZPnBlxmyfUXCKE4aGZFDRZfNzAihOHRzCCMZm6i4aLIoRQ0WZl8vpqL5u6CFadNPrTdSabqQbpp///9SCC0EPU1BugggsuFxBaaab03oNTdSafTTTpppupAuILLhpppvpv6b06kKZfN1F8vupBBtD6DUGvQMEFlw0Gg/4neD7RbaQL6VKiqtVVX5ixEZ0nCwaZCdKXUxqREZyQmDqZ6iEYyRme2ZhYKhWZELmFBLQ8Q3wY8mxQA5I0RH4AYDABIxHInEmS6PsnxmCCGgZCFIkRNHNSwkYFxBNRMjyitDLRopA3Tdk2Ol0nTVJNFFkXTZNMuGjIz6TOZI6un1NQailQTdjH6+mm6CHoMkkkitFS2SRdetavrMzc0XUghTppqSRPnTArF2RUmXNDUj2TSWtkWU6lJboab0EDQvp1p003Q6mTTnlHThk6S0C+mgdWcsfPKNzBBbmxq6U1rdsVtWLQEsQAAB88AABRWEpTba3XW3NTnML1Vsa7VStNXiYRIWWP0gsxB0M3q0XEXN4F4F5YuG1DSciaj9H0yM8DON5pbOt/NoTExPUNTqGwI2YvhZxnUmabtSNLNLqSz17SOyz5xW+JsvrQrZzTO22aFOyxo0mXlcz11Ef42ztqlZYNYc0mN18OePalmttZW5zrDq4ZtDljTXngYhf/7sMBHgBhtn1m9l4AraTRpNYYxtUiUrK/riLAu1xW1sgQ2BmfO2HGG5zYn1IcGEqYLWw0ix5ZoitpFxh/////////////////uqIkyWS2VtyGWGqeebN7ZPE5JjSOMFCm6It0GdMjnqHTzSY8MnFrXWXbD0OIPt1vCbNTYwKp9ErtX2oII4OLyRpecXsdPsKqv1eWQOKFE3UrkSRc2sbXYw6tYLvlUnHqdQvSLDBeqfToSilYT1iNQ4WX24iIcLb2PTlKSCq+hHjRqVy8tMdeXpXXXFJ0fLnjdcSLLLEkhJ4lo5j0qOTpCOj5XiT2ReBwwOC8moeEUSDlqhdCAlnWFlSYFxePY5mo6xUBNys0STyEyZbs8yJpmX63O/7Xo9T/fz+hTkzIRREbkbSTQgUqli3qBWp6E6b3k8UkQmTnRq3CbXk9ITnGi42xN6pyra5bp7ssumF6rqyvFFCUUto0sWDAjYy2vVC5KV6I6RnY+suwIzFIPxOMSqXD/TwKmIteW1gVHNF3LxFTLxUPxWOSay4ydQHZQYHlzHqj0Ry4YFss3MWoaa1d2WjJKsTnxytPYRUb2RKD8alZkSYHiSOQVH1bFUdT4soj8fSUvOAHVfPjpLZETi6HqGrWGQ7FwIg9fgTedAkjBtQAwnk4u0e6FyNrN2vXoq6ru0eavzNWpvT/perU+69lurPT/TaWi14riXRWP/Mm7//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////uwwKcALp4NP+e9jeufyCLk8zG4////////////////////////////////////////////////////98qrLS0BrEHIaQpIqAmwhIfw0DrSsav+y+bLWiSNLUlPa0SRwsYOAIomEgx1xufZZtz//ZfEjUJeiMiqhrEbrTcR8cl1Idnio9OkpSSK1rV+t/bm9baPMswNuRrVyVCYfdtfnmWoL9bZ+uZfrVzetnrUyGsNhFCYahLIhaJKZepMkJ91dC4fEkeikdnj8Ty0yKpTPFS1MvRGRVKZ4gnpklSPxOtIaxGemRdSMRzVcyxG6zA24qWtQsUjWtQsRnp0mQ0i9EfLWm7qTpKw/1Wmm3HmYLunSZfE9Vq/fMzM/1mYYnmYH3TpDP//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+7DApwA/8AEuAAAAIXYAJcAAAAT/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+  ban: 'data:audio/mp3;base64,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VY+JiZiYmJUVVUmJhVRVFRVRFIpMDEpMFUE1FVFUVE2H6uv////////4iY4mJhKYlyKSpgVKqKqKqGJgVFKSKRJIIRRCD8IpBEUgiBEYVioFhaeyZTB6nwbJZFEVJmItSKdIHuexhGadifVjO8a10fyRSCfZHObeIUsCPFfQYUsN4ztBxE5JEWZfFA71TEFNRTMuOTkuM1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//uSxJYD1z4QniGt/wAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==',
+  pick: 'data:audio/mp3;base64,SUQzAwAAAAAnSlRZRVIAAAAVAAAAMjAxMC0xMS0wNFQyMjozMzo1M1pQUklWAAATPQAAWE1QADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+Cjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDQuMi4yLWMwNjMgNTMuMzUxNzM1LCAyMDA4LzA3LzIyLTE4OjExOjEyICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiCiAgICB4bWxuczp4bXBETT0iaHR0cDovL25zLmFkb2JlLmNvbS94bXAvMS4wL0R5bmFtaWNNZWRpYS8iCiAgIGRjOmZvcm1hdD0idm5kLmFkb2JlLngtYXNuZCIKICAgeG1wOk1vZGlmeURhdGU9IjIwMTAtMTEtMDRUMjI6NDE6MzBaIgogICB4bXA6TWV0YWRhdGFEYXRlPSIyMDEwLTExLTA0VDIyOjQxOjMwWiIKICAgeG1wOkNyZWF0ZURhdGU9IjIwMTAtMTEtMDRUMjI6MzM6NTNaIgogICB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFNvdW5kYm9vdGggQ1M1IChYTVBEb2NPcHNUZW1wb3JhbDoyMDA4LjA4LjI2KSIKICAgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjBBRTVGNjkyNjNFOERGMTFCOTdFRkFGREU2MzAyOUJBIgogICB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBDRTVGNjkyNjNFOERGMTFCOTdFRkFGREU2MzAyOUJBIgogICB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjVENDFFRDlBNjRFOERGMTE4MkYzRkIzMEQ5QzFFNjQ4Ij4KICAgPHhtcE1NOkRlcml2ZWRGcm9tCiAgICBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBCRTVGNjkyNjNFOERGMTFCOTdFRkFGREU2MzAyOUJBIgogICAgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowQUU1RjY5MjYzRThERjExQjk3RUZBRkRFNjMwMjlCQSIKICAgIHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowQUU1RjY5MjYzRThERjExQjk3RUZBRkRFNjMwMjlCQSIvPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJzYXZlZCIKICAgICAgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDowQUU1RjY5MjYzRThERjExQjk3RUZBRkRFNjMwMjlCQSIKICAgICAgc3RFdnQ6d2hlbj0iMjAxMC0xMS0wNFQyMjozNjoyNFoiCiAgICAgIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFNvdW5kYm9vdGggQ1M1IChYTVBEb2NPcHNUZW1wb3JhbDoyMDA4LjA4LjI2KSIKICAgICAgc3RFdnQ6Y2hhbmdlZD0iLzsvbWV0YWRhdGEiLz4KICAgICA8cmRmOmxpCiAgICAgIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiCiAgICAgIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MEJFNUY2OTI2M0U4REYxMUI5N0VGQUZERTYzMDI5QkEiCiAgICAgIHN0RXZ0OndoZW49IjIwMTAtMTEtMDRUMjI6MzY6MjRaIgogICAgICBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBTb3VuZGJvb3RoIENTNSAoWE1QRG9jT3BzVGVtcG9yYWw6MjAwOC4wOC4yNikiCiAgICAgIHN0RXZ0OmNoYW5nZWQ9Ii9jb250ZW50Ii8+CiAgICAgPHJkZjpsaQogICAgICBzdEV2dDphY3Rpb249InNhdmVkIgogICAgICBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjBDRTVGNjkyNjNFOERGMTFCOTdFRkFGREU2MzAyOUJBIgogICAgICBzdEV2dDp3aGVuPSIyMDEwLTExLTA0VDIyOjM2OjI0WiIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgU291bmRib290aCBDUzUgKFhNUERvY09wc1RlbXBvcmFsOjIwMDguMDguMjYpIgogICAgICBzdEV2dDpjaGFuZ2VkPSIvIi8+CiAgICAgPHJkZjpsaQogICAgICBzdEV2dDphY3Rpb249InNhdmVkIgogICAgICBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjVDNDFFRDlBNjRFOERGMTE4MkYzRkIzMEQ5QzFFNjQ4IgogICAgICBzdEV2dDp3aGVuPSIyMDEwLTExLTA0VDIyOjQxOjMwWiIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgU291bmRib290aCBDUzUgKFhNUERvY09wc1RlbXBvcmFsOjIwMDguMDguMjYpIgogICAgICBzdEV2dDpjaGFuZ2VkPSIvbWV0YWRhdGEiLz4KICAgICA8cmRmOmxpCiAgICAgIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiCiAgICAgIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6NUQ0MUVEOUE2NEU4REYxMTgyRjNGQjMwRDlDMUU2NDgiCiAgICAgIHN0RXZ0OndoZW49IjIwMTAtMTEtMDRUMjI6NDE6MzBaIgogICAgICBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBTb3VuZGJvb3RoIENTNSAoWE1QRG9jT3BzVGVtcG9yYWw6MjAwOC4wOC4yNikiCiAgICAgIHN0RXZ0OmNoYW5nZWQ9Ii9jb250ZW50Ii8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICAgPHhtcERNOlRyYWNrcz4KICAgIDxyZGY6QmFnPgogICAgIDxyZGY6bGkKICAgICAgeG1wRE06dHJhY2tOYW1lPSJDdWVQb2ludCBNYXJrZXJzIgogICAgICB4bXBETTp0cmFja1R5cGU9IkZMVkN1ZVBvaW50IgogICAgICB4bXBETTpmcmFtZVJhdGU9ImYyNTQwMTYwMDAwMDAiLz4KICAgIDwvcmRmOkJhZz4KICAgPC94bXBETTpUcmFja3M+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQwAAABhRw8SMYyQnBm2YmnjAAKpqqlQA/gtMQomsn9MQcHSCMTBESe8xBiCgdcRlxl3sEJJzf7dnWuCxnV0YjNboRPVKitVXWARgQwkZCzTLeTses60MQxDFArGSJT6BAAAAAAAAAMW5xERAMDAwMDFu59cDcDAxboU93d0RAghETP0RERHc//J3d3d3Pd3DgYGBixAIAgCDpcHwfLnyhzE75cHy4Ph/yjuIDgYUGeUP/SipCFxOkKziChTKptmwNmMyFcUuNGTQ5CwKMtYXY7pf14mlPk1M6NsBYzVQHWE7jmClhoC/HhAli+RcslAjyGlVi4imWQ5EDtFW5mAJRG7oNkSNS+mYJstehd5NjVJcWQO41mIZ2Tq29k5PnzQnybDCAWmfSGJv10CLF0+kapnxNgnz+LpHd/tSOqLxi5sQBE1N7/SFWp7/bf0FHUDImRZY7TcuIG6BkP/zo5yX/////zc87bKWmeV90H/yKJ/rLp3h5/7lm8eSEwlMCfqDVhWu1Hal+EipE0jDSoB3ZzROj66twZUbhEjiR81b6//uQwHWAGBodX/mogAJ3QWo3t1ABKJ4vGw6iHC5hywxwBqzgFAISZ1mJqj//mRuYh0IuEDEQCFzH0aLN//1tLANvgoCSKlUyLxkr//axwyFJAMBepp///65iXQCAAM0bImqP//9E1CQBDQDF0G///ZRkOUASASAk8Vv//+k4fgVkUf///RKJQUA2hlIiWIqVARJL1/ncToBQAKxkQEJXCMCHrKgBBUPTIihzFkJUpkt3cLOBwmGADE14rxDgxBO48OReRPJT9jWcqjWEnfwwNDCe5WuUW8+bu////8///uNqGp19nTSA/nP/f//6RZCHYuFSazxs3//qWXATCB5ERdBBM83//7lQCWhMD61GH//9nCA4U4pRxv//9RKhFSclv//+tAOKGwh////G8MN4VCIleKlQEARILSkyKTTJJBNCnU0SYwSCR4JpTiwNZEj6YLFxxjyGtwwEAqup1whwBUZWWoeTGZgYSCgswcPMkAgUUGEBCDksimFfGZ1ddAGyp14c/cCZ54Z48/+f////zWGMqxixiB4Uv7f//UUwQTDY//uQwIwAFJILTe7ubdqswWm9zc270C+tAv//970haQJYLWr///YzAccr6b///6wkEHkZZw9///UmRgAB0FFf///4pMYhgl///8oEVTgkZmMyV4yVJZJBwDrpL4tdQdaSmQkOIwIRDX4WXMKg0N0Y0NFg8FiNTB1wSFhwKoerQkKBAVkqnnQRnTRDAEOAX5xkEXaA2Ggm26EM2ZGCQXGInvn85//////rXw/csv+3UwA06ciz+///qY+HSg5eSxPmZwfKL//1qWkZhgwAYyaG9A2f//+UAIGCeWlPP///WJCFDFRYb///UUwDhx9Zp///50MlMV2///8sEnOHZElLYlQESVOe85T7jzerDFxm6kIAEAgmIc/mEgXoTo21yCkbleMPa/LI+5dGyhrlDB8YqyzFStWmXyljQgqzXAprMy1p+90/cN9/v81njG5iMMMehejyMaOgYgp0Nk9TVv/1mQFBgXcxkgcKKbvVQ/2ufMQ6IA6WSSKCndP6v9TM5dACLio1ubL//upStRDQooZAoN2//pzJGCiVkCnpv//1KdQu//uQwKoAFcYLT+7ujdrCQWm13dG6Uba1qX/V/63nR3BHUhFzNKAtFL/t55uW69p9JRG6e22QDgDcg3/txCB2JuG48GJUGAAxgQIZ8yHVwpo4uYaHgoPh+aciHJ2clmobFREeOIpDcbhikwzp6en7qvG5f3UYjEYllNMP45A4AcZp6003QQHYFzJiJfL5fN6CZubl9MAvDzNzc0Q3TTdPTTTqQQdSCCA1gTIoIKQNGTL5fL49wngK4MguMmm/Wm6ALSU1Jv6m0PdPTTTWZkuD7QOIIKQTWO8LQHMPGCCCGgytiQFcuJv//+ybvHwptepBBBpmS73YyJEKFQREhO/ZVF8rrbRJbUNULK9ep1KivE2fWHYzTdqxmM0tJChDaNKsSC3jul5WpscpVRrlb1rTvS7WUql1r8ccct41bOP5U1LS43ByiSKJrqTZEukyWhyAAXQ5AnYgxPHTEuk6kkiURzS0OcVktJJLRW/RbSRRRYpG5ASobLUkkkZImgroIUAOGsUisk6KKWiigTyZdSWy0f6kneip+suoF5HUkkZHzcO8//uQwMCAGvnvWa1trcMIPau4/VG8BYKRFFFnUkj6kjprR///fXU/brSjmmzfrDP/v/G9+kkiUC/V9ymBNCTsNshgCsV4uErterYoUnTfZ4keX0fGAGdIXmF7uHjhiGKgLgYEkiV1O7Lqsu5NqWwdKnCcaNO9EGHKBLWkrWUvU6Y5edF3WAsljS8VcySHX1TlLwqSf5iy2PgSBwGKGWkk0wTRbU9Sn79Tv/r1lqk7pIrqWonw1gyQGEQcFFaN81M2t1t6//+j//9ErjJAmCgAhWRZGyX/////6X+g6gbeYVh2Z3dCdGSCBIgWIFAgECe+ydWyatCaNOYkKYgIYQEYAEZIsYwgZIUYKAkYCAIYKAAYJgiUAsYOhqFgGLVoBDBUFzCoaDEESznQVSYKW+kLbQdL4xeoWntlv///////////+u////f//SoTQFgyBhl3Ecauz/////6Ba/6LmIjIP0AwiewGlCOcTqTJf//////rnTVAQuBZDDbZ2f///////m7LAgB0wBRWeHZSJUYkIEOuy0FFSJLkrCl0Vq4cSBSV//uQwLmAFhHtT6x2rdKfPam9rtW6R9CgS1oXOha6AIARQQcUCwCCQGIUYwMjgAA4DGeLA0QwQMKg4LnRAYujNJl4yREKkELf//WyrN//+kCIBAUSJn/////+ZGv9VBy4M2DdgIWGEIDJQxMv//////9NkyQFhCQZAqBimpal///////885kCYMQ//////////////////////////////////////8UmYiIhDdHSDBBL/4EOUImhOKItxY2VjOUiRfFvEqD9wb0AJASOgVuHoAEgFAwXFzA1hiJAwcgKAUAKGqhmRzi67KNUn//5i1BNL//7oAsAQMAKgoIv/////5w2/3QMyGAhAIaQBhhLgMNsWAv3v//////+tSBOiOQLEgkUmf///////0mhatEUmIiZdDdHSDBBH/eARoIUfCAhGMxzhLzjLaKTC0ABQC5fBt8AABQGAsC4ZcCz4GAgCQGCUJIGGQSAGvkOwIglh2C2VCgaKZMny+///Teunb//0wWAQGF1Kaq/////+ot/6zh0pBEBiMQMRDIBiDCNSePO//uQwNMAFWntS+xWrdIfPao8+1W63//////90D5JBAAADhSTmv///////0agbyP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////4pEREQpEruiECNBUTGhMBABkuCbWrHIDBu7WY43GlogG2DY00xpiMcQw6rAyoMgMUmEDDpIDagbwBjcLmhwCgwywASDwMOZADC7EAACYZGFkkGIQ+x5AYo6v2/5kpklpdN//2TBwYAw8hh7//////TP/+xsLNDFYGAFUAUchcJeNUkf//////9ErixARCQGKQCOI1Spf//////6ikiwAIBLQUd4iHczdHSCBIpU0F0gcJLVJxqaRKHVMhHtKEukFCiEAb0GWQwiGRAbXAwCAAIuRQSMG2AGEUugGyQQwGEQB4CgCg5Uc4gpEkXUSRBW7f//Q6v/6YMAYGRVayTf////+dS/62NxSAgGA8/AMCwi6FX/////uQwP+AHVXtUefardKFPal9utW6///9c6xoH7gWLRJs6v///////O1BbBP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////A4h3eGMlR0ggQ7f9EEG4HAflaxNP75D8hH4jwjxAQG5YGAQBgrcMiAEgFAwJA0AwfiLA0GBhAsBwezRJk+YHi+bqYzf/0PUx1//6nRBwMAzQwBmkf/////onv9SaimGOC3AYPFQKLAlzyTf//////7OSAyIQBECgCJlJf///////ywywRAM0cViIiIcze/aCBKCq65i4gl6bN50ljpxsMBjYMQNQRNEyTQcOCAEMCAGRgS8MCACSPpX/awwMGAUYbwOYsn+YQgwXdVWZS70dkln0iI7TJFrCSlunNWOd////53//DW+/+f/qkABQRgZnTZOlf/////6y1///uQwP+AIJHtT+xardIePem8+1W66jESIWYBgkmgNH0dxq6L///////6lF0QlBEWB5Pt///////87cLkjv/////////////////////////////////////////////////////////////////////////////////////////////////////////////zLbtsk9+iECHTggBaX2bGjRQqAFGYGXWDHIemY6eBboIAJ1wIAZaoqACDgVFADgyLNYC4AmHyBnL4amHIEI4ydK1rVaLQzLm7gQA1Io3Ftp9NHly1n/ef//rv/+PP//1/+bhQEgZMMRNO//////oHv9aKZ4d4XAAVWIGAgCTRiktX//////90CXHcDQGAYaAJEFt///////8wcwAOAQkUiIiJYjW/aDBKx9519q8ojcoklqXS2HrwnMLTBG5KCtwxoDYGXCBiEgCQBgYUBvAaZREAKAnIInfyubJuomiLH1o//0n6//qYzBQJgZnNZI//////nP+tkyYC9YbwBghJgHKsmE2dv//////9ZfIkF+gG//uQwP+AHbHrT+z2rdp6PWl1jtW7BOVkVf///////M8MQ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////4pEREy5m8A0ECUG/DkYju33rRORSEu+2RzQubEEhOB0XGGWAsPLhuLIASBwMDZ4DXDCAwkEQtkISkGLpkeQWM2PZAGV/////+kiBYYB8LxEm/////+p/+pMwEvICAoMB3YiLtb//////+pZ48IRgSdFtn///////+g6g2ZgDeHd3YhUGJBAFgZ3FWITzpXMw0yO81DlBQylJNYMiQbNJRwhfMoQjNiIhB0w5DsoC8wPCkHBen4YaBxJZIgDMAgKMHy8OEAcBwUrWeV9Hdh/lBTt0aZAv/////////////3n81+//4Nj4GnzeKIbI//////uQwP+AIe3rUexardHxvao9itG6/+ol/+7OLNELgYEPAChiIKZIpI///////7lQaINAaAQACZMl////////L7F0Cgbq//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////N2//yb38QQJQfRf5NZR0uK3iJwKUxoskzctSgalUAUAIMjg2FEbCiggAKDYQrkAEJwEAEAwqjnA0LCPBvhHlpi8miiscKRJL9///Wuml/1LUT4DRwD6PCt/////+tL/2TIALGEN4BoAZqq///////1qmpBQc8Krs////////tUGSADbbbEl/IAgFee/8raTMPO8M7CLnKaLxCB7s8qRXYGDGcsdsRAIwDizea3MMgpB1iUOy6W2ufjl///7SIkDIF+Mrh9CeqOQvI0t+4Dd+avTEOV4fpnY/60ER8ABCwPyxLTt/////5Zb/U5gTYJAA+wGTpA//uQwP+AIVHrRe32rdoEvWo1i1G6TiDFNT7P//////+pNAkxpBASAyQMhi1L///////8nllkDAn43////////////////////////////////////////////////////////////////////////////////////////////////////+Bu8REMRK/sggFBvvWzIYdSkMnyDlhUaLgkEs+hMFsjQHmAQCROHC94WAYLgTKH3UAAoDmHRenUYPhAnJwr+h2XY5Z/nAEzWpYfoIiwNh44AQEAVFRrgQAIVAQtmiigqnsuVVZPp0UAi8WXLEQivf9TmBmAIAA/iArI//////We/66Ivh0AYNOCK6RJFK///////9SKZPBxQEk5WZL///////5ikcAIBGwUaHiHUie3ZCBGhN1jDAMRgBgoyTJhwLAZI9mFEREkmlnBiCOZEQBDsZYaioIDgmYIAK7ZQu4qgV9GVpiAUHmOGUeXQAsB7NI1NiLdonRRkGgRhI8BQcCgIAS/g0BxICoCS8iB6VqCZGdUCZyAVjYcAAwN//uQwP+AHG3rQaxyjdqiPak9jtG6GCgSk4hLKwcGAJHVKcOAqCzDf/U41gDQWBmcBk6//////1lr/oOeIkGKAHpMAYOkCRSWr//////+pM8VAxeAcViJmj////////MsG55q///////////////////////////////////////////////////////////////////////////////////////h///9pX9kEEmV2d9YsLv01yXXaC3hUryjr+OeuwunKIfZYFwGILUccUhhwFoLNdi0Zyxz+tqfwxzrcsOy5UxLl1RyJ1JupRONHsmJXLtyJ1Jj/1mCYCwQBXQVm//////R/9ZgMeLgAWjgWXmid///////9nKgyIJEQMUCJk2XX///////zG4FgCQDiIiIcyV/hCBET/yG2eJYyXMZ+LyngIo1mkbT4gFOQGgMwIDIbZQnuYCCRikzBPMDhKtaHZ7HLH/vxCc5//r+7w7jr8d493h3G9rLPff+tRgOgJjQRqjz//////V/10zARMnQGCoPHEsbMk3//////+qY//uQwP+AIE3vS+3yrdImPak1jlG6jwFKpLO3///////1VhwR7/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8UiIiIYidHhCBGjrEUjBwQGdAeFBzZHlAevp47n76f+59+n3mBjEYgY9GoGNRWFlAWEDrAwIACbGUDV4BAGAxOxQOUHcP8Ro9C5yLkDJ8vk4O0qnf/+1aae7of+tlEYHRgRIABpR3v/////9R//uyhnRW4GEuASvEFSRSR///////ugfHcEwwNqnFq///////+dqDGJuwUZWeGZCdHhCBFpu6Ail4TxM4PLkoqgJKAYt8mEj8raKNUxSJL+l1iyxgoAYGCLuTmRyEQcOfZ+bGAiJTVymuw9DvKWmlzlQr///////////1z9d/uf5f6nUbC8BALA5YpT//////ct/90Dcggj8J8AyIX//uQwP+AHsHtTefyjdJXvem9mtG60kVf//////9ZuQYPaAs/JJF////////nHUFzyH//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+BxDu8MZK/whAhZf7DjJ2Y6jrms2L1FClUXGUBZ4ZcCwZABHYYgAwKEQMSD0H4cFBEMiTxqkj03R6mQb1KWad61dFtBvsmWBnwARgHGJn//////1pf6loGYngYYGBdApoJNCz///////2TPFUN2AwuK7P///////9OsL4rAL/bfEmfsAgE288Oo8M6b9V/ZzDf43YIcSFTiKYCBDCQeUPuuQGgpkmYfu1MLhqU5Y5c/7/8z/8s0x6lihtYZwQrCtSKWKGj76qFE91LNvUicMyp6qBkOQBiBoHFOFp//////r/9bHRWBnAMOfBTyO41SW//uQwP+AIfXtTexujdHwPWm8+tG7////////NCIg0BgHDC6kv///////5oo4A8cR///////////////////////////////////////////////////////////////wN4d3dUFX9AEAeBnDL7IKnYjBzAke2+nNSxk6yF08QnRjBaY6LGSA4shERACB2DhovRXaJhf9PQqAELAxRMCvI4UTgUCXqgN4HjeCDZdFiYAjwLDgIDgGWUC4BEQAY2AiiTHcBGgxaFTFAcMNikwUKgSKwaCBofBxEMPgEwoCjB4TMBA4Lg8dCBhYGjwkDBeYcBBhsLmB1JH9NAaYDxAG+TpN/////9Fv+zoEWEeAVygKISeRS///////7qSWRAEUUlnb///////59FYSHmoPfb+smfoAgEZpc7MeSXTQLzsRxlct2y1/HviiPaXntcU3BgAXOhgYDAph4fGLxAfUAY0KW2s1rOf7+kl9zDkvvXAsAET3mkCrE64YTuGAKjbi87EGVxGUJco/QQxNWx6Vqb95mgAUFA37Bkf/////qLX+//uQwP+AF7HrRaxujds5vai9vlG6tky4LPFKALaQGGZMJoL///////3YtkSCIQMCmC1f///////NVGQCxBb///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8L/7fImfoAgFbf1x8XHWuzuBJVyvqprFnb210METzBgqG3IQTgAUMZxTvl9ZEM0FLlvv4PxjXudobeVBIpTOxqXxmq67YUf4vQorrXpHcrytVdIt0v/QQJsA4UBrl7//////nEf/TMBIyKgYQKFN5In2U3//////+tMnhNwInZPIv///////8yRMQCQ6oP//+smboAgFA9K0u1bDjIA1oeMFMzSVMzchLAuZeemel5ENmPFhmxQDiAIwuYtFpeBHUwCATAYNlzgCIGP0FHuc7L4KHTgxKDrkpr44vvhAry6ktb8sOfh+qsNSkrAxfleI0B0hkhBwBPOiYW0QGLDHz///uQwP+AH+HrQ6xyjdozvWi1jdG79yuRcwAYKgbV8TiP/////zJ/+pnFNFfAw0wC2oiJsi7f//////2TPFUGoEA5MX2f///////5dU4GEAG7f//////////////////////////////////////////////////////////////////////////////////////5km1taV/ZBCCJxQ0oCDN3LuoKwgy4OlwyIjEWWSueMuqgNgRL0EAFElZzClnqYGAwuYqB56EODwmuRaHYzO/cxhPWtQfjQwd/5fr/5XdWgS9TpirOi8yP02hNQlNDYCDgKir/LpQFzAZEQBpnpBUW/////9T//TPDnhNkK8ml///////3pFQUqBAmAFQFwl5Gj///////zjIh06QL///ImboAgE3u86kyrpaMBQ+/8gjshoZ1lbIFrQAutIQwEBjDhrEAIiYlZG+qy8YaxtWf//pt75zePd39Yc33msrXaSghUNyGDIBuxp3l+h6CJMANCQMqyNF//////Wf/+ZjODjAJbAtALbW///////6k//uQwP+AHhXvQ63yjdJsvWl1jlG6kxyAUWlR////////yzcHBBn////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+Bu7u8OhK/shAlBuYbd7kzWlGFJK7crhhgjXm8f9uEMkoClcBEIBc8wK6DtRYAwtV07sus2uf9SS0ccvTdu4776VM6t6tMUUQpW6TLx1HYf+nfyYpYutzjJnSbcuGZPlw0AORAZyfb/////502/9A6IkQ4DFjQVCjaNUr///////3YrkkEIYMHmSKX///////zCwYWPAL//7MGfIAABw02ilaa5nVMdcqGmyZv4qZ0sDVUaEnAJRM1MTCxAygWQLGgMto1MwQAMRISoUUqRBiY6ZMkCwufwNt5BUVf+XRCljdUtmxhAIsGimrYmosOaQEGXm4s5mWFwsqmXkZkIMZgPGHAJlQoXNM//uQwP+AHt3rRaxujdpTPak9jlG6PCyUQMOACUTBw2Ig4IHBQSQGAkPSDJw8Rc2IITRMORdRBB8itwGEIGVoE+b//////We/7ZSKAFWIKDT6Nv//////+tZPCEQOllZH///////8psZgYYCf//////////////////////////////////////////8S7f/Iq/sAglD6YIEz8uiqkEOEQy/KeokkGiXuXFcRkzZW0tsgRXDgSniDKwQAGBxJnR6uppsat7oqbuTT31cR/mtw6/kaL2L+SXdRDs3NBlYJCclUl8W5LciEAQTICS9qE5yS1UKAQSiZS66KaLIl4c4ogKKgDFLv/////9bf/QJsdgJOQtLUn///////7OWiqDUGAceJv///////+g6gs8wDeHd3hCV/ZCBKx/vjtQ8sVyJHDFmYnLdupEo/KkP1FC0dA3OGAaATBC/OrkMHCpgsDUtrHLn1c+S7PHC1ZdanluESp4o8kIib7Tr65TVuM08twiVH+mmgTgDSUBMpSv/////rLX+tSzASMcIGANgprJY+//uQwP+AHUHtQa3ujdKHvaj1jdG6yv//////+kaERC/IDCAqpN///////9NlhhF/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8PfbbMGboAgFbPViN3Ms4M0OnURyFCBmFCgIsOABFMQUeDApHkwEBTPbuZIKGElLgJ7qCGQm5hQke6GK18wz7Yt48ZxSPBlvT4QSlTLMsce/HlpqVlwFY26uw1pW1YJeifwoAjQHbvb6JFCLl4ERoIJZ12/////9BFv+tIWkh4GEaApeJBJFSP//////91H3EIARNSo////////6CkgajJAO27aoq/sAhDw3+L6rUP6gZcIIbQCi0az5MVwNnPEyGwsmMUVERAWAgUEiGAiLxNbVCDQYi+GTYOS2z8vtbpZi3WWHnHCov+NuKCAbyWdX/1To/LaZug6OhA4UXlVUQqBgFd5dFV3KU1+ovkiLOAyAMJIi//uQwP+AHXHtSexyjdKBPWg1ndG7e//////Un/6CZ4ZsItg1UYoLTf//////9nRJIT8BU0BgQ5w1VS///////59lhu0f//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8Dh3d3dCU/ZCBJjds9BwFhnVxiMU12al0mv3eSC28ogAztsUV2AAUCVIcyGSEK9odnqvccvtb///Hj+y3l/9/jZlN6Aq8Zmp6bswzS47/zzOU0wWJACvVoU1f////6it/3QMxuDDAXfAWYFc0Wp///////6C1mxBgczJdF7///////9F3DoEAL///MmfMBAla+ZerezOXwLZiL8y2RO9UjKmbMFRGGCQUBSQEdVW4syYWdCM9PoF1WuIyuRU9/f/L5RjrDdv5ZhUkDK4HpOVI3lYp5fzfd6/dfrQMkVEkUCIETJwFkoBCQ2Zbo6H////zcrppp+tMmDU6H//uQwP+AIKHtR6xqjdIbPak9jlG68IEBIeDxJWTY1Ky0P//////us8SIRCgHCi+1lf//////1pJJOFw7f/////////////////+Bw8O7qQq/shNDQFDhchBw9q0OScBYgCoSZ+cmpJxjwkAhxqCaYFA0kxIe5UmfIFETGALD2igFOgC+RG7Iga7VpP6sA+kMUmRbgHAEKETHsVvQfUHNAMMMCQoGQJlTJnSJkx5dNvgCJMePMeTMWDQXYQYIMZIgZQUZEGt4vYAghcJwnDEgZUSJwiBsTAyYoMA5WBi35LMaqSq/////M0lX+XUjFhcwsgAWeCKCRhcQTWbpoIpmZfN3UYJ3exoaM7IFwuGCDIqa3dbprTczSLgtoJDQBtA7T6Kqv//////60aw5Q+4EVmeHgxW3hSaHhxkHBZa0ZCUbUGlQCMmq2Atse8HVgOc1edjKdIUAQQAJFTDjuIYKADB6AzNK6W1Wu83TSqlLQrpghG4BAxaZXXXiSGQlF4lNpEzFL0u6oEhU5KCUAAIAAwcCtdegKAIAASyKKJqkQ4c4//uQwP+AFQXtRaxujdOPPej9vVG6c4ipOlgZYiRPCzhywNABAxShE10HRb//pf1aNRmyO3zI2LRDxRAlHDVZMH1VPSSd1rRRR6KKLVIsitJJJJJv0UUtaJiTCZWDFgDVEnDY89aP//////9BTDDY1/////////////////////////////////////////////////////////////////////////+IREREQhG/sAglY//6KJWJyJZwqXTcvno7DErboztlAOB5Q5aPAVCwAMHHiC/+d5+v/6fPuWVTDG1QQ5u5U7T085Kb3cKt+1d1a5zrN200kFEkDlYGRSspVX////+Yjeb+uZkUD8xbQMM9BGPJB0Ff//////7y2O4IRQAwcvGP///////68iIL///smfshAlGv1tssRc1TyY6V7iPs3J1ldQQrYXLUfRUTxDAUxFk0BgODPxklzEYeq37Ot//2KHOevTF6JPktyQv2n21rr5svqz7zy9lkYjMiksWhx903rLnXJ8zRBQgBpmRsg//////nCr/6Khdj+BhE//uQwP+AIKXrSexujdobPWo9jdG+gIrxVdF2///////10ifCj8rI////////oYaqV////////////////////////////////////////////////////////////////////////////D///7Jv8IQRQDO+FARDmYdWGFxoWeiw1jrQCV4kWywtCJVEacMJoXTgIngFYMJTDClkxVUMaYV5MhZMXMAKYLvK/J6MbqXbl3FZCCVdz4ppRl0mAtZCos0V9gsGhUACwWKgzRQQAlslbQuDFnS4SE0s8gBBgGgKAAGCQIgJAjyBdyPIsICiEwoELpAZMiBn0YyJsi//////KBq/+6JuQETuENQBgsO02Wf///////2TJEYgNBoGFCEPS1///////9OZhkUDeId3cxM+YAAJlWp20ymAEw12MPeeM5QTJYaooegx0G8Q3CgSVyiDQIKMCdPIHZJS9yrY7zzvzdW1dxsWlvT0BrZZ06SfaQpeB0YzEqWIzNPS25TjBzhF8uopJM46SKkYUy+K6Ac4A2yw23/////5wl3///uQwP+AGPnrRaxqjdsRPWi1vdG61lArizBYwF6wFnBFy4Zq///////6RcJ0PxAkwIibM////////oWFJEf//////////////////////////////////////////////////////////////////////////////////////////////////A///8JnzAIAVmx0kHOEQJAnDhfJU8OO3E2ol02Rq30Mw7BfpG8qQzJk2pw7HoEfycw5+Mo5Sz/cNo5IbrsXk3zYm3pWlTd+nvb7Z5Nz1bsOmBkyCJqYCzCKDZFnjSFmAZUCBuUpVSW9FSf////zgmRwzVpuZkwRcfw9MIAQj4DMhAVyC3miZYMzqX/9T////6aBeK4Y4A0tKhsiYLb///////SxQqgEeHh3dBN2YABRiugIWpeIRBmkh4Lh1HgKKLyMwiM8kMIAL4QakeX/elMkSBpgjClPZCSCjgQGEBkP3tSbq9sz2HJRYvzwoALYFxFLJAyNH8yQ4wwJXiN5gQphwoGHr3ZQhmCQZgwoGBphs8LgFmC+Cm8P//uQwP+AHLnrSexqjfqYPWk1DVG+peGABC5CCFozJMSgHqBiwfROCA4jcAUKBggwG4LEKzJGiFK2qt02QrTT6aadBRhRdAokkgzopoJmZFkC6dFMEKAYOWC1E2OmxmpbJvsg3tX/f0Fpr6mtoGiLEmLEDUwBmQ43zc+myJ5+gpr2/////+LxAorMzw5ibcySSGbgVI4s0bUFvlRF1TEkxkBwnmTRAgS0IsShkDgoCUTJhFN3qe53SAcEAAuqh1ch6VWt0sqM8YtE2zSUhS5KKLatJRNLYltUfYEUyRWTGVKXFbQuEYIRigAYJq6hoFAMUQBFKXD+JRGVGZFmkSHSIChlkZUXCJRFAAFCYDJYTFBEWNjqK0UVLUtF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i46E//uQwNGAI+ntRafjTfNZs2b897G1oxMT1a7i56xytHECIHTFS0SjE9MTlbS1oDkxWrT2testOT1a7XGjIkmJieurVtF1Vp6tWxWs0tWnJitW1yzK1atOVta19k5W1rWtKsrVq1atJYiMokAACejpCxpYSq////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQwJyAGMAJGoekACAAACXAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+};
+
+const HERO_VOICELINES = {
+  axe: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_axe_axe_spawn_02.mp3',
+  pudge: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_pudge_pud_spawn_04.mp3',
+  crystal_maiden: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_crystalmaiden_cm_spawn_02.mp3',
+  antimage: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_antimage_anti_spawn_04.mp3',
+  kunkka: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_kunkka_kunk_spawn_06.mp3',
+  lina: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_lina_lina_spawn_05.mp3',
+  storm_spirit: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_stormspirit_ss_spawn_04.mp3',
+  zuus: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_zuus_zuus_spawn_04.mp3',
+  drow_ranger: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_drowranger_dro_spawn_04.mp3',
+  silencer: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/attention/Vo_silencer_silen_attack_14.mp3',
+  bloodseeker: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_bloodseeker_blod_spawn_05.mp3',
+  tidehunter: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_tidehunter_tide_spawn_04.mp3',
+  windrunner: 'https://cdn.jsdelivr.net/npm/dota2-hero-sounds@1.2.0/sounds/start/Vo_windrunner_wind_spawn_06.mp3'
+};
+
+class SoundFX {
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+    this.volume = 0.65;
+    this.audioCache = new Map();
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        this.ctx = new AudioContext();
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+  }
+
+  toggle(enable) {
+    if (enable !== undefined) {
+      this.enabled = enable;
+    } else {
+      this.enabled = !this.enabled;
+    }
+    return this.enabled;
+  }
+
+  setVolume(val) {
+    this.volume = Math.max(0, Math.min(1, val));
+  }
+
+  _playAudioUrl(url, volumeMult = 1) {
+    if (!this.enabled) return;
+    try {
+      const audio = new Audio(url);
+      audio.volume = Math.max(0, Math.min(1, this.volume * volumeMult));
+      audio.play().catch(() => {});
+    } catch (e) {
+      // Ignore autoplay errors
+    }
+  }
+
+  // Tactile Click Sound
+  playClick() {
+    if (!this.enabled) return;
+    this.init();
+    try {
+      this._playAudioUrl(AUDIO_DATA.click, 0.7);
+    } catch (e) {
+      this._synthClick();
+    }
+  }
+
+  // Dota 2 Start Horn / Match Ready Gong
+  playGong() {
+    if (!this.enabled) return;
+    this.init();
+    // Try horn.wav first, fallback to synthesized gong
+    try {
+      const audio = new Audio('sounds/horn.wav');
+      audio.volume = this.volume;
+      audio.play().then(() => {}).catch(() => {
+        this._synthGong();
+      });
+    } catch (e) {
+      this._synthGong();
+    }
+  }
+
+  // Ban Sound: Steel Blade Slice / Impact
+  playBan() {
+    if (!this.enabled) return;
+    this.init();
+    try {
+      this._playAudioUrl(AUDIO_DATA.ban, 0.9);
+    } catch (e) {
+      this._synthBan();
+    }
+  }
+
+  // Hero Pick Sound: Lock-in chime + optional hero voice line
+  playPick(heroSlug = null) {
+    if (!this.enabled) return;
+    this.init();
+    try {
+      this._playAudioUrl(AUDIO_DATA.pick, 0.85);
+
+      // Play hero voice line if available
+      if (heroSlug && HERO_VOICELINES[heroSlug]) {
+        setTimeout(() => {
+          this._playAudioUrl(HERO_VOICELINES[heroSlug], 0.75);
+        }, 180);
+      }
+    } catch (e) {
+      this._synthPick();
+    }
+  }
+
+  // Countdown warning tick (last 5 seconds)
+  playAlert() {
+    if (!this.enabled) return;
+    this.init();
+    try {
+      this._playAudioUrl(AUDIO_DATA.tick, 0.8);
+    } catch (e) {
+      this._synthAlert();
+    }
+  }
+
+  // Timer runout buzzer
+  playTimeExpired() {
+    if (!this.enabled) return;
+    this.init();
+    this._synthTimeExpired();
+  }
+
+  // Draft completion victory fanfare
+  playComplete() {
+    if (!this.enabled) return;
+    this.init();
+    this.playGong();
+    setTimeout(() => {
+      this._synthComplete();
+    }, 400);
+  }
+
+  // Coin flip spin
+  playCoinFlip() {
+    if (!this.enabled) return;
+    this.init();
+    this._synthCoinFlip();
+  }
+
+  /* ========================================================================
+     SYNTHESIZER FALLBACKS (Web Audio API)
+     ======================================================================== */
+  _synthClick() {
+    if (!this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.15 * this.volume, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.04);
+  }
+
+  _synthGong() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const freqs = [110, 164.8, 220, 277.2, 330];
+    freqs.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = idx === 0 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.96, now + 2.5);
+      const peak = (0.28 / (idx + 1)) * this.volume;
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(peak, now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 2.5);
+    });
+  }
+
+  _synthBan() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(35, now + 0.6);
+    gain.gain.setValueAtTime(0.45 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(450, now);
+    filter.frequency.exponentialRampToValueAtTime(90, now + 0.6);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.6);
+  }
+
+  _synthPick() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const notes = [261.63, 329.63, 392.00, 523.25];
+    notes.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+      const delay = idx * 0.04;
+      gain.gain.setValueAtTime(0.001, now + delay);
+      gain.gain.linearRampToValueAtTime(0.22 * this.volume, now + delay + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.8);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.85);
+    });
+  }
+
+  _synthAlert() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(920, now);
+    gain.gain.setValueAtTime(0.2 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  _synthTimeExpired() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.setValueAtTime(130, now + 0.15);
+    gain.gain.setValueAtTime(0.3 * this.volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.45);
+  }
+
+  _synthComplete() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const melody = [
+      { f: 392.00, t: 0.0, d: 0.2 },
+      { f: 523.25, t: 0.18, d: 0.25 },
+      { f: 659.25, t: 0.38, d: 0.25 },
+      { f: 783.99, t: 0.60, d: 0.7 }
+    ];
+    melody.forEach(note => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(note.f, now + note.t);
+      gain.gain.setValueAtTime(0.001, now + note.t);
+      gain.gain.linearRampToValueAtTime(0.25 * this.volume, now + note.t + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + note.t + note.d);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + note.t);
+      osc.stop(now + note.t + note.d + 0.05);
+    });
+  }
+
+  _synthCoinFlip() {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    for (let i = 0; i < 7; i++) {
+      const t = now + i * 0.07;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1400 + (i % 2) * 400, t);
+      gain.gain.setValueAtTime(0.12 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.05);
+    }
+  }
+}
+const sounds = new SoundFX();
+
+  // --- NETWORK WEBRTC ---
+// WebRTC Peer-to-Peer Multiplayer for Dota 2 Drafter using PeerJS
 class DrafterNetwork {
   constructor(engine, onStatusChange) {
     this.engine = engine;
@@ -2274,7 +2277,7 @@ class DrafterNetwork {
       status: 'creating',
       roomId: this.roomId,
       myRole: this.myRole,
-      message: 'Создание комнаты...'
+      message: 'Creating room...'
     });
 
     this.peer.on('open', (id) => {
@@ -2282,7 +2285,7 @@ class DrafterNetwork {
         status: 'waiting',
         roomId: this.roomId,
         myRole: this.myRole,
-        message: 'Ожидание подключения соперника...'
+        message: 'Waiting for opponent to connect...'
       });
     });
 
@@ -2296,7 +2299,7 @@ class DrafterNetwork {
           roomId: this.roomId,
           myRole: this.myRole,
           opponentConnected: true,
-          message: 'Соперник подключен!'
+          message: 'Opponent connected!'
         });
 
         // Send initial complete state to joined client
@@ -2317,7 +2320,7 @@ class DrafterNetwork {
           status: 'disconnected',
           roomId: this.roomId,
           myRole: this.myRole,
-          message: 'Соперник отключился'
+          message: 'Opponent disconnected'
         });
       });
     });
@@ -2330,7 +2333,7 @@ class DrafterNetwork {
       } else {
         this.onStatusChange({
           status: 'error',
-          message: 'Ошибка подключения: ' + err.message
+          message: 'Connection error: ' + err.message
         });
       }
     });
@@ -2357,7 +2360,7 @@ class DrafterNetwork {
       status: 'connecting',
       roomId: this.roomId,
       myRole: this.myRole,
-      message: `Подключение к комнате ${this.roomId}...`
+      message: `Connecting to room ${this.roomId}...`
     });
 
     this.peer.on('open', () => {
@@ -2373,7 +2376,7 @@ class DrafterNetwork {
           roomId: this.roomId,
           myRole: this.myRole,
           opponentConnected: true,
-          message: 'Успешно подключено к комнате!'
+          message: 'Successfully connected to room!'
         });
 
         // Announce joined role
@@ -2393,14 +2396,14 @@ class DrafterNetwork {
           status: 'disconnected',
           roomId: this.roomId,
           myRole: this.myRole,
-          message: 'Хост отключился'
+          message: 'Host disconnected'
         });
       });
 
       conn.on('error', (err) => {
         this.onStatusChange({
           status: 'error',
-          message: 'Ошибка соединения: ' + err.message
+          message: 'Connection error: ' + err.message
         });
       });
     });
@@ -2408,7 +2411,7 @@ class DrafterNetwork {
     this.peer.on('error', (err) => {
       this.onStatusChange({
         status: 'error',
-        message: 'Комната не найдена или ошибка сети'
+        message: 'Room not found or network error'
       });
     });
   }
@@ -2538,25 +2541,8 @@ class DrafterNetwork {
 }
 
 
-  // Expose to window
-  if (typeof window !== 'undefined') {
-    window.DraftEngine = DraftEngine;
-    window.PHASE = PHASE;
-    window.sounds = sounds;
-    window.generatePool = generatePool;
-    window.HEROES = HEROES;
-    window.ATTRIBUTES = ATTRIBUTES;
-    window.DrafterNetwork = DrafterNetwork;
-  }
-
-  // --- APPLICATION CONTROLLER ---
-  function initApp() {
-    if (typeof document === 'undefined') return;
-    const rootEl = document.getElementById('turnStatusContainer');
-    if (!rootEl) return;
-
-    // Dota 2 Tournament Drafter - Controller
-
+  // --- CONTROLLER ---
+// Dota 2 Tournament Drafter - Controller
 
 
 
@@ -2712,7 +2698,7 @@ function handleNetworkStatus(statusObj) {
     activeRoomInfo.style.display = 'flex';
     displayRoomCode.textContent = statusObj.roomId;
     disconnectOnlineBtn.style.display = 'inline-flex';
-    onlineBtnText.textContent = `Комната: ${statusObj.roomId}`;
+    onlineBtnText.textContent = `ROOM: ${statusObj.roomId}`;
 
     const baseUrl = `${window.location.origin}${window.location.pathname}`;
     direInviteLink.value = `${baseUrl}#room=${statusObj.roomId}&role=dire`;
@@ -2721,31 +2707,31 @@ function handleNetworkStatus(statusObj) {
     // Role badge
     if (network.myRole === 'radiant') {
       myRoleBadge.className = 'role-badge radiant';
-      myRoleBadge.textContent = 'Вы: Капитан Radiant';
+      myRoleBadge.textContent = 'Role: Radiant Captain';
     } else if (network.myRole === 'dire') {
       myRoleBadge.className = 'role-badge dire';
-      myRoleBadge.textContent = 'Вы: Капитан Dire';
+      myRoleBadge.textContent = 'Role: Dire Captain';
     } else {
       myRoleBadge.className = 'role-badge spectator';
-      myRoleBadge.textContent = 'Режим: Зритель';
+      myRoleBadge.textContent = 'Role: Spectator';
     }
 
     if (statusObj.status === 'connected') {
-      displayConnStatus.textContent = '🟢 Соперник подключен!';
+      displayConnStatus.textContent = '🟢 Opponent Connected';
       displayConnStatus.style.color = '#26e07f';
-      networkStatusIndicator.textContent = '🟢 В сети (соперник подключен)';
-      showToast('🟢 Соперник подключен к комнате!');
+      networkStatusIndicator.textContent = '🟢 Online (Opponent Connected)';
+      showToast('🟢 Opponent joined the draft!');
       sounds.playPick();
     } else {
-      displayConnStatus.textContent = '🟡 Ожидание подключения соперника...';
+      displayConnStatus.textContent = '🟡 Waiting for opponent to join...';
       displayConnStatus.style.color = '#ffcc00';
-      networkStatusIndicator.textContent = '🟡 Ожидание соперника...';
+      networkStatusIndicator.textContent = '🟡 Waiting for opponent...';
     }
   } else if (statusObj.status === 'disconnected') {
-    displayConnStatus.textContent = '🔴 Соперник отключился';
+    displayConnStatus.textContent = '🔴 Opponent Disconnected';
     displayConnStatus.style.color = '#ff3b30';
-    networkStatusIndicator.textContent = '🔴 Соперник отключился';
-    showToast('⚠️ Соперник отключился от комнаты');
+    networkStatusIndicator.textContent = '🔴 Opponent Disconnected';
+    showToast('⚠️ Opponent disconnected from room');
   } else if (statusObj.status === 'error') {
     showToast(`⚠️ ${statusObj.message}`);
   }
@@ -2783,17 +2769,16 @@ function render(state) {
 
   // Update Turn Status Bar
   const isCompleted = state.isCompleted;
-  const currentStep = state.currentStep;
 
   if (isCompleted) {
     if (phaseIndicator) {
       phaseIndicator.className = 'phase-pill phase-completed';
-      phaseIndicator.textContent = 'ДРАФТ ЗАВЕРШЁН';
+      phaseIndicator.textContent = 'DRAFT COMPLETE';
     }
     if (activeTeamBanner) activeTeamBanner.className = 'active-team-banner';
     if (activeTurnLabel) {
       activeTurnLabel.className = 'turn-team-text';
-      activeTurnLabel.textContent = 'МАТЧ ГОТОВ К НАЧАЛУ';
+      activeTurnLabel.textContent = 'MATCH READY';
     }
     if (activePulseDot) activePulseDot.style.display = 'none';
     radiantPanel.classList.remove('active-panel');
@@ -2802,7 +2787,7 @@ function render(state) {
     const banIndex = state.currentStepIndex + 1;
     if (phaseIndicator) {
       phaseIndicator.className = 'phase-pill phase-ban';
-      phaseIndicator.textContent = `БАНЫ (${banIndex}/6)`;
+      phaseIndicator.textContent = `BANS (${banIndex}/6)`;
     }
     
     const isRadiant = state.currentTeam === 'radiant';
@@ -2810,7 +2795,7 @@ function render(state) {
     if (activePulseDot) activePulseDot.style.display = 'block';
     if (activeTurnLabel) {
       activeTurnLabel.className = `turn-team-text ${state.currentTeam}`;
-      activeTurnLabel.textContent = `ХОД: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
+      activeTurnLabel.textContent = `TURN: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
     }
 
     radiantPanel.classList.toggle('active-panel', isRadiant);
@@ -2820,7 +2805,7 @@ function render(state) {
     const pickIndex = state.currentStepIndex - 6 + 1;
     if (phaseIndicator) {
       phaseIndicator.className = 'phase-pill phase-pick';
-      phaseIndicator.textContent = `ПИКИ (${pickIndex}/10)`;
+      phaseIndicator.textContent = `PICKS (${pickIndex}/10)`;
     }
     
     const isRadiant = state.currentTeam === 'radiant';
@@ -2828,7 +2813,7 @@ function render(state) {
     if (activePulseDot) activePulseDot.style.display = 'block';
     if (activeTurnLabel) {
       activeTurnLabel.className = `turn-team-text ${state.currentTeam}`;
-      activeTurnLabel.textContent = `ХОД: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
+      activeTurnLabel.textContent = `TURN: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
     }
 
     radiantPanel.classList.toggle('active-panel', isRadiant);
@@ -2854,9 +2839,9 @@ function render(state) {
   direPickCount.textContent = `${state.teams.dire.picks.length} / 5`;
 
   // Render Radiant Bans
-  renderBansSlots(radiantBansGrid, state.teams.radiant.bans, 'Radiant');
+  renderBansSlots(radiantBansGrid, state.teams.radiant.bans);
   // Render Dire Bans
-  renderBansSlots(direBansGrid, state.teams.dire.bans, 'Dire');
+  renderBansSlots(direBansGrid, state.teams.dire.bans);
 
   // Render Radiant Picks
   renderPicksSlots(radiantPicksList, state.teams.radiant.picks, !isCompleted && state.currentTeam === 'radiant' && state.phase === PHASE.PICK);
@@ -2876,7 +2861,7 @@ function render(state) {
   allCountPill.textContent = `${state.byAttr.all.filter(h => h.status === 'available').length} / 5`;
 
   const totalAvailable = state.pool.filter(h => h.status === 'available').length;
-  poolStatsBadge.textContent = `Доступно: ${totalAvailable} / 20`;
+  poolStatsBadge.textContent = `Available: ${totalAvailable} / 20`;
 
   // Selected Hero Preview & Action Lock-in Button
   renderActionControls(state);
@@ -2891,19 +2876,19 @@ function render(state) {
 }
 
 // Render Bans Slots helper
-function renderBansSlots(container, bansList, teamLabel) {
+function renderBansSlots(container, bansList) {
   const slots = container.querySelectorAll('.ban-slot');
   slots.forEach((slot, idx) => {
     const hero = bansList[idx];
     if (hero) {
       slot.className = 'ban-slot filled';
       slot.innerHTML = `
-        <img src="${hero.img}" alt="${hero.nameRu}" title="${hero.nameRu} (Забанен)">
+        <img src="${hero.img}" alt="${hero.name}" title="${hero.name} (Banned)">
         <span class="ban-cross">✕</span>
       `;
     } else {
       slot.className = 'ban-slot';
-      slot.innerHTML = `<span class="slot-placeholder">БАН ${idx + 1}</span>`;
+      slot.innerHTML = `<span class="slot-placeholder">BAN ${idx + 1}</span>`;
     }
   });
 }
@@ -2914,16 +2899,16 @@ function renderPicksSlots(container, picksList, isActiveTeam) {
   slots.forEach((slot, idx) => {
     const hero = picksList[idx];
     if (hero) {
-      const attrInfo = ATTRIBUTES[hero.attr] || { nameRu: '', color: '#fff' };
+      const attrInfo = ATTRIBUTES[hero.attr] || { nameEn: 'Universal', color: '#fff' };
       slot.className = 'pick-slot filled';
       slot.innerHTML = `
         <div class="pick-slot-portrait">
-          <img src="${hero.img}" alt="${hero.nameRu}">
+          <img src="${hero.img}" alt="${hero.name}">
         </div>
         <div class="pick-slot-info">
-          <div class="pick-slot-name" title="${hero.nameRu}">${hero.nameRu}</div>
+          <div class="pick-slot-name" title="${hero.name}">${hero.name}</div>
           <div class="pick-slot-attr">
-            <span style="color:${attrInfo.color}; font-weight:700; font-size:0.65rem;">${attrInfo.nameRu}</span>
+            <span style="color:${attrInfo.color}; font-weight:700; font-size:0.65rem;">${attrInfo.nameEn}</span>
             <span style="color:var(--text-dim); margin-left:4px;">• ${hero.attackType}</span>
           </div>
         </div>
@@ -2931,7 +2916,7 @@ function renderPicksSlots(container, picksList, isActiveTeam) {
     } else {
       const isNext = isActiveTeam && idx === picksList.length;
       slot.className = `pick-slot ${isNext ? 'active-picking' : ''}`;
-      slot.innerHTML = `<span class="empty-slot-text">СЛОТ ${idx + 1} ${isNext ? '(ВЫБОР...)' : ''}</span>`;
+      slot.innerHTML = `<span class="empty-slot-text">SLOT ${idx + 1} ${isNext ? '(PICKING...)' : ''}</span>`;
     }
   });
 }
@@ -2944,8 +2929,7 @@ function renderAttributeStack(container, heroes, selectedId, state) {
   container.innerHTML = '';
   heroes.forEach(hero => {
     const matchesSearch = !searchQuery || 
-      hero.nameEn.toLowerCase().includes(searchQuery) ||
-      hero.nameRu.toLowerCase().includes(searchQuery);
+      hero.nameEn.toLowerCase().includes(searchQuery);
 
     const card = document.createElement('div');
     let statusClass = '';
@@ -2965,10 +2949,9 @@ function renderAttributeStack(container, heroes, selectedId, state) {
 
     card.innerHTML = `
       <div class="hero-img-wrap">
-        <img src="${hero.img}" alt="${hero.nameRu}" loading="lazy">
+        <img src="${hero.img}" alt="${hero.name}" loading="lazy">
         <div class="hero-name-overlay">
-          <span class="ru" title="${hero.nameRu}">${hero.nameRu}</span>
-          <span class="en">${hero.nameEn}</span>
+          <span class="hero-name-text" title="${hero.name}">${hero.name}</span>
         </div>
       </div>
     `;
@@ -3003,23 +2986,23 @@ function renderActionControls(state) {
   if (state.isCompleted) {
     lockInBtn.disabled = true;
     lockInBtn.className = 'main-lockin-btn';
-    lockInBtnText.textContent = 'ДРАФТ ЗАВЕРШЁН';
+    lockInBtnText.textContent = 'DRAFT COMPLETE';
     if (lockInActionIcon) lockInActionIcon.textContent = '';
     previewThumb.style.display = 'none';
-    previewName.textContent = 'Матч готов к старту';
-    previewHint.textContent = 'Все пики и баны совершены';
+    previewName.textContent = 'Match ready to start';
+    previewHint.textContent = 'All picks and bans locked in';
     return;
   }
 
   if (selectedHero) {
     previewThumb.src = selectedHero.img;
     previewThumb.style.display = 'block';
-    previewName.textContent = selectedHero.nameRu;
-    previewHint.textContent = `${selectedHero.nameEn} • ${ATTRIBUTES[selectedHero.attr].nameRu} • ${selectedHero.attackType}`;
+    previewName.textContent = selectedHero.name;
+    previewHint.textContent = `${ATTRIBUTES[selectedHero.attr].nameEn} • ${selectedHero.attackType}`;
   } else {
     previewThumb.style.display = 'none';
-    previewName.textContent = allowedToAct ? 'ВЫБЕРИТЕ ГЕРОЯ' : 'ХОД СОПЕРНИКА';
-    previewHint.textContent = allowedToAct ? 'Кликните на карточку или нажмите Случайно' : 'Ожидание действия противоположной команды';
+    previewName.textContent = allowedToAct ? 'SELECT A HERO' : 'OPPONENT TURN';
+    previewHint.textContent = allowedToAct ? 'Click a portrait or click Random' : 'Waiting for opposing team action';
   }
 
   // In online mode, lock button if not your turn
@@ -3027,7 +3010,7 @@ function renderActionControls(state) {
     lockInBtn.disabled = true;
     lockInBtn.className = 'main-lockin-btn';
     if (lockInActionIcon) lockInActionIcon.textContent = '';
-    lockInBtnText.textContent = network.myRole === 'spectator' ? 'РЕЖИМ ЗРИТЕЛЯ' : 'ХОД СОПЕРНИКА...';
+    lockInBtnText.textContent = network.myRole === 'spectator' ? 'SPECTATOR MODE' : 'OPPONENT TURN...';
     return;
   }
 
@@ -3037,16 +3020,15 @@ function renderActionControls(state) {
   if (state.phase === PHASE.BAN) {
     lockInBtn.className = 'main-lockin-btn btn-ban';
     if (lockInActionIcon) lockInActionIcon.textContent = '';
-    lockInBtnText.textContent = selectedHero ? `ЗАБАНИТЬ: ${selectedHero.nameRu.toUpperCase()}` : 'ПОДТВЕРДИТЬ БАН';
+    lockInBtnText.textContent = selectedHero ? `LOCK BAN: ${selectedHero.name.toUpperCase()}` : 'LOCK IN BAN';
   } else {
     // Pick Phase
     const isRadiant = state.currentTeam === 'radiant';
     lockInBtn.className = `main-lockin-btn ${isRadiant ? 'btn-pick-radiant' : 'btn-pick-dire'}`;
     if (lockInActionIcon) lockInActionIcon.textContent = '';
-    lockInBtnText.textContent = selectedHero ? `ВЫБРАТЬ: ${selectedHero.nameRu.toUpperCase()}` : 'ПОДТВЕРДИТЬ ПИК';
+    lockInBtnText.textContent = selectedHero ? `LOCK PICK: ${selectedHero.name.toUpperCase()}` : 'LOCK IN PICK';
   }
 }
-
 
 // Lock-In action execution
 function handleLockIn(heroId = null) {
@@ -3066,11 +3048,11 @@ function handleLockIn(heroId = null) {
 
     if (phaseBefore === PHASE.BAN) {
       sounds.playBan();
-      showToast(`🛡️ ${action.hero.nameRu} забанен!`);
+      showToast(`🛡️ ${action.hero.name} banned!`);
     } else {
-      sounds.playPick();
+      sounds.playPick(action.hero.slug);
       const teamName = action.team === 'radiant' ? engine.teams.radiant.name : engine.teams.dire.name;
-      showToast(`⚔️ ${teamName} выбирает ${action.hero.nameRu}!`);
+      showToast(`⚔️ ${teamName} picked ${action.hero.name}!`);
     }
 
     if (engine.getState().isCompleted) {
@@ -3087,34 +3069,34 @@ function openSummaryModal(state) {
   // Picks Radiant
   summaryRadiantPicks.innerHTML = state.teams.radiant.picks.map(h => `
     <div class="summary-hero-row">
-      <img src="${h.img}" alt="${h.nameRu}">
-      <span class="name">${h.nameRu}</span>
-      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].icon} ${ATTRIBUTES[h.attr].nameRu}</span>
+      <img src="${h.img}" alt="${h.name}">
+      <span class="name">${h.name}</span>
+      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].nameEn}</span>
     </div>
   `).join('');
 
   // Picks Dire
   summaryDirePicks.innerHTML = state.teams.dire.picks.map(h => `
     <div class="summary-hero-row">
-      <img src="${h.img}" alt="${h.nameRu}">
-      <span class="name">${h.nameRu}</span>
-      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].icon} ${ATTRIBUTES[h.attr].nameRu}</span>
+      <img src="${h.img}" alt="${h.name}">
+      <span class="name">${h.name}</span>
+      <span style="font-size:0.75rem; color:${ATTRIBUTES[h.attr].color}; margin-left:auto;">${ATTRIBUTES[h.attr].nameEn}</span>
     </div>
   `).join('');
 
   // Bans Radiant
   summaryRadiantBans.innerHTML = state.teams.radiant.bans.map(h => `
     <div class="summary-ban-tag">
-      <img src="${h.img}" alt="${h.nameRu}">
-      <span>${h.nameRu}</span>
+      <img src="${h.img}" alt="${h.name}">
+      <span>${h.name}</span>
     </div>
   `).join('');
 
   // Bans Dire
   summaryDireBans.innerHTML = state.teams.dire.bans.map(h => `
     <div class="summary-ban-tag">
-      <img src="${h.img}" alt="${h.nameRu}">
-      <span>${h.nameRu}</span>
+      <img src="${h.img}" alt="${h.name}">
+      <span>${h.name}</span>
     </div>
   `).join('');
 
@@ -3122,9 +3104,9 @@ function openSummaryModal(state) {
   const unpicked = state.pool.filter(h => h.status === 'available');
   summaryUnpicked.innerHTML = unpicked.map(h => `
     <div class="unpicked-tag">
-      <img src="${h.img}" alt="${h.nameRu}">
-      <span>${h.nameRu}</span>
-      <span style="font-size:0.7rem; color:${ATTRIBUTES[h.attr].color};">${ATTRIBUTES[h.attr].icon}</span>
+      <img src="${h.img}" alt="${h.name}">
+      <span>${h.name}</span>
+      <span style="font-size:0.7rem; color:${ATTRIBUTES[h.attr].color};">${ATTRIBUTES[h.attr].nameEn}</span>
     </div>
   `).join('');
 
@@ -3134,26 +3116,26 @@ function openSummaryModal(state) {
 // Copy Markdown Text Summary for Discord / Telegram
 function copyDraftSummary() {
   const state = engine.getState();
-  const radiantPicks = state.teams.radiant.picks.map(h => `• ${h.nameRu} (${h.nameEn})`).join('\n');
-  const direPicks = state.teams.dire.picks.map(h => `• ${h.nameRu} (${h.nameEn})`).join('\n');
-  const radiantBans = state.teams.radiant.bans.map(h => h.nameRu).join(', ') || 'Нет';
-  const direBans = state.teams.dire.bans.map(h => h.nameRu).join(', ') || 'Нет';
+  const radiantPicks = state.teams.radiant.picks.map(h => `• ${h.name}`).join('\n');
+  const direPicks = state.teams.dire.picks.map(h => `• ${h.name}`).join('\n');
+  const radiantBans = state.teams.radiant.bans.map(h => h.name).join(', ') || 'None';
+  const direBans = state.teams.dire.bans.map(h => h.name).join(', ') || 'None';
 
-  const text = `🏆 **Dota 2 Tournament Draft Results** (Сид: ${state.seed})
+  const text = `🏆 **Dota 2 Tournament Draft Results** (Seed: ${state.seed})
   
 🟢 **${state.teams.radiant.name}** (Radiant):
 ${radiantPicks}
-*Баны:* ${radiantBans}
+*Bans:* ${radiantBans}
 
 🔴 **${state.teams.dire.name}** (Dire):
 ${direPicks}
-*Баны:* ${direBans}
+*Bans:* ${direBans}
 `;
 
   navigator.clipboard.writeText(text).then(() => {
-    showToast('📋 Результаты скопированы в буфер обмена!');
+    showToast('📋 Draft results copied to clipboard!');
   }).catch(() => {
-    showToast('Не удалось скопировать, используйте выделение текста');
+    showToast('Failed to copy, please select text manually');
   });
 }
 
@@ -3164,7 +3146,7 @@ undoBtn.addEventListener('click', () => {
   if (engine.undo()) {
     network.sendUndo();
     sounds.playClick();
-    showToast('↩️ Отмена последнего действия');
+    showToast('↩️ Undone last action');
   }
 });
 
@@ -3179,42 +3161,42 @@ randomPickBtn.addEventListener('click', () => {
 });
 
 resetDraftBtn.addEventListener('click', () => {
-  if (confirm('Сбросить текущий драфт и начать заново с тем же пулом героев?')) {
+  if (confirm('Reset the current draft and start over with the same hero pool?')) {
     engine.resetDraft();
     network.sendReset();
     sounds.playGong();
-    showToast('🔄 Драфт сброшен');
+    showToast('🔄 Draft reset');
   }
 });
 
 rerollPoolBtn.addEventListener('click', () => {
-  if (confirm('Сгенерировать полностью новый случайный пул из 20 героев (по 5 на каждый атрибут)?')) {
+  if (confirm('Generate a brand-new random pool of 20 heroes (5 per attribute)?')) {
     engine.rerollPool();
     network.sendReroll(engine.seed);
     updateUrlHash(engine.seed, network.roomId, network.myRole);
     sounds.playGong();
-    showToast(`🎲 Новый пул сгенерирован (Сид: ${engine.seed})`);
+    showToast(`🎲 New pool generated (Seed: ${engine.seed})`);
   }
 });
 
 // Coin Flip
 coinFlipBtn.addEventListener('click', () => {
   if (engine.getState().currentStepIndex > 0) {
-    showToast('⚠️ Жеребьевка возможна только до первого бана');
+    showToast('⚠️ Coin toss is only available before first ban');
     return;
   }
   sounds.playCoinFlip();
   const first = Math.random() < 0.5 ? 'radiant' : 'dire';
   engine.setFirstTurn(first);
   const teamName = first === 'radiant' ? engine.teams.radiant.name : engine.teams.dire.name;
-  showToast(`🪙 Монетка решила: первый ход у ${teamName}!`);
+  showToast(`🪙 Coin toss result: ${teamName} goes first!`);
 });
 
 // Share button
 shareBtn.addEventListener('click', () => {
   const url = `${window.location.origin}${window.location.pathname}#seed=${engine.seed}`;
   navigator.clipboard.writeText(url).then(() => {
-    showToast(`🔗 Ссылка с сидом ${engine.seed} скопирована!`);
+    showToast(`🔗 Share link with seed ${engine.seed} copied!`);
   });
 });
 
@@ -3233,7 +3215,7 @@ closeOnlineFooterBtn.addEventListener('click', () => {
 
 createRoomBtn.addEventListener('click', () => {
   const room = network.createRoom();
-  showToast(`🌐 Комната ${room} создана! Скопируйте ссылку для соперника.`);
+  showToast(`🌐 Room ${room} created! Share invite link with opponent.`);
 });
 
 joinRoomBtn.addEventListener('click', () => {
@@ -3241,26 +3223,26 @@ joinRoomBtn.addEventListener('click', () => {
   if (code) {
     network.joinRoom(code, 'dire');
     onlineModal.classList.remove('open');
-    showToast(`🔄 Подключение к комнате ${code}...`);
+    showToast(`🔄 Connecting to room ${code}...`);
   } else {
-    showToast('Введите корректный код комнаты');
+    showToast('Please enter a valid room code');
   }
 });
 
 copyDireLinkBtn.addEventListener('click', () => {
   navigator.clipboard.writeText(direInviteLink.value).then(() => {
-    showToast('📋 Ссылка для Капитана Dire скопирована!');
+    showToast('📋 Dire Captain invite link copied!');
   });
 });
 
 copySpecLinkBtn.addEventListener('click', () => {
   navigator.clipboard.writeText(specInviteLink.value).then(() => {
-    showToast('📋 Ссылка для зрителей скопирована!');
+    showToast('📋 Spectator link copied!');
   });
 });
 
 disconnectOnlineBtn.addEventListener('click', () => {
-  if (confirm('Отключиться от онлайн-комнаты и вернуться в локальный режим?')) {
+  if (confirm('Disconnect from online room and return to local draft mode?')) {
     if (network.peer) network.peer.destroy();
     network.myRole = 'local';
     network.roomId = null;
@@ -3268,9 +3250,9 @@ disconnectOnlineBtn.addEventListener('click', () => {
     onlineChoices.style.display = 'grid';
     activeRoomInfo.style.display = 'none';
     disconnectOnlineBtn.style.display = 'none';
-    onlineBtnText.textContent = 'Онлайн (2 капитана)';
+    onlineBtnText.textContent = 'ONLINE';
     onlineModal.classList.remove('open');
-    showToast('Локальный режим восстановлен');
+    showToast('Local draft mode restored');
     render(engine.getState());
   }
 });
@@ -3279,13 +3261,13 @@ disconnectOnlineBtn.addEventListener('click', () => {
 soundToggleBtn.addEventListener('click', () => {
   const enabled = sounds.toggle();
   soundIcon.textContent = enabled ? '🔊' : '🔇';
-  showToast(enabled ? 'Звуковые эффекты включены' : 'Звуковые эффекты выключены');
+  showToast(enabled ? 'Sound effects unmuted' : 'Sound effects muted');
 });
 
 // Timer Pause / Resume
 timerPauseBtn.addEventListener('click', () => {
   const isPaused = engine.pauseTimer();
-  showToast(isPaused ? '⏸️ Таймер на паузе' : '▶️ Таймер запущен');
+  showToast(isPaused ? '⏸️ Timer paused' : '▶️ Timer resumed');
 });
 
 // Team Name Inputs
@@ -3315,7 +3297,7 @@ window.addEventListener('keydown', (e) => {
     if (engine.undo()) {
       network.sendUndo();
       sounds.playClick();
-      showToast('↩️ Отмена последнего действия');
+      showToast('↩️ Undone last action');
     }
   }
 });
@@ -3351,7 +3333,7 @@ saveSettingsBtn.addEventListener('click', () => {
   }
 
   settingsModal.classList.remove('open');
-  showToast('⚙️ Настройки сохранены');
+  showToast('⚙️ Settings applied');
 });
 
 // Summary Modal Actions
@@ -3366,7 +3348,7 @@ restartSamePoolBtn.addEventListener('click', () => {
   engine.resetDraft();
   network.sendReset();
   sounds.playGong();
-  showToast('🔄 Драфт начат заново');
+  showToast('🔄 Draft restarted');
 });
 
 newPoolModalBtn.addEventListener('click', () => {
@@ -3375,7 +3357,7 @@ newPoolModalBtn.addEventListener('click', () => {
   network.sendReroll(engine.seed);
   updateUrlHash(engine.seed, network.roomId, network.myRole);
   sounds.playGong();
-  showToast(`🎲 Новый пул сгенерирован (Сид: ${engine.seed})`);
+  showToast(`🎲 New pool generated (Seed: ${engine.seed})`);
 });
 
 // Close modals when clicking backdrop
@@ -3397,7 +3379,7 @@ engine.startTimer(
   },
   () => {
     sounds.playTimeExpired();
-    showToast('⏰ Время вышло! Герой выбран автоматически.');
+    showToast('⏰ Time expired! Hero selected automatically.');
   }
 );
 
@@ -3413,11 +3395,6 @@ window.addEventListener('click', () => {
 // Initial render
 render(engine.getState());
 
-  }
-
-  if (typeof document !== 'undefined') {
-    initApp();
-  }
 })();
   </script>
 </body>
