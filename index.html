@@ -6,41 +6,43 @@
   <title>Dota 2 Tournament Drafter | 20 Heroes • 3 Bans</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
 /* ==========================================================================
-   Dota 2 Tournament Drafter - Styling
+   DOTA 2 TOURNAMENT DRAFTER - PROFESSIONAL ESPORTS BROADCAST HUD
+   Compact, Authentic Valve Dota 2 Interface (Zero Scroll, 100vh)
    ========================================================================== */
 
 :root {
-  --bg-dark: #090c10;
-  --bg-panel: rgba(16, 21, 30, 0.85);
-  --bg-card: #151b26;
-  --bg-card-hover: #1f2737;
+  --bg-main: #0a0e14;
+  --bg-hud: rgba(13, 17, 24, 0.95);
+  --bg-card: #131822;
+  --bg-card-hover: #1c2433;
+  --bg-slot: rgba(0, 0, 0, 0.55);
 
-  --color-radiant: #26e07f;
-  --color-radiant-glow: rgba(38, 224, 127, 0.35);
-  --color-dire: #ff3b30;
-  --color-dire-glow: rgba(255, 59, 48, 0.35);
+  --dota-radiant: #38e078;
+  --dota-radiant-dim: #1f6b3e;
+  --dota-dire: #e83a2b;
+  --dota-dire-dim: #7a1f18;
 
   --attr-str: #ec3d27;
-  --attr-str-glow: rgba(236, 61, 39, 0.3);
   --attr-agi: #26e07f;
-  --attr-agi-glow: rgba(38, 224, 127, 0.3);
   --attr-int: #00d5ff;
-  --attr-int-glow: rgba(0, 213, 255, 0.3);
   --attr-all: #c36aff;
-  --attr-all-glow: rgba(195, 106, 255, 0.3);
 
-  --text-main: #f0f4fc;
-  --text-muted: #8b99ae;
-  --text-dim: #546274;
+  --gold-accent: #c49d48;
+  --gold-glow: rgba(196, 157, 72, 0.4);
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(255, 255, 255, 0.25);
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-bevel: rgba(255, 255, 255, 0.16);
+  --border-gold: rgba(196, 157, 72, 0.35);
 
-  --font-heading: 'Cinzel', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --text-primary: #e6ebf2;
+  --text-secondary: #8e9bb0;
+  --text-dim: #556277;
+
+  --font-hud: 'Cinzel', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * {
@@ -50,71 +52,56 @@
   user-select: none;
 }
 
-body {
-  background-color: var(--bg-dark);
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-main);
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(38, 224, 127, 0.07) 0%, transparent 45%),
-    radial-gradient(circle at 90% 20%, rgba(255, 59, 48, 0.07) 0%, transparent 45%),
-    linear-gradient(180deg, #090c10 0%, #06080b 100%);
-  color: var(--text-main);
-  font-family: var(--font-body);
-  min-height: 100vh;
+    radial-gradient(ellipse at 15% 50%, rgba(56, 224, 120, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 50%, rgba(232, 58, 43, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #0d1118 0%, #06080c 100%);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ==========================================================================
-   Header & Navigation
+   Top Broadcast HUD (Compact 46px)
    ========================================================================== */
 .app-header {
-  background: rgba(11, 15, 22, 0.95);
-  border-bottom: 1px solid var(--border-subtle);
-  backdrop-filter: blur(12px);
-  padding: 12px 24px;
+  height: 46px;
+  min-height: 46px;
+  background: linear-gradient(180deg, #141923 0%, #0c1017 100%);
+  border-bottom: 1px solid rgba(196, 157, 72, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  position: sticky;
-  top: 0;
+  padding: 0 16px;
   z-index: 100;
 }
 
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.dota-logo {
-  width: 32px;
-  height: 32px;
-  filter: drop-shadow(0 0 8px rgba(255, 60, 40, 0.4));
+.dota-emblem {
+  width: 22px;
+  height: 22px;
+  fill: #d33526;
+  filter: drop-shadow(0 0 6px rgba(211, 53, 38, 0.5));
 }
 
 .brand-title {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-family: var(--font-hud);
+  font-size: 0.95rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
   color: #fff;
   display: flex;
   align-items: center;
@@ -122,403 +109,352 @@ body {
 }
 
 .brand-badge {
-  background: linear-gradient(135deg, #e67e22, #d35400);
-  font-size: 0.65rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-.brand-subtitle {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* Phase Banner & Turn Indicator */
-.turn-status-container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 6px 20px;
-  border-radius: 30px;
-  border: 1px solid var(--border-subtle);
-}
-
-.phase-indicator {
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
+  color: var(--gold-accent);
+  background: rgba(196, 157, 72, 0.12);
+  border: 1px solid rgba(196, 157, 72, 0.3);
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+
+/* Center Turn & Timer HUD */
+.center-hud-bar {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+  height: 100%;
 }
 
-.phase-ban {
-  background: rgba(255, 59, 48, 0.15);
-  color: #ff5549;
-  border: 1px solid rgba(255, 59, 48, 0.3);
-}
-
-.phase-pick {
-  background: rgba(38, 224, 127, 0.15);
-  color: #26e07f;
-  border: 1px solid rgba(38, 224, 127, 0.3);
-}
-
-.phase-completed {
-  background: rgba(245, 166, 35, 0.15);
-  color: #f5a623;
-  border: 1px solid rgba(245, 166, 35, 0.3);
-}
-
-.active-team-banner {
+.turn-indicator-box {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-bevel);
+  padding: 4px 14px;
+  border-radius: 4px;
 }
 
-.active-team-banner.radiant {
-  color: var(--color-radiant);
-}
-.active-team-banner.dire {
-  color: var(--color-dire);
-}
-
-.pulse-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  animation: pulse-ring 1.5s infinite;
+.phase-pill {
+  font-family: var(--font-hud);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
 }
 
-.pulse-dot.radiant {
-  background: var(--color-radiant);
-  box-shadow: 0 0 10px var(--color-radiant);
+.phase-pill.phase-ban {
+  background: rgba(232, 58, 43, 0.2);
+  color: #ff5549;
+  border: 1px solid rgba(232, 58, 43, 0.4);
 }
 
-.pulse-dot.dire {
-  background: var(--color-dire);
-  box-shadow: 0 0 10px var(--color-dire);
+.phase-pill.phase-pick {
+  background: rgba(56, 224, 120, 0.2);
+  color: #38e078;
+  border: 1px solid rgba(56, 224, 120, 0.4);
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.8; }
+.phase-pill.phase-completed {
+  background: rgba(196, 157, 72, 0.2);
+  color: var(--gold-accent);
+  border: 1px solid rgba(196, 157, 72, 0.4);
 }
 
-/* Match Timer */
-.timer-wrapper {
+.turn-team-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.turn-team-text.radiant { color: var(--dota-radiant); }
+.turn-team-text.dire { color: var(--dota-dire); }
+
+.timer-box {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border-subtle);
+  gap: 6px;
+  background: #000;
+  border: 1px solid var(--border-bevel);
+  padding: 2px 10px;
+  border-radius: 3px;
 }
 
-.timer-digits {
+.timer-num {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 800;
   color: #fff;
-  min-width: 32px;
+  min-width: 26px;
   text-align: center;
 }
 
-.timer-digits.urgent {
+.timer-num.urgent {
   color: #ff3b30;
-  animation: timer-flash 0.8s infinite;
+  animation: urgent-pulse 0.7s infinite alternate;
 }
 
-@keyframes timer-flash {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.1); }
+@keyframes urgent-pulse {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0.6; transform: scale(1.08); }
 }
 
-.timer-pause-btn {
+.timer-pause-icon {
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-dim);
   cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s;
+  font-size: 0.75rem;
+  padding: 2px 4px;
 }
+.timer-pause-icon:hover { color: #fff; }
 
-.timer-pause-btn:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Header Action Controls */
+/* Right HUD Controls */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
-.btn-icon {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  padding: 7px 12px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+.hud-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-bevel);
+  color: var(--text-secondary);
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  transition: all 0.2s ease;
+  gap: 5px;
+  transition: all 0.15s ease;
 }
 
-.btn-icon:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: var(--border-focus);
+.hud-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-.btn-icon:active {
-  transform: translateY(1px);
+.hud-btn.btn-accent {
+  background: rgba(0, 213, 255, 0.1);
+  border-color: rgba(0, 213, 255, 0.35);
+  color: #00d5ff;
+}
+.hud-btn.btn-accent:hover {
+  background: rgba(0, 213, 255, 0.2);
+  border-color: #00d5ff;
 }
 
 /* ==========================================================================
-   Main Arena Layout (3-Column Arena)
+   Player Online Role Ribbon (Ultra Compact)
+   ========================================================================== */
+.role-banner-bar {
+  background: rgba(0, 0, 0, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.72rem;
+}
+
+.role-badge {
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+}
+.role-badge.radiant { background: rgba(56, 224, 120, 0.2); color: var(--dota-radiant); border: 1px solid var(--dota-radiant); }
+.role-badge.dire { background: rgba(232, 58, 43, 0.2); color: var(--dota-dire); border: 1px solid var(--dota-dire); }
+.role-badge.spectator { background: rgba(196, 157, 72, 0.2); color: var(--gold-accent); border: 1px solid var(--gold-accent); }
+
+/* ==========================================================================
+   Main Arena Layout (Strictly fits inside 100vh viewport)
    ========================================================================== */
 .arena-container {
-  display: grid;
-  grid-template-columns: 290px 1fr 290px;
-  gap: 18px;
-  padding: 18px 24px;
   flex: 1;
-  max-width: 1920px;
-  margin: 0 auto;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 12px;
+  padding: 10px 14px;
+  height: calc(100vh - 46px);
+  max-height: calc(100vh - 46px);
+  overflow: hidden;
 }
 
 /* ==========================================================================
-   Team Side Panels (Radiant & Dire)
+   Team Side Panels (Left & Right)
    ========================================================================== */
 .team-panel {
-  background: var(--bg-panel);
-  border-radius: 12px;
-  border: 1px solid var(--border-subtle);
-  padding: 16px;
+  background: var(--bg-hud);
+  border-radius: 6px;
+  border: 1px solid var(--border-dark);
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  backdrop-filter: blur(16px);
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
   position: relative;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .team-panel.radiant {
-  border-left: 3px solid var(--color-radiant);
+  border-left: 3px solid var(--dota-radiant);
 }
 .team-panel.radiant.active-panel {
-  border-color: var(--color-radiant);
-  box-shadow: 0 0 25px var(--color-radiant-glow);
+  border-color: rgba(56, 224, 120, 0.6);
+  box-shadow: inset 0 0 20px rgba(56, 224, 120, 0.1), 0 0 15px rgba(56, 224, 120, 0.2);
 }
 
 .team-panel.dire {
-  border-right: 3px solid var(--color-dire);
+  border-right: 3px solid var(--dota-dire);
 }
 .team-panel.dire.active-panel {
-  border-color: var(--color-dire);
-  box-shadow: 0 0 25px var(--color-dire-glow);
+  border-color: rgba(232, 58, 43, 0.6);
+  box-shadow: inset 0 0 20px rgba(232, 58, 43, 0.1), 0 0 15px rgba(232, 58, 43, 0.2);
 }
 
 .team-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .team-name-input {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--font-hud);
+  font-size: 0.95rem;
+  font-weight: 800;
   letter-spacing: 1px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
   color: #fff;
-  padding: 4px 6px;
+  padding: 2px 4px;
   width: 100%;
   outline: none;
-  transition: all 0.2s;
 }
-
-.team-panel.radiant .team-name-input {
-  color: var(--color-radiant);
-}
-.team-panel.dire .team-name-input {
-  color: var(--color-dire);
-}
-
+.team-panel.radiant .team-name-input { color: var(--dota-radiant); }
+.team-panel.dire .team-name-input { color: var(--dota-dire); }
 .team-name-input:hover, .team-name-input:focus {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: var(--border-focus);
+  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--border-bevel);
 }
 
-.team-badge-tag {
-  font-size: 0.68rem;
+.panel-subheading {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-
-.team-panel.radiant .team-badge-tag {
-  background: rgba(38, 224, 127, 0.2);
-  color: var(--color-radiant);
-}
-.team-panel.dire .team-badge-tag {
-  background: rgba(255, 59, 48, 0.2);
-  color: var(--color-dire);
-}
-
-/* Bans Section (3 Bans per team) */
-.bans-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.section-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  font-weight: 600;
   display: flex;
   justify-content: space-between;
 }
 
+/* 3 Compact Ban Slots */
 .bans-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .ban-slot {
-  height: 52px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px dashed rgba(255, 59, 48, 0.3);
+  height: 42px;
+  border-radius: 4px;
+  background: var(--bg-slot);
+  border: 1px dashed rgba(232, 58, 43, 0.3);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
 }
 
 .ban-slot.filled {
   border-style: solid;
-  border-color: rgba(255, 59, 48, 0.6);
+  border-color: rgba(232, 58, 43, 0.6);
 }
 
 .ban-slot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(85%) contrast(1.1) brightness(0.6);
+  filter: grayscale(100%) brightness(0.5);
 }
 
 .ban-slot .ban-cross {
   position: absolute;
   color: #ff3b30;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 900;
   pointer-events: none;
-  text-shadow: 0 0 6px #000;
+  text-shadow: 0 0 4px #000;
 }
 
 .ban-slot .slot-placeholder {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: var(--text-dim);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-/* Picks Section (5 Picks per team) */
-.picks-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
+/* 5 Compact Pick Slots */
 .picks-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 
 .pick-slot {
-  min-height: 64px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px dashed var(--border-subtle);
+  flex: 1;
+  min-height: 44px;
+  max-height: 56px;
+  border-radius: 4px;
+  background: var(--bg-slot);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 8px;
+  gap: 8px;
+  padding: 3px 6px;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
 }
 
 .pick-slot.active-picking {
-  border: 1px solid #ffcc00;
-  background: rgba(255, 204, 0, 0.05);
-  animation: pick-slot-glow 1.5s infinite alternate;
-}
-
-@keyframes pick-slot-glow {
-  from { box-shadow: inset 0 0 8px rgba(255, 204, 0, 0.15); }
-  to { box-shadow: inset 0 0 16px rgba(255, 204, 0, 0.35); }
+  border: 1px solid var(--gold-accent);
+  background: rgba(196, 157, 72, 0.08);
 }
 
 .pick-slot.filled {
   border-style: solid;
-  background: rgba(21, 27, 38, 0.9);
+  background: rgba(19, 24, 34, 0.95);
 }
 
-.team-panel.radiant .pick-slot.filled {
-  border-color: rgba(38, 224, 127, 0.4);
-}
-.team-panel.dire .pick-slot.filled {
-  border-color: rgba(255, 59, 48, 0.4);
-}
+.team-panel.radiant .pick-slot.filled { border-color: rgba(56, 224, 120, 0.4); }
+.team-panel.dire .pick-slot.filled { border-color: rgba(232, 58, 43, 0.4); }
 
 .pick-slot-portrait {
-  width: 76px;
-  height: 48px;
-  border-radius: 4px;
-  background: #0d1219;
+  width: 58px;
+  height: 36px;
+  border-radius: 2px;
+  background: #000;
   overflow: hidden;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
 }
 
 .pick-slot-portrait img {
@@ -530,14 +466,14 @@ body {
 .pick-slot-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   overflow: hidden;
   flex: 1;
 }
 
 .pick-slot-name {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
@@ -545,403 +481,399 @@ body {
 }
 
 .pick-slot-attr {
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 .empty-slot-text {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
   font-style: italic;
   padding-left: 4px;
 }
 
 /* ==========================================================================
-   Center Panel: The 20-Hero Tournament Pool
+   Center Panel: 20-Hero Tournament Grid (Compact, High-Density)
    ========================================================================== */
 .pool-panel {
-  background: var(--bg-panel);
-  border-radius: 12px;
-  border: 1px solid var(--border-subtle);
-  padding: 16px 20px;
+  background: var(--bg-hud);
+  border-radius: 6px;
+  border: 1px solid var(--border-dark);
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  backdrop-filter: blur(16px);
+  gap: 8px;
+  height: 100%;
+  overflow: hidden;
 }
 
 .pool-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 12px;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.pool-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .pool-title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-family: var(--font-hud);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: #fff;
 }
 
 .pool-stats-badge {
-  font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 3px 8px;
-  border-radius: 12px;
-  color: var(--text-muted);
-}
-
-.pool-search-box {
-  position: relative;
-  min-width: 220px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  background: rgba(196, 157, 72, 0.1);
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(196, 157, 72, 0.25);
 }
 
 .pool-search-input {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 6px 12px 6px 30px;
-  font-size: 0.82rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-bevel);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
   color: #fff;
+  width: 180px;
   outline: none;
-  transition: all 0.2s;
 }
-
 .pool-search-input:focus {
-  border-color: var(--border-focus);
-  background: rgba(0, 0, 0, 0.6);
+  border-color: var(--gold-accent);
 }
 
-.pool-search-icon {
-  position: absolute;
-  left: 9px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-dim);
-  pointer-events: none;
-  font-size: 0.85rem;
-}
-
-/* 4 Columns for 4 Attributes (Strength, Agility, Intelligence, Universal) */
+/* 4 Columns for 4 Attributes */
 .pool-columns-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 8px;
   flex: 1;
+  overflow: hidden;
 }
 
 .attr-column {
-  background: rgba(13, 17, 24, 0.75);
-  border-radius: 10px;
-  border: 1px solid var(--border-subtle);
-  padding: 10px;
+  background: rgba(9, 13, 18, 0.7);
+  border-radius: 4px;
+  border: 1px solid var(--border-dark);
+  padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  position: relative;
+  gap: 6px;
+  overflow: hidden;
 }
 
-.attr-column.col-str { border-top: 3px solid var(--attr-str); }
-.attr-column.col-agi { border-top: 3px solid var(--attr-agi); }
-.attr-column.col-int { border-top: 3px solid var(--attr-int); }
-.attr-column.col-all { border-top: 3px solid var(--attr-all); }
+.attr-column.col-str { border-top: 2px solid var(--attr-str); }
+.attr-column.col-agi { border-top: 2px solid var(--attr-agi); }
+.attr-column.col-int { border-top: 2px solid var(--attr-int); }
+.attr-column.col-all { border-top: 2px solid var(--attr-all); }
 
 .attr-col-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 4px 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 0 2px 2px;
 }
 
 .attr-col-title {
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-family: var(--font-hud);
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
-
 .col-str .attr-col-title { color: var(--attr-str); }
 .col-agi .attr-col-title { color: var(--attr-agi); }
 .col-int .attr-col-title { color: var(--attr-int); }
 .col-all .attr-col-title { color: var(--attr-all); }
 
 .attr-count-pill {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-dim);
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* 5 Hero Cards in each attribute column - Proportioned to fit without scroll! */
 .heroes-card-stack {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
   flex: 1;
+  overflow: hidden;
 }
 
-/* Hero Card inside Pool */
 .hero-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  flex: 1;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   cursor: pointer;
   position: relative;
-  transition: all 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: all 0.15s ease;
+  display: flex;
+  min-height: 0; /* allows flexbox shrinking */
 }
 
 .hero-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 10px var(--gold-glow);
+  transform: translateY(-1px);
+  z-index: 10;
 }
 
 .hero-card.selected {
-  outline: 2px solid #ffcc00;
-  box-shadow: 0 0 16px rgba(255, 204, 0, 0.5);
-  transform: translateY(-3px) scale(1.02);
+  border-color: #fff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+  z-index: 20;
 }
 
 .hero-img-wrap {
   width: 100%;
-  height: 94px;
-  background: #0a0d12;
+  height: 100%;
   position: relative;
   overflow: hidden;
+  background: #080b0f;
 }
 
 .hero-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  object-position: center 20%;
+  transition: transform 0.2s;
 }
 
 .hero-card:hover .hero-img-wrap img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-.hero-meta {
-  padding: 6px 8px;
+/* Compact In-Card Hero Name Bar Overlay (Valve Style) */
+.hero-name-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.98) 100%);
+  padding: 8px 6px 2px;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: rgba(15, 20, 28, 0.95);
+  align-items: baseline;
+  justify-content: space-between;
+  pointer-events: none;
 }
 
-.hero-name-ru {
-  font-size: 0.85rem;
+.hero-name-overlay .ru {
+  font-size: 0.72rem;
   font-weight: 700;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 0 1px 3px #000;
 }
 
-.hero-name-en {
-  font-size: 0.7rem;
-  color: var(--text-muted);
+.hero-name-overlay .en {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-left: 4px;
 }
 
-/* Card States: Banned / Picked */
+/* Banned Card State */
 .hero-card.status-banned {
-  filter: grayscale(100%);
+  filter: grayscale(100%) brightness(0.4);
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: rgba(232, 58, 43, 0.4);
+}
+
+.hero-card.status-banned::after {
+  content: 'BANNED';
+  position: absolute;
+  inset: 0;
+  background: rgba(180, 0, 0, 0.5);
+  color: #fff;
+  font-family: var(--font-hud);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 6px #000;
+  transform: rotate(-12deg);
+}
+
+/* Picked Card State */
+.hero-card.status-picked-radiant {
+  border-color: var(--dota-radiant);
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
-
-.hero-card.status-banned .hero-img-wrap::after {
-  content: 'ЗАБАНЕН';
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 0, 0, 0.45);
-  color: #fff;
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-shadow: 0 0 8px #000;
-  transform: rotate(-10deg);
-}
-
-.hero-card.status-picked-radiant {
-  opacity: 0.55;
-  cursor: not-allowed;
-  border-color: var(--color-radiant);
-}
-.hero-card.status-picked-radiant .hero-img-wrap::after {
+.hero-card.status-picked-radiant::after {
   content: 'RADIANT';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(38, 224, 127, 0.85);
+  top: 4px;
+  right: 4px;
+  background: var(--dota-radiant);
   color: #000;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-align: center;
-  padding: 2px 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 1px 4px;
+  border-radius: 2px;
 }
 
 .hero-card.status-picked-dire {
-  opacity: 0.55;
+  border-color: var(--dota-dire);
+  opacity: 0.45;
   cursor: not-allowed;
-  border-color: var(--color-dire);
+  pointer-events: none;
 }
-.hero-card.status-picked-dire .hero-img-wrap::after {
+.hero-card.status-picked-dire::after {
   content: 'DIRE';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 59, 48, 0.85);
+  top: 4px;
+  right: 4px;
+  background: var(--dota-dire);
   color: #fff;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-align: center;
-  padding: 2px 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 1px 4px;
+  border-radius: 2px;
 }
 
-/* Center Bottom Action Controls */
+/* ==========================================================================
+   Center Bottom Action Bar (Ultra Compact 44px)
+   ========================================================================== */
 .pool-action-bar {
+  height: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border-subtle);
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .selected-hero-preview {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  min-width: 180px;
 }
 
 .preview-thumb {
-  width: 54px;
-  height: 34px;
-  border-radius: 4px;
+  width: 44px;
+  height: 26px;
+  border-radius: 2px;
   object-fit: cover;
-  border: 1px solid var(--border-focus);
+  border: 1px solid var(--gold-accent);
 }
 
 .preview-name {
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
 }
 
 .preview-hint {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-size: 0.65rem;
+  color: var(--text-dim);
 }
 
+/* Authentic Dota Lock-In Action Button */
 .main-lockin-btn {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-hud);
+  font-size: 0.88rem;
+  font-weight: 800;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  padding: 10px 24px;
-  border-radius: 8px;
-  border: none;
+  padding: 8px 24px;
+  border-radius: 3px;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .main-lockin-btn:disabled {
-  background: #2a313d;
-  color: #657386;
+  background: #1c222c;
+  color: #586577;
+  border-color: rgba(255, 255, 255, 0.05);
   cursor: not-allowed;
-  box-shadow: none;
 }
 
 .main-lockin-btn.btn-ban {
-  background: linear-gradient(135deg, #ff3b30, #b81c12);
+  background: linear-gradient(180deg, #d33526 0%, #821c13 100%);
   color: #fff;
+  border-color: #ff5545;
+  box-shadow: 0 0 12px rgba(211, 53, 38, 0.4);
 }
 .main-lockin-btn.btn-ban:not(:disabled):hover {
-  background: linear-gradient(135deg, #ff5549, #d6281e);
-  box-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
-  transform: translateY(-2px);
+  background: linear-gradient(180deg, #e63f2f 0%, #9e2318 100%);
+  box-shadow: 0 0 18px rgba(211, 53, 38, 0.7);
 }
 
 .main-lockin-btn.btn-pick-radiant {
-  background: linear-gradient(135deg, #26e07f, #139952);
-  color: #051c10;
+  background: linear-gradient(180deg, #28a75a 0%, #155c30 100%);
+  color: #fff;
+  border-color: #38e078;
+  box-shadow: 0 0 12px rgba(40, 167, 90, 0.4);
 }
 .main-lockin-btn.btn-pick-radiant:not(:disabled):hover {
-  background: linear-gradient(135deg, #44f096, #18b361);
-  box-shadow: 0 0 20px rgba(38, 224, 127, 0.6);
-  transform: translateY(-2px);
+  background: linear-gradient(180deg, #32bf68 0%, #1a733c 100%);
+  box-shadow: 0 0 18px rgba(56, 224, 120, 0.7);
 }
 
 .main-lockin-btn.btn-pick-dire {
-  background: linear-gradient(135deg, #ff3b30, #b81c12);
+  background: linear-gradient(180deg, #d33526 0%, #821c13 100%);
   color: #fff;
+  border-color: #ff5545;
+  box-shadow: 0 0 12px rgba(211, 53, 38, 0.4);
 }
 .main-lockin-btn.btn-pick-dire:not(:disabled):hover {
-  background: linear-gradient(135deg, #ff5549, #d6281e);
-  box-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
-  transform: translateY(-2px);
+  background: linear-gradient(180deg, #e63f2f 0%, #9e2318 100%);
+  box-shadow: 0 0 18px rgba(211, 53, 38, 0.7);
 }
 
 .secondary-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 /* ==========================================================================
-   Modals (Settings & Completed Draft Summary)
+   Modals & Popups
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.2s ease;
 }
 
 .modal-backdrop.open {
@@ -950,579 +882,390 @@ body {
 }
 
 .modal-card {
-  background: #131822;
-  border: 1px solid var(--border-focus);
-  border-radius: 12px;
-  max-width: 820px;
+  background: #111620;
+  border: 1px solid var(--border-bevel);
+  border-radius: 6px;
+  max-width: 680px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
   overflow: hidden;
-  animation: modal-enter 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-}
-
-@keyframes modal-enter {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 .modal-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  letter-spacing: 1px;
+  font-family: var(--font-hud);
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: #fff;
 }
 
 .modal-close-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
-  font-size: 1.4rem;
+  color: var(--text-secondary);
+  font-size: 1.3rem;
   cursor: pointer;
   line-height: 1;
-  transition: color 0.2s;
 }
-
-.modal-close-btn:hover {
-  color: #fff;
-}
+.modal-close-btn:hover { color: #fff; }
 
 .modal-body {
-  padding: 20px;
+  padding: 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .modal-footer {
-  padding: 14px 20px;
-  border-top: 1px solid var(--border-subtle);
+  padding: 10px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
 }
 
-/* Settings Controls Inside Modal */
+/* Settings Row */
 .setting-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .setting-title {
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: #fff;
 }
-
 .setting-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.72rem;
+  color: var(--text-dim);
 }
 
 .setting-control select, .setting-control input {
-  background: #090c10;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 6px 12px;
+  background: #070a0f;
+  border: 1px solid var(--border-bevel);
+  border-radius: 4px;
+  padding: 5px 8px;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   outline: none;
 }
 
-/* Draft Summary Results Display */
+/* Summary Grid */
 .summary-teams-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 14px;
 }
 
 .summary-team-card {
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 8px;
-  padding: 16px;
-  border: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
-
-.summary-team-card.radiant { border-top: 3px solid var(--color-radiant); }
-.summary-team-card.dire { border-top: 3px solid var(--color-dire); }
-
-.summary-team-title {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-.summary-team-card.radiant .summary-team-title { color: var(--color-radiant); }
-.summary-team-card.dire .summary-team-title { color: var(--color-dire); }
+.summary-team-card.radiant { border-top: 2px solid var(--dota-radiant); }
+.summary-team-card.dire { border-top: 2px solid var(--dota-dire); }
 
 .summary-hero-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #18202c;
-  padding: 6px 10px;
-  border-radius: 6px;
+  gap: 8px;
+  background: #141a24;
+  padding: 4px 8px;
+  border-radius: 3px;
 }
-
 .summary-hero-row img {
-  width: 44px;
-  height: 28px;
-  border-radius: 4px;
+  width: 38px;
+  height: 22px;
+  border-radius: 2px;
   object-fit: cover;
 }
-
 .summary-hero-row .name {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .summary-bans-list {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
-
 .summary-ban-tag {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 59, 48, 0.15);
-  border: 1px solid rgba(255, 59, 48, 0.3);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 0.78rem;
+  gap: 4px;
+  background: rgba(232, 58, 43, 0.12);
+  border: 1px solid rgba(232, 58, 43, 0.25);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
 }
-
 .summary-ban-tag img {
-  width: 24px;
-  height: 15px;
-  object-fit: cover;
-  border-radius: 2px;
+  width: 20px;
+  height: 12px;
+  border-radius: 1px;
   filter: grayscale(100%);
 }
 
 .unpicked-heroes-section {
   background: rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-  padding: 12px;
-  border: 1px dashed var(--border-subtle);
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
 }
-
 .unpicked-tags {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 6px;
 }
-
 .unpicked-tag {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 0.78rem;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
 }
-
 .unpicked-tag img {
-  width: 24px;
-  height: 15px;
-  object-fit: cover;
-  border-radius: 2px;
+  width: 20px;
+  height: 12px;
+  border-radius: 1px;
 }
 
-/* Toast notification */
+/* Toast */
 .toast-notice {
   position: fixed;
-  bottom: 24px;
+  bottom: 18px;
   left: 50%;
-  transform: translateX(-50%) translateY(30px);
-  background: #1c2432;
-  border: 1px solid var(--border-focus);
+  transform: translateX(-50%) translateY(20px);
+  background: #18202d;
+  border: 1px solid var(--gold-accent);
   color: #fff;
-  padding: 8px 18px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   z-index: 2000;
 }
-
 .toast-notice.show {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1400px) {
-  .arena-container {
-    grid-template-columns: 260px 1fr 260px;
-    gap: 12px;
-    padding: 12px;
-  }
-  .hero-img-wrap {
-    height: 80px;
-  }
-}
-
-@media (max-width: 1100px) {
-  .arena-container {
-    grid-template-columns: 1fr;
-  }
-  .pool-columns-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .team-panel {
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-
-/* ==========================================================================
-   Online Multiplayer 2-Player UI Styles
-   ========================================================================== */
-.btn-online-badge {
-  background: rgba(0, 213, 255, 0.12);
-  border-color: rgba(0, 213, 255, 0.35);
-  color: #00d5ff;
-}
-.btn-online-badge:hover {
-  background: rgba(0, 213, 255, 0.22);
-  box-shadow: 0 0 12px rgba(0, 213, 255, 0.3);
-}
-
-.role-banner-bar {
-  background: rgba(10, 14, 20, 0.95);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 6px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  font-size: 0.85rem;
-}
-
-.role-banner-content {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.role-badge {
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.role-badge.radiant {
-  background: rgba(38, 224, 127, 0.2);
-  color: var(--color-radiant);
-  border: 1px solid var(--color-radiant);
-}
-.role-badge.dire {
-  background: rgba(255, 59, 48, 0.2);
-  color: var(--color-dire);
-  border: 1px solid var(--color-dire);
-}
-.role-badge.spectator {
-  background: rgba(245, 166, 35, 0.2);
-  color: #f5a623;
-  border: 1px solid #f5a623;
-}
-
-.online-section-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 10px 14px;
-  border-radius: 6px;
-  border-left: 3px solid #00d5ff;
-}
-
-.online-cards-choice {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 10px;
-}
-
-.online-choice-card {
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: border-color 0.2s;
-}
-
-.online-choice-card:hover {
-  border-color: var(--border-focus);
-}
-
-.online-choice-card h4 {
-  color: #fff;
-  font-size: 0.95rem;
-}
-
-.online-choice-card p {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-  flex: 1;
 }
 
 </style>
 </head>
 <body>
 
-  <!-- Top App Header -->
+  <!-- Top Broadcast HUD (46px) -->
   <header class="app-header">
     <div class="brand-section">
-      <svg class="dota-logo" viewBox="0 0 24 24" fill="none">
-        <path d="M3 3h7v3H6v4H3V3zm15 0h3v7h-3V6h-4V3h4zm3 15v3h-7v-3h4v-4h3v4zM6 18v-4H3v7h7v-3H6z" fill="#ec3d27"/>
-        <rect x="8" y="8" width="8" height="8" rx="2" fill="#ff5549" opacity="0.8"/>
+      <svg class="dota-emblem" viewBox="0 0 24 24">
+        <path d="M3 3h7v3H6v4H3V3zm15 0h3v7h-3V6h-4V3h4zm3 15v3h-7v-3h4v-4h3v4zM6 18v-4H3v7h7v-3H6z"/>
+        <rect x="8" y="8" width="8" height="8" rx="1"/>
       </svg>
-      <div>
-        <div class="brand-title">
-          Dota 2 Drafter <span class="brand-badge">20 HEROES</span>
-        </div>
-        <div class="brand-subtitle">5 Сила • 5 Ловкость • 5 Интеллект • 5 Универсал | 3 Бана в начале</div>
+      <div class="brand-title">
+        DOTA 2 DRAFTER <span class="brand-badge">20 POOL</span>
       </div>
     </div>
 
-    <!-- Phase Banner & Active Turn Info -->
-    <div class="turn-status-container" id="turnStatusContainer">
-      <div class="phase-indicator phase-ban" id="phaseIndicator">
-        <span>🛡️</span> <span id="phaseLabel">ФАЗА БАНОВ (1/6)</span>
+    <!-- Center Turn & Timer HUD -->
+    <div class="center-hud-bar" id="turnStatusContainer">
+      <div class="phase-pill phase-ban" id="phaseIndicator">
+        <span id="phaseLabel">ФАЗА БАНОВ (1/6)</span>
       </div>
-      <div class="active-team-banner radiant" id="activeTeamBanner">
-        <div class="pulse-dot radiant" id="activePulseDot"></div>
-        <span id="activeTurnLabel">Ход: Radiant</span>
+      <div class="turn-indicator-box">
+        <span class="turn-team-text radiant" id="activeTurnLabel">ХОД: RADIANT</span>
       </div>
-      <div class="timer-wrapper">
-        <span class="timer-digits" id="timerDigits">30</span>
-        <button class="timer-pause-btn" id="timerPauseBtn" title="Пауза / Продолжить таймер">⏸️</button>
+      <div class="timer-box">
+        <span class="timer-num" id="timerDigits">30</span>
+        <button class="timer-pause-icon" id="timerPauseBtn" title="Пауза таймера">⏸</button>
       </div>
     </div>
 
-    <!-- Header Action Controls -->
+    <!-- Right Header Controls -->
     <div class="header-actions">
-      <button class="btn-icon" id="soundToggleBtn" title="Включить / отключить звук">
+      <button class="hud-btn" id="soundToggleBtn" title="Звук">
         <span id="soundIcon">🔊</span>
       </button>
-      <button class="btn-icon" id="coinFlipBtn" title="Жеребьевка первого хода (монетка)">
-        <span>🪙</span> Жеребьевка
+      <button class="hud-btn" id="coinFlipBtn" title="Жеребьевка первого хода">ЖЕРЕБЬЕВКА</button>
+      <button class="hud-btn" id="rerollPoolBtn" title="Сгенерировать новый пул из 20 героев">НОВЫЙ ПУЛ</button>
+      <button class="hud-btn" id="shareBtn" title="Скопировать ссылку с сидом">СИД</button>
+      <button class="hud-btn btn-accent" id="onlineModalBtn" title="Онлайн драфт для двух капитанов">
+        <span id="onlineBtnText">ОНЛАЙН</span>
       </button>
-      <button class="btn-icon" id="rerollPoolBtn" title="Сгенерировать новый пул из 20 героев">
-        <span>🎲</span> Новый пул
-      </button>
-      <button class="btn-icon" id="shareBtn" title="Скопировать ссылку с текущим пулом">
-        <span>🔗</span> Поделиться
-      </button>
-      <button class="btn-icon btn-online-badge" id="onlineModalBtn" title="Онлайн драфт (2 капитана по сети)">
-        <span>🌐</span> <span id="onlineBtnText">Онлайн (2 капитана)</span>
-      </button>
-      <button class="btn-icon" id="settingsBtn" title="Настройки турнира">
-        <span>⚙️</span>
-      </button>
+      <button class="hud-btn" id="settingsBtn" title="Настройки">⚙</button>
     </div>
   </header>
 
-  <!-- Player Role Banner (shown in online rooms) -->
+  <!-- Player Online Role Ribbon -->
   <div class="role-banner-bar" id="roleBannerBar" style="display:none;">
-    <div class="role-banner-content">
-      <span class="role-badge" id="myRoleBadge">Локальный режим</span>
-      <span id="networkStatusIndicator" style="color:var(--text-muted);">🟢 В сети</span>
-    </div>
+    <span class="role-badge" id="myRoleBadge">ЛОКАЛЬНЫЙ РЕЖИМ</span>
+    <span id="networkStatusIndicator" style="color:var(--text-dim); font-size:0.7rem;">В СЕТИ</span>
   </div>
 
-  <!-- Main 3-Column Arena -->
+  <!-- Main 3-Column Arena (Zero scroll, strictly fits in 100vh) -->
   <main class="arena-container">
 
-    <!-- Left Column: Team Radiant -->
+    <!-- Left: Radiant Panel -->
     <section class="team-panel radiant active-panel" id="radiantPanel">
       <div class="team-header">
-        <input type="text" class="team-name-input" id="radiantNameInput" value="Team Radiant" title="Кликните, чтобы изменить имя команды" maxlength="28">
-        <span class="team-badge-tag">Radiant</span>
+        <input type="text" class="team-name-input" id="radiantNameInput" value="TEAM RADIANT" maxlength="24">
       </div>
 
-      <!-- 3 Bans Slots -->
-      <div class="bans-section">
-        <div class="section-label">
-          <span>Баны команды</span>
+      <!-- 3 Ban Slots -->
+      <div>
+        <div class="panel-subheading">
+          <span>БАНЫ</span>
           <span id="radiantBanCount">0 / 3</span>
         </div>
-        <div class="bans-grid" id="radiantBansGrid">
+        <div class="bans-grid" id="radiantBansGrid" style="margin-top:4px;">
           <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
           <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
           <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
         </div>
       </div>
 
-      <!-- 5 Picks Slots -->
-      <div class="picks-section">
-        <div class="section-label">
-          <span>Выбранные герои (Пики)</span>
+      <!-- 5 Pick Slots -->
+      <div style="flex:1; display:flex; flex-direction:column; gap:4px; overflow:hidden;">
+        <div class="panel-subheading">
+          <span>ПИКИ КОМАНДЫ</span>
           <span id="radiantPickCount">0 / 5</span>
         </div>
         <div class="picks-list" id="radiantPicksList">
-          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">Пик 1</span></div>
-          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">Пик 2</span></div>
-          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">Пик 3</span></div>
-          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">Пик 4</span></div>
-          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">Пик 5</span></div>
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">СЛОТ 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">СЛОТ 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">СЛОТ 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">СЛОТ 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">СЛОТ 5</span></div>
         </div>
       </div>
     </section>
 
-    <!-- Center Column: 20-Hero Tournament Pool -->
+    <!-- Center: 20-Hero Pool Panel -->
     <section class="pool-panel">
       <div class="pool-header">
-        <div class="pool-title-group">
-          <h2 class="pool-title">Турнирный пул героев</h2>
-          <span class="pool-stats-badge" id="poolStatsBadge">Доступно: 20 / 20</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h2 class="pool-title">ТУРНИРНЫЙ ПУЛ ГЕРОЕВ</h2>
+          <span class="pool-stats-badge" id="poolStatsBadge">ДОСТУПНО: 20 / 20</span>
         </div>
-
-        <div class="pool-search-box">
-          <span class="pool-search-icon">🔍</span>
-          <input type="text" class="pool-search-input" id="poolSearchInput" placeholder="Поиск по имени (RU / EN)...">
-        </div>
+        <input type="text" class="pool-search-input" id="poolSearchInput" placeholder="Поиск героя...">
       </div>
 
-      <!-- 4 Columns for 4 Attributes (Strength, Agility, Intelligence, Universal) -->
+      <!-- 4 Attribute Columns (5 heroes each) -->
       <div class="pool-columns-grid">
-        <!-- Strength -->
         <div class="attr-column col-str">
           <div class="attr-col-header">
-            <span class="attr-col-title">🔴 Сила</span>
-            <span class="attr-count-pill" id="strCountPill">5</span>
+            <span class="attr-col-title">СИЛА</span>
+            <span class="attr-count-pill" id="strCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-str"></div>
         </div>
 
-        <!-- Agility -->
         <div class="attr-column col-agi">
           <div class="attr-col-header">
-            <span class="attr-col-title">🟢 Ловкость</span>
-            <span class="attr-count-pill" id="agiCountPill">5</span>
+            <span class="attr-col-title">ЛОВКОСТЬ</span>
+            <span class="attr-count-pill" id="agiCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-agi"></div>
         </div>
 
-        <!-- Intelligence -->
         <div class="attr-column col-int">
           <div class="attr-col-header">
-            <span class="attr-col-title">🔵 Интеллект</span>
-            <span class="attr-count-pill" id="intCountPill">5</span>
+            <span class="attr-col-title">ИНТЕЛЛЕКТ</span>
+            <span class="attr-count-pill" id="intCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-int"></div>
         </div>
 
-        <!-- Universal -->
         <div class="attr-column col-all">
           <div class="attr-col-header">
-            <span class="attr-col-title">🟣 Универсал</span>
-            <span class="attr-count-pill" id="allCountPill">5</span>
+            <span class="attr-col-title">УНИВЕРСАЛ</span>
+            <span class="attr-count-pill" id="allCountPill">5/5</span>
           </div>
           <div class="heroes-card-stack" id="stack-all"></div>
         </div>
       </div>
 
-      <!-- Center Bottom Action Controls -->
+      <!-- Action Strip -->
       <div class="pool-action-bar">
         <div class="selected-hero-preview" id="selectedHeroPreview">
-          <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png" class="preview-thumb" id="previewThumb" style="display:none;" alt="Превью">
+          <img src="" class="preview-thumb" id="previewThumb" style="display:none;" alt="">
           <div>
-            <div class="preview-name" id="previewName">Выберите героя из пула</div>
-            <div class="preview-hint" id="previewHint">Двойной клик по карточке или кнопка подтверждения</div>
+            <div class="preview-name" id="previewName">ВЫБЕРИТЕ ГЕРОЯ</div>
+            <div class="preview-hint" id="previewHint">Кликните на карточку или нажмите Случайно</div>
           </div>
         </div>
 
         <button class="main-lockin-btn btn-ban" id="lockInBtn" disabled>
-          <span id="lockInActionIcon">🛡️</span>
-          <span id="lockInBtnText">Забанить героя</span>
+          <span id="lockInBtnText">ПОДТВЕРДИТЬ БАН</span>
         </button>
 
         <div class="secondary-actions">
-          <button class="btn-icon" id="randomPickBtn" title="Случайный выбор из доступных">
-            <span>🎲</span> Случайно
-          </button>
-          <button class="btn-icon" id="undoBtn" title="Отменить последний ход (Ctrl+Z)" disabled>
-            <span>↩️</span> Отмена
-          </button>
-          <button class="btn-icon" id="resetDraftBtn" title="Перезапустить драфт с тем же пулом">
-            <span>🔄</span> Сброс
-          </button>
+          <button class="hud-btn" id="randomPickBtn" title="Случайный выбор">СЛУЧАЙНО</button>
+          <button class="hud-btn" id="undoBtn" title="Отмена (Ctrl+Z)" disabled>ОТМЕНА</button>
+          <button class="hud-btn" id="resetDraftBtn" title="Сбросить драфт">СБРОС</button>
         </div>
       </div>
     </section>
 
-    <!-- Right Column: Team Dire -->
+    <!-- Right: Dire Panel -->
     <section class="team-panel dire" id="direPanel">
       <div class="team-header">
-        <input type="text" class="team-name-input" id="direNameInput" value="Team Dire" title="Кликните, чтобы изменить имя команды" maxlength="28">
-        <span class="team-badge-tag">Dire</span>
+        <input type="text" class="team-name-input" id="direNameInput" value="TEAM DIRE" maxlength="24">
       </div>
 
-      <!-- 3 Bans Slots -->
-      <div class="bans-section">
-        <div class="section-label">
-          <span>Баны команды</span>
+      <!-- 3 Ban Slots -->
+      <div>
+        <div class="panel-subheading">
+          <span>БАНЫ</span>
           <span id="direBanCount">0 / 3</span>
         </div>
-        <div class="bans-grid" id="direBansGrid">
+        <div class="bans-grid" id="direBansGrid" style="margin-top:4px;">
           <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
           <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
           <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
         </div>
       </div>
 
-      <!-- 5 Picks Slots -->
-      <div class="picks-section">
-        <div class="section-label">
-          <span>Выбранные герои (Пики)</span>
+      <!-- 5 Pick Slots -->
+      <div style="flex:1; display:flex; flex-direction:column; gap:4px; overflow:hidden;">
+        <div class="panel-subheading">
+          <span>ПИКИ КОМАНДЫ</span>
           <span id="direPickCount">0 / 5</span>
         </div>
         <div class="picks-list" id="direPicksList">
-          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">Пик 1</span></div>
-          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">Пик 2</span></div>
-          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">Пик 3</span></div>
-          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">Пик 4</span></div>
-          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">Пик 5</span></div>
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">СЛОТ 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">СЛОТ 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">СЛОТ 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">СЛОТ 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">СЛОТ 5</span></div>
         </div>
       </div>
     </section>
@@ -1533,56 +1276,56 @@ body {
   <div class="modal-backdrop" id="summaryModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title">🏆 Драфт матча завершён!</h3>
+        <h3 class="modal-title">ИТОГИ ДРАФТА МАТЧА</h3>
         <button class="modal-close-btn" id="closeSummaryBtn">&times;</button>
       </div>
       <div class="modal-body">
         <div class="summary-teams-grid">
           <!-- Radiant Summary -->
           <div class="summary-team-card radiant">
-            <h4 class="summary-team-title" id="summaryRadiantTitle">Team Radiant</h4>
-            <div class="section-label">Выбранные герои (Пики):</div>
-            <div id="summaryRadiantPicks" style="display:flex; flex-direction:column; gap:6px;"></div>
-            <div class="section-label" style="margin-top:8px;">Забанены командой:</div>
+            <h4 class="summary-team-title" id="summaryRadiantTitle" style="color:var(--dota-radiant); font-size:1rem; font-weight:800;">TEAM RADIANT</h4>
+            <div class="panel-subheading">ВЫБРАННЫЕ ГЕРОИ:</div>
+            <div id="summaryRadiantPicks" style="display:flex; flex-direction:column; gap:4px;"></div>
+            <div class="panel-subheading" style="margin-top:6px;">БАНЫ:</div>
             <div class="summary-bans-list" id="summaryRadiantBans"></div>
           </div>
 
           <!-- Dire Summary -->
           <div class="summary-team-card dire">
-            <h4 class="summary-team-title" id="summaryDireTitle">Team Dire</h4>
-            <div class="section-label">Выбранные герои (Пики):</div>
-            <div id="summaryDirePicks" style="display:flex; flex-direction:column; gap:6px;"></div>
-            <div class="section-label" style="margin-top:8px;">Забанены командой:</div>
+            <h4 class="summary-team-title" id="summaryDireTitle" style="color:var(--dota-dire); font-size:1rem; font-weight:800;">TEAM DIRE</h4>
+            <div class="panel-subheading">ВЫБРАННЫЕ ГЕРОИ:</div>
+            <div id="summaryDirePicks" style="display:flex; flex-direction:column; gap:4px;"></div>
+            <div class="panel-subheading" style="margin-top:6px;">БАНЫ:</div>
             <div class="summary-bans-list" id="summaryDireBans"></div>
           </div>
         </div>
 
         <!-- Unpicked Heroes (4 remaining) -->
         <div class="unpicked-heroes-section">
-          <div class="section-label">Остались в пуле невыбранными:</div>
+          <div class="panel-subheading">НЕВЫБРАННЫЕ ГЕРОИ ИЗ ПУЛА (4):</div>
           <div class="unpicked-tags" id="summaryUnpicked"></div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-icon" id="copySummaryBtn">📋 Скопировать для Discord / чата</button>
-        <button class="btn-icon" id="restartSamePoolBtn">🔄 Заново с этим пулом</button>
-        <button class="main-lockin-btn btn-pick-radiant" id="newPoolModalBtn">🎲 Новый пул</button>
+        <button class="hud-btn" id="copySummaryBtn">СКОПИРОВАТЬ ТЕКСТ</button>
+        <button class="hud-btn" id="restartSamePoolBtn">ЗАНОВО</button>
+        <button class="main-lockin-btn btn-pick-radiant" id="newPoolModalBtn">НОВЫЙ ПУЛ</button>
       </div>
     </div>
   </div>
 
   <!-- Settings Modal -->
   <div class="modal-backdrop" id="settingsModal">
-    <div class="modal-card" style="max-width: 580px;">
+    <div class="modal-card" style="max-width: 500px;">
       <div class="modal-header">
-        <h3 class="modal-title">⚙️ Настройки турнирного драфта</h3>
+        <h3 class="modal-title">НАСТРОЙКИ ДРАФТА</h3>
         <button class="modal-close-btn" id="closeSettingsBtn">&times;</button>
       </div>
       <div class="modal-body">
         <div class="setting-row">
-          <div class="setting-info">
+          <div>
             <div class="setting-title">Таймер на ход</div>
-            <div class="setting-desc">Время в секундах для каждого бана или пика</div>
+            <div class="setting-desc">Секунд на каждый бан или пик</div>
           </div>
           <div class="setting-control">
             <select id="settingTimerSec">
@@ -1596,9 +1339,9 @@ body {
         </div>
 
         <div class="setting-row">
-          <div class="setting-info">
+          <div>
             <div class="setting-title">Порядок пиков</div>
-            <div class="setting-desc">Формат чередования выбора после 6 банов</div>
+            <div class="setting-desc">Формат после 6 банов</div>
           </div>
           <div class="setting-control">
             <select id="settingPickFormat">
@@ -1609,9 +1352,9 @@ body {
         </div>
 
         <div class="setting-row">
-          <div class="setting-info">
+          <div>
             <div class="setting-title">Первый ход</div>
-            <div class="setting-desc">Какая команда делает первый бан и первый пик</div>
+            <div class="setting-desc">Кто начинает фазу банов</div>
           </div>
           <div class="setting-control">
             <select id="settingFirstTurn">
@@ -1622,81 +1365,81 @@ body {
         </div>
 
         <div class="setting-row">
-          <div class="setting-info">
+          <div>
             <div class="setting-title">Сид пула (Seed)</div>
-            <div class="setting-desc">Идентификатор для одинаковой генерации 20 героев</div>
+            <div class="setting-desc">Код пула героев</div>
           </div>
           <div class="setting-control">
-            <input type="text" id="settingSeedInput" style="width: 140px;" placeholder="DOTA-XXXX">
+            <input type="text" id="settingSeedInput" style="width: 120px;" placeholder="DOTA-XXXX">
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-icon" id="saveSettingsBtn">💾 Применить настройки</button>
+        <button class="hud-btn btn-accent" id="saveSettingsBtn">ПРИМЕНИТЬ</button>
       </div>
     </div>
   </div>
 
   <!-- Online Multiplayer Modal -->
   <div class="modal-backdrop" id="onlineModal">
-    <div class="modal-card" style="max-width: 620px;">
+    <div class="modal-card" style="max-width: 560px;">
       <div class="modal-header">
-        <h3 class="modal-title">🌐 Онлайн-драфт для 2 капитанов</h3>
+        <h3 class="modal-title">ОНЛАЙН МАТЧ (2 КАПИТАНА)</h3>
         <button class="modal-close-btn" id="closeOnlineBtn">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="online-section-desc">
-          Вы можете играть удаленно: создайте комнату и отправьте ссылку второму капитану. Каждый капитан сможет выбирать и банить героев со своего устройства только в свою очередь!
+        <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.4;">
+          Создайте комнату и отправьте ссылку второму капитану. Каждый игрок выбирает только в свой ход со своего устройства!
         </div>
 
-        <div class="online-cards-choice" id="onlineChoices">
-          <div class="online-choice-card">
-            <h4>Создать комнату</h4>
-            <p>Вы станете хостом матча и Капитаном Radiant. Получите ссылку для второго капитана.</p>
-            <button class="main-lockin-btn btn-pick-radiant" id="createRoomBtn" style="margin-top:10px; width:100%; justify-content:center; font-size:0.85rem; padding:8px 14px;">
-              ➕ Создать комнату
+        <div class="online-cards-choice" id="onlineChoices" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+          <div class="online-choice-card" style="background:#070a0f; padding:12px; border-radius:4px; border:1px solid var(--border-bevel);">
+            <div style="font-weight:700; font-size:0.85rem; color:#fff;">СОЗДАТЬ КОМНАТУ</div>
+            <div style="font-size:0.75rem; color:var(--text-dim); margin:4px 0 10px;">Вы станете Капитаном Radiant.</div>
+            <button class="main-lockin-btn btn-pick-radiant" id="createRoomBtn" style="width:100%; justify-content:center; font-size:0.75rem; padding:6px;">
+              СОЗДАТЬ
             </button>
           </div>
 
-          <div class="online-choice-card">
-            <h4>Войти по коду</h4>
-            <p>Если соперник уже создал комнату, введите её код ниже:</p>
-            <div style="display:flex; gap:8px; margin-top:10px;">
-              <input type="text" id="joinRoomInput" placeholder="КОД (напр: ABC12)" style="flex:1; padding:8px 10px; background:#090c10; border:1px solid var(--border-subtle); color:#fff; border-radius:6px; font-weight:700; text-transform:uppercase;">
-              <button class="btn-icon" id="joinRoomBtn">Войти</button>
+          <div class="online-choice-card" style="background:#070a0f; padding:12px; border-radius:4px; border:1px solid var(--border-bevel);">
+            <div style="font-weight:700; font-size:0.85rem; color:#fff;">ВОЙТИ ПО КОДУ</div>
+            <div style="font-size:0.75rem; color:var(--text-dim); margin:4px 0 8px;">Код комнаты соперника:</div>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="joinRoomInput" placeholder="КОД" style="flex:1; padding:6px; background:#000; border:1px solid var(--border-bevel); color:#fff; border-radius:3px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">
+              <button class="hud-btn" id="joinRoomBtn">ВОЙТИ</button>
             </div>
           </div>
         </div>
 
-        <!-- Active Room Info (shown when room is created or joined) -->
-        <div id="activeRoomInfo" style="display:none; flex-direction:column; gap:14px; background:rgba(0,0,0,0.3); padding:16px; border-radius:8px; border:1px solid var(--border-subtle);">
+        <!-- Active Room Info -->
+        <div id="activeRoomInfo" style="display:none; flex-direction:column; gap:10px; background:#070a0f; padding:12px; border-radius:4px; border:1px solid var(--border-bevel);">
           <div style="display:flex; align-items:center; justify-content:space-between;">
-            <div><strong>Код комнаты:</strong> <span id="displayRoomCode" style="font-size:1.2rem; color:#ffcc00; font-weight:bold; letter-spacing:2px;"></span></div>
-            <div id="displayConnStatus" style="font-size:0.85rem; color:#8b99ae;">Ожидание соперника...</div>
+            <div><strong>КОМНАТА:</strong> <span id="displayRoomCode" style="color:var(--gold-accent); font-weight:900; letter-spacing:1px;"></span></div>
+            <div id="displayConnStatus" style="font-size:0.75rem; color:var(--text-dim);">Ожидание...</div>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
             <div>
-              <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:4px;">Ссылка для Капитана Dire (соперника):</label>
-              <div style="display:flex; gap:8px;">
-                <input type="text" id="direInviteLink" readonly style="flex:1; background:#090c10; border:1px solid var(--border-subtle); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem;">
-                <button class="btn-icon" id="copyDireLinkBtn">📋 Копировать</button>
+              <label style="font-size:0.72rem; color:var(--text-dim); display:block; margin-bottom:2px;">Ссылка для Капитана Dire (соперника):</label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="direInviteLink" readonly style="flex:1; background:#000; border:1px solid var(--border-bevel); color:#fff; padding:4px 8px; border-radius:3px; font-size:0.75rem;">
+                <button class="hud-btn" id="copyDireLinkBtn">КОПИРОВАТЬ</button>
               </div>
             </div>
 
             <div>
-              <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:4px;">Ссылка для зрителей / трансляции (только просмотр):</label>
-              <div style="display:flex; gap:8px;">
-                <input type="text" id="specInviteLink" readonly style="flex:1; background:#090c10; border:1px solid var(--border-subtle); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem;">
-                <button class="btn-icon" id="copySpecLinkBtn">📋 Копировать</button>
+              <label style="font-size:0.72rem; color:var(--text-dim); display:block; margin-bottom:2px;">Ссылка для зрителей (стрим):</label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="specInviteLink" readonly style="flex:1; background:#000; border:1px solid var(--border-bevel); color:#fff; padding:4px 8px; border-radius:3px; font-size:0.75rem;">
+                <button class="hud-btn" id="copySpecLinkBtn">КОПИРОВАТЬ</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-icon" id="disconnectOnlineBtn" style="display:none; color:#ff5549;">Отключиться от комнаты</button>
-        <button class="btn-icon" id="closeOnlineFooterBtn">Закрыть</button>
+        <button class="hud-btn" id="disconnectOnlineBtn" style="display:none; color:#ff5549;">ОТКЛЮЧИТЬСЯ</button>
+        <button class="hud-btn" id="closeOnlineFooterBtn">ЗАКРЫТЬ</button>
       </div>
     </div>
   </div>
@@ -1704,8 +1447,10 @@ body {
   <!-- Toast Notification -->
   <div class="toast-notice" id="toastNotice">Уведомление</div>
 
-    <!-- WebRTC PeerJS Library (CDN with local fallback) -->
-  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <!-- WebRTC PeerJS Library -->
+  <script src="peerjs.min.js"></script>
+
+  <!-- Application Script -->
   <script>
 // Dota 2 Tournament Drafter - Standalone Bundle with WebRTC Multiplayer
 (function() {
@@ -3149,37 +2894,50 @@ function render(state) {
   const currentStep = state.currentStep;
 
   if (isCompleted) {
-    phaseIndicator.className = 'phase-indicator phase-completed';
-    phaseIndicator.innerHTML = '<span>🏆</span> <span>ДРАФТ ЗАВЕРШЁН</span>';
-    activeTeamBanner.className = 'active-team-banner';
-    activeTurnLabel.textContent = 'Все пики и баны совершены';
-    activePulseDot.style.display = 'none';
+    if (phaseIndicator) {
+      phaseIndicator.className = 'phase-pill phase-completed';
+      phaseIndicator.textContent = 'ДРАФТ ЗАВЕРШЁН';
+    }
+    if (activeTeamBanner) activeTeamBanner.className = 'active-team-banner';
+    if (activeTurnLabel) {
+      activeTurnLabel.className = 'turn-team-text';
+      activeTurnLabel.textContent = 'МАТЧ ГОТОВ К НАЧАЛУ';
+    }
+    if (activePulseDot) activePulseDot.style.display = 'none';
     radiantPanel.classList.remove('active-panel');
     direPanel.classList.remove('active-panel');
   } else if (state.phase === PHASE.BAN) {
     const banIndex = state.currentStepIndex + 1;
-    phaseIndicator.className = 'phase-indicator phase-ban';
-    phaseIndicator.innerHTML = `<span>🛡️</span> <span>ФАЗА БАНОВ (${banIndex}/6)</span>`;
+    if (phaseIndicator) {
+      phaseIndicator.className = 'phase-pill phase-ban';
+      phaseIndicator.textContent = `БАНЫ (${banIndex}/6)`;
+    }
     
     const isRadiant = state.currentTeam === 'radiant';
-    activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
-    activePulseDot.className = `pulse-dot ${state.currentTeam}`;
-    activePulseDot.style.display = 'block';
-    activeTurnLabel.textContent = `Ход: ${isRadiant ? state.teams.radiant.name : state.teams.dire.name}`;
+    if (activeTeamBanner) activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
+    if (activePulseDot) activePulseDot.style.display = 'block';
+    if (activeTurnLabel) {
+      activeTurnLabel.className = `turn-team-text ${state.currentTeam}`;
+      activeTurnLabel.textContent = `ХОД: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
+    }
 
     radiantPanel.classList.toggle('active-panel', isRadiant);
     direPanel.classList.toggle('active-panel', !isRadiant);
   } else {
     // Pick Phase
     const pickIndex = state.currentStepIndex - 6 + 1;
-    phaseIndicator.className = 'phase-indicator phase-pick';
-    phaseIndicator.innerHTML = `<span>⚔️</span> <span>ФАЗА ПИКОВ (${pickIndex}/10)</span>`;
+    if (phaseIndicator) {
+      phaseIndicator.className = 'phase-pill phase-pick';
+      phaseIndicator.textContent = `ПИКИ (${pickIndex}/10)`;
+    }
     
     const isRadiant = state.currentTeam === 'radiant';
-    activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
-    activePulseDot.className = `pulse-dot ${state.currentTeam}`;
-    activePulseDot.style.display = 'block';
-    activeTurnLabel.textContent = `Ход: ${isRadiant ? state.teams.radiant.name : state.teams.dire.name}`;
+    if (activeTeamBanner) activeTeamBanner.className = `active-team-banner ${state.currentTeam}`;
+    if (activePulseDot) activePulseDot.style.display = 'block';
+    if (activeTurnLabel) {
+      activeTurnLabel.className = `turn-team-text ${state.currentTeam}`;
+      activeTurnLabel.textContent = `ХОД: ${isRadiant ? state.teams.radiant.name.toUpperCase() : state.teams.dire.name.toUpperCase()}`;
+    }
 
     radiantPanel.classList.toggle('active-panel', isRadiant);
     direPanel.classList.toggle('active-panel', !isRadiant);
@@ -3264,7 +3022,7 @@ function renderPicksSlots(container, picksList, isActiveTeam) {
   slots.forEach((slot, idx) => {
     const hero = picksList[idx];
     if (hero) {
-      const attrInfo = ATTRIBUTES[hero.attr] || { nameRu: '', icon: '' };
+      const attrInfo = ATTRIBUTES[hero.attr] || { nameRu: '', color: '#fff' };
       slot.className = 'pick-slot filled';
       slot.innerHTML = `
         <div class="pick-slot-portrait">
@@ -3273,8 +3031,7 @@ function renderPicksSlots(container, picksList, isActiveTeam) {
         <div class="pick-slot-info">
           <div class="pick-slot-name" title="${hero.nameRu}">${hero.nameRu}</div>
           <div class="pick-slot-attr">
-            <span>${attrInfo.icon}</span>
-            <span style="color:${attrInfo.color}; font-size:0.75rem;">${attrInfo.nameRu}</span>
+            <span style="color:${attrInfo.color}; font-weight:700; font-size:0.65rem;">${attrInfo.nameRu}</span>
             <span style="color:var(--text-dim); margin-left:4px;">• ${hero.attackType}</span>
           </div>
         </div>
@@ -3282,12 +3039,12 @@ function renderPicksSlots(container, picksList, isActiveTeam) {
     } else {
       const isNext = isActiveTeam && idx === picksList.length;
       slot.className = `pick-slot ${isNext ? 'active-picking' : ''}`;
-      slot.innerHTML = `<span class="empty-slot-text">Пик ${idx + 1} ${isNext ? '(Ожидание выбора...)' : ''}</span>`;
+      slot.innerHTML = `<span class="empty-slot-text">СЛОТ ${idx + 1} ${isNext ? '(ВЫБОР...)' : ''}</span>`;
     }
   });
 }
 
-// Render one of the 4 Attribute stacks (5 cards each)
+// Render one of the 4 Attribute stacks (5 cards each, zero scroll)
 function renderAttributeStack(container, heroes, selectedId, state) {
   const searchQuery = poolSearchInput.value.trim().toLowerCase();
   const allowedToPick = isMyTurn(state);
@@ -3309,7 +3066,7 @@ function renderAttributeStack(container, heroes, selectedId, state) {
     const isSelected = selectedId === hero.id;
     card.className = `hero-card ${statusClass} ${isSelected ? 'selected' : ''}`;
     if (!matchesSearch) {
-      card.style.opacity = '0.15';
+      card.style.opacity = '0.12';
     }
 
     card.dataset.heroId = hero.id;
@@ -3317,10 +3074,10 @@ function renderAttributeStack(container, heroes, selectedId, state) {
     card.innerHTML = `
       <div class="hero-img-wrap">
         <img src="${hero.img}" alt="${hero.nameRu}" loading="lazy">
-      </div>
-      <div class="hero-meta">
-        <div class="hero-name-ru" title="${hero.nameRu}">${hero.nameRu}</div>
-        <div class="hero-name-en">${hero.nameEn}</div>
+        <div class="hero-name-overlay">
+          <span class="ru" title="${hero.nameRu}">${hero.nameRu}</span>
+          <span class="en">${hero.nameEn}</span>
+        </div>
       </div>
     `;
 
@@ -3354,11 +3111,11 @@ function renderActionControls(state) {
   if (state.isCompleted) {
     lockInBtn.disabled = true;
     lockInBtn.className = 'main-lockin-btn';
-    lockInBtnText.textContent = 'Драфт завершён';
-    lockInActionIcon.textContent = '🏆';
+    lockInBtnText.textContent = 'ДРАФТ ЗАВЕРШЁН';
+    if (lockInActionIcon) lockInActionIcon.textContent = '';
     previewThumb.style.display = 'none';
-    previewName.textContent = 'Матч готов к началу';
-    previewHint.textContent = 'Ознакомьтесь с результатами в итоговом окне';
+    previewName.textContent = 'Матч готов к старту';
+    previewHint.textContent = 'Все пики и баны совершены';
     return;
   }
 
@@ -3369,16 +3126,16 @@ function renderActionControls(state) {
     previewHint.textContent = `${selectedHero.nameEn} • ${ATTRIBUTES[selectedHero.attr].nameRu} • ${selectedHero.attackType}`;
   } else {
     previewThumb.style.display = 'none';
-    previewName.textContent = allowedToAct ? 'Выберите героя из пула' : 'Ожидание хода соперника';
-    previewHint.textContent = allowedToAct ? 'Кликните на карточку или нажмите "Случайно"' : 'Сейчас выбирает противоположная команда';
+    previewName.textContent = allowedToAct ? 'ВЫБЕРИТЕ ГЕРОЯ' : 'ХОД СОПЕРНИКА';
+    previewHint.textContent = allowedToAct ? 'Кликните на карточку или нажмите Случайно' : 'Ожидание действия противоположной команды';
   }
 
   // In online mode, lock button if not your turn
   if (!allowedToAct) {
     lockInBtn.disabled = true;
     lockInBtn.className = 'main-lockin-btn';
-    lockInActionIcon.textContent = '⏳';
-    lockInBtnText.textContent = network.myRole === 'spectator' ? 'Режим зрителя' : 'Ход соперника...';
+    if (lockInActionIcon) lockInActionIcon.textContent = '';
+    lockInBtnText.textContent = network.myRole === 'spectator' ? 'РЕЖИМ ЗРИТЕЛЯ' : 'ХОД СОПЕРНИКА...';
     return;
   }
 
@@ -3387,16 +3144,17 @@ function renderActionControls(state) {
   // Update button style & label depending on Ban or Pick
   if (state.phase === PHASE.BAN) {
     lockInBtn.className = 'main-lockin-btn btn-ban';
-    lockInActionIcon.textContent = '🛡️';
-    lockInBtnText.textContent = selectedHero ? `Забанить: ${selectedHero.nameRu}` : 'Забанить героя';
+    if (lockInActionIcon) lockInActionIcon.textContent = '';
+    lockInBtnText.textContent = selectedHero ? `ЗАБАНИТЬ: ${selectedHero.nameRu.toUpperCase()}` : 'ПОДТВЕРДИТЬ БАН';
   } else {
     // Pick Phase
     const isRadiant = state.currentTeam === 'radiant';
     lockInBtn.className = `main-lockin-btn ${isRadiant ? 'btn-pick-radiant' : 'btn-pick-dire'}`;
-    lockInActionIcon.textContent = '⚔️';
-    lockInBtnText.textContent = selectedHero ? `Выбрать: ${selectedHero.nameRu}` : 'Выбрать героя';
+    if (lockInActionIcon) lockInActionIcon.textContent = '';
+    lockInBtnText.textContent = selectedHero ? `ВЫБРАТЬ: ${selectedHero.nameRu.toUpperCase()}` : 'ПОДТВЕРДИТЬ ПИК';
   }
 }
+
 
 // Lock-In action execution
 function handleLockIn(heroId = null) {
@@ -3766,13 +3524,9 @@ render(engine.getState());
   }
 
   if (typeof document !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
-    }
+    initApp();
   }
 })();
-  </script>
+</script>
 </body>
 </html>
