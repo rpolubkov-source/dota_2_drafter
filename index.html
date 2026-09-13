@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dota 2 Tournament Drafter | 20 Heroes • 3 Bans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <svg class="dota-logo" viewBox="0 0 24 24" fill="none">
+        <path d="M3 3h7v3H6v4H3V3zm15 0h3v7h-3V6h-4V3h4zm3 15v3h-7v-3h4v-4h3v4zM6 18v-4H3v7h7v-3H6z" fill="#ec3d27"/>
+        <rect x="8" y="8" width="8" height="8" rx="2" fill="#ff5549" opacity="0.8"/>
+      </svg>
+      <div>
+        <div class="brand-title">
+          Dota 2 Drafter <span class="brand-badge">20 HEROES</span>
+        </div>
+        <div class="brand-subtitle">5 Сила • 5 Ловкость • 5 Интеллект • 5 Универсал | 3 Бана в начале</div>
+      </div>
+    </div>
+
+    <!-- Phase Banner & Active Turn Info -->
+    <div class="turn-status-container" id="turnStatusContainer">
+      <div class="phase-indicator phase-ban" id="phaseIndicator">
+        <span>🛡️</span> <span id="phaseLabel">ФАЗА БАНОВ (1/6)</span>
+      </div>
+      <div class="active-team-banner radiant" id="activeTeamBanner">
+        <div class="pulse-dot radiant" id="activePulseDot"></div>
+        <span id="activeTurnLabel">Ход: Radiant</span>
+      </div>
+      <div class="timer-wrapper">
+        <span class="timer-digits" id="timerDigits">30</span>
+        <button class="timer-pause-btn" id="timerPauseBtn" title="Пауза / Продолжить таймер">⏸️</button>
+      </div>
+    </div>
+
+    <!-- Header Action Controls -->
+    <div class="header-actions">
+      <button class="btn-icon" id="soundToggleBtn" title="Включить / отключить звук">
+        <span id="soundIcon">🔊</span>
+      </button>
+      <button class="btn-icon" id="coinFlipBtn" title="Жеребьевка первого хода (монетка)">
+        <span>🪙</span> Жеребьевка
+      </button>
+      <button class="btn-icon" id="rerollPoolBtn" title="Сгенерировать новый пул из 20 героев">
+        <span>🎲</span> Новый пул
+      </button>
+      <button class="btn-icon" id="shareBtn" title="Скопировать ссылку с текущим пулом">
+        <span>🔗</span> Поделиться
+      </button>
+      <button class="btn-icon btn-online-badge" id="onlineModalBtn" title="Онлайн драфт (2 капитана по сети)">
+        <span>🌐</span> <span id="onlineBtnText">Онлайн (2 капитана)</span>
+      </button>
+      <button class="btn-icon" id="settingsBtn" title="Настройки турнира">
+        <span>⚙️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Player Role Banner (shown in online rooms) -->
+  <div class="role-banner-bar" id="roleBannerBar" style="display:none;">
+    <div class="role-banner-content">
+      <span class="role-badge" id="myRoleBadge">Локальный режим</span>
+      <span id="networkStatusIndicator" style="color:var(--text-muted);">🟢 В сети</span>
+    </div>
+  </div>
+
+  <!-- Main 3-Column Arena -->
+  <main class="arena-container">
+
+    <!-- Left Column: Team Radiant -->
+    <section class="team-panel radiant active-panel" id="radiantPanel">
+      <div class="team-header">
+        <input type="text" class="team-name-input" id="radiantNameInput" value="Team Radiant" title="Кликните, чтобы изменить имя команды" maxlength="28">
+        <span class="team-badge-tag">Radiant</span>
+      </div>
+
+      <!-- 3 Bans Slots -->
+      <div class="bans-section">
+        <div class="section-label">
+          <span>Баны команды</span>
+          <span id="radiantBanCount">0 / 3</span>
+        </div>
+        <div class="bans-grid" id="radiantBansGrid">
+          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
+          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
+          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
+        </div>
+      </div>
+
+      <!-- 5 Picks Slots -->
+      <div class="picks-section">
+        <div class="section-label">
+          <span>Выбранные герои (Пики)</span>
+          <span id="radiantPickCount">0 / 5</span>
+        </div>
+        <div class="picks-list" id="radiantPicksList">
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">Пик 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">Пик 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">Пик 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">Пик 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">Пик 5</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Column: 20-Hero Tournament Pool -->
+    <section class="pool-panel">
+      <div class="pool-header">
+        <div class="pool-title-group">
+          <h2 class="pool-title">Турнирный пул героев</h2>
+          <span class="pool-stats-badge" id="poolStatsBadge">Доступно: 20 / 20</span>
+        </div>
+
+        <div class="pool-search-box">
+          <span class="pool-search-icon">🔍</span>
+          <input type="text" class="pool-search-input" id="poolSearchInput" placeholder="Поиск по имени (RU / EN)...">
+        </div>
+      </div>
+
+      <!-- 4 Columns for 4 Attributes (Strength, Agility, Intelligence, Universal) -->
+      <div class="pool-columns-grid">
+        <!-- Strength -->
+        <div class="attr-column col-str">
+          <div class="attr-col-header">
+            <span class="attr-col-title">🔴 Сила</span>
+            <span class="attr-count-pill" id="strCountPill">5</span>
+          </div>
+          <div class="heroes-card-stack" id="stack-str"></div>
+        </div>
+
+        <!-- Agility -->
+        <div class="attr-column col-agi">
+          <div class="attr-col-header">
+            <span class="attr-col-title">🟢 Ловкость</span>
+            <span class="attr-count-pill" id="agiCountPill">5</span>
+          </div>
+          <div class="heroes-card-stack" id="stack-agi"></div>
+        </div>
+
+        <!-- Intelligence -->
+        <div class="attr-column col-int">
+          <div class="attr-col-header">
+            <span class="attr-col-title">🔵 Интеллект</span>
+            <span class="attr-count-pill" id="intCountPill">5</span>
+          </div>
+          <div class="heroes-card-stack" id="stack-int"></div>
+        </div>
+
+        <!-- Universal -->
+        <div class="attr-column col-all">
+          <div class="attr-col-header">
+            <span class="attr-col-title">🟣 Универсал</span>
+            <span class="attr-count-pill" id="allCountPill">5</span>
+          </div>
+          <div class="heroes-card-stack" id="stack-all"></div>
+        </div>
+      </div>
+
+      <!-- Center Bottom Action Controls -->
+      <div class="pool-action-bar">
+        <div class="selected-hero-preview" id="selectedHeroPreview">
+          <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png" class="preview-thumb" id="previewThumb" style="display:none;" alt="Превью">
+          <div>
+            <div class="preview-name" id="previewName">Выберите героя из пула</div>
+            <div class="preview-hint" id="previewHint">Двойной клик по карточке или кнопка подтверждения</div>
+          </div>
+        </div>
+
+        <button class="main-lockin-btn btn-ban" id="lockInBtn" disabled>
+          <span id="lockInActionIcon">🛡️</span>
+          <span id="lockInBtnText">Забанить героя</span>
+        </button>
+
+        <div class="secondary-actions">
+          <button class="btn-icon" id="randomPickBtn" title="Случайный выбор из доступных">
+            <span>🎲</span> Случайно
+          </button>
+          <button class="btn-icon" id="undoBtn" title="Отменить последний ход (Ctrl+Z)" disabled>
+            <span>↩️</span> Отмена
+          </button>
+          <button class="btn-icon" id="resetDraftBtn" title="Перезапустить драфт с тем же пулом">
+            <span>🔄</span> Сброс
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Team Dire -->
+    <section class="team-panel dire" id="direPanel">
+      <div class="team-header">
+        <input type="text" class="team-name-input" id="direNameInput" value="Team Dire" title="Кликните, чтобы изменить имя команды" maxlength="28">
+        <span class="team-badge-tag">Dire</span>
+      </div>
+
+      <!-- 3 Bans Slots -->
+      <div class="bans-section">
+        <div class="section-label">
+          <span>Баны команды</span>
+          <span id="direBanCount">0 / 3</span>
+        </div>
+        <div class="bans-grid" id="direBansGrid">
+          <div class="ban-slot" data-slot="0"><span class="slot-placeholder">БАН 1</span></div>
+          <div class="ban-slot" data-slot="1"><span class="slot-placeholder">БАН 2</span></div>
+          <div class="ban-slot" data-slot="2"><span class="slot-placeholder">БАН 3</span></div>
+        </div>
+      </div>
+
+      <!-- 5 Picks Slots -->
+      <div class="picks-section">
+        <div class="section-label">
+          <span>Выбранные герои (Пики)</span>
+          <span id="direPickCount">0 / 5</span>
+        </div>
+        <div class="picks-list" id="direPicksList">
+          <div class="pick-slot" data-slot="0"><span class="empty-slot-text">Пик 1</span></div>
+          <div class="pick-slot" data-slot="1"><span class="empty-slot-text">Пик 2</span></div>
+          <div class="pick-slot" data-slot="2"><span class="empty-slot-text">Пик 3</span></div>
+          <div class="pick-slot" data-slot="3"><span class="empty-slot-text">Пик 4</span></div>
+          <div class="pick-slot" data-slot="4"><span class="empty-slot-text">Пик 5</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Completed Draft Summary Modal -->
+  <div class="modal-backdrop" id="summaryModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">🏆 Драфт матча завершён!</h3>
+        <button class="modal-close-btn" id="closeSummaryBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="summary-teams-grid">
+          <!-- Radiant Summary -->
+          <div class="summary-team-card radiant">
+            <h4 class="summary-team-title" id="summaryRadiantTitle">Team Radiant</h4>
+            <div class="section-label">Выбранные герои (Пики):</div>
+            <div id="summaryRadiantPicks" style="display:flex; flex-direction:column; gap:6px;"></div>
+            <div class="section-label" style="margin-top:8px;">Забанены командой:</div>
+            <div class="summary-bans-list" id="summaryRadiantBans"></div>
+          </div>
+
+          <!-- Dire Summary -->
+          <div class="summary-team-card dire">
+            <h4 class="summary-team-title" id="summaryDireTitle">Team Dire</h4>
+            <div class="section-label">Выбранные герои (Пики):</div>
+            <div id="summaryDirePicks" style="display:flex; flex-direction:column; gap:6px;"></div>
+            <div class="section-label" style="margin-top:8px;">Забанены командой:</div>
+            <div class="summary-bans-list" id="summaryDireBans"></div>
+          </div>
+        </div>
+
+        <!-- Unpicked Heroes (4 remaining) -->
+        <div class="unpicked-heroes-section">
+          <div class="section-label">Остались в пуле невыбранными:</div>
+          <div class="unpicked-tags" id="summaryUnpicked"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-icon" id="copySummaryBtn">📋 Скопировать для Discord / чата</button>
+        <button class="btn-icon" id="restartSamePoolBtn">🔄 Заново с этим пулом</button>
+        <button class="main-lockin-btn btn-pick-radiant" id="newPoolModalBtn">🎲 Новый пул</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Настройки турнирного драфта</h3>
+        <button class="modal-close-btn" id="closeSettingsBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Таймер на ход</div>
+            <div class="setting-desc">Время в секундах для каждого бана или пика</div>
+          </div>
+          <div class="setting-control">
+            <select id="settingTimerSec">
+              <option value="15">15 сек (Быстрый)</option>
+              <option value="30" selected>30 сек (Стандартный)</option>
+              <option value="45">45 сек (Турнирный)</option>
+              <option value="60">60 сек (Комфортный)</option>
+              <option value="0">Без таймера</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Порядок пиков</div>
+            <div class="setting-desc">Формат чередования выбора после 6 банов</div>
+          </div>
+          <div class="setting-control">
+            <select id="settingPickFormat">
+              <option value="SNAKE" selected>Змейка (1-2-2-2-2-1)</option>
+              <option value="ALTERNATING">Чередование (1-1-1-1...)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Первый ход</div>
+            <div class="setting-desc">Какая команда делает первый бан и первый пик</div>
+          </div>
+          <div class="setting-control">
+            <select id="settingFirstTurn">
+              <option value="radiant" selected>Radiant (Светлые)</option>
+              <option value="dire">Dire (Тёмные)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Сид пула (Seed)</div>
+            <div class="setting-desc">Идентификатор для одинаковой генерации 20 героев</div>
+          </div>
+          <div class="setting-control">
+            <input type="text" id="settingSeedInput" style="width: 140px;" placeholder="DOTA-XXXX">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-icon" id="saveSettingsBtn">💾 Применить настройки</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Online Multiplayer Modal -->
+  <div class="modal-backdrop" id="onlineModal">
+    <div class="modal-card" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🌐 Онлайн-драфт для 2 капитанов</h3>
+        <button class="modal-close-btn" id="closeOnlineBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="online-section-desc">
+          Вы можете играть удаленно: создайте комнату и отправьте ссылку второму капитану. Каждый капитан сможет выбирать и банить героев со своего устройства только в свою очередь!
+        </div>
+
+        <div class="online-cards-choice" id="onlineChoices">
+          <div class="online-choice-card">
+            <h4>Создать комнату</h4>
+            <p>Вы станете хостом матча и Капитаном Radiant. Получите ссылку для второго капитана.</p>
+            <button class="main-lockin-btn btn-pick-radiant" id="createRoomBtn" style="margin-top:10px; width:100%; justify-content:center; font-size:0.85rem; padding:8px 14px;">
+              ➕ Создать комнату
+            </button>
+          </div>
+
+          <div class="online-choice-card">
+            <h4>Войти по коду</h4>
+            <p>Если соперник уже создал комнату, введите её код ниже:</p>
+            <div style="display:flex; gap:8px; margin-top:10px;">
+              <input type="text" id="joinRoomInput" placeholder="КОД (напр: ABC12)" style="flex:1; padding:8px 10px; background:#090c10; border:1px solid var(--border-subtle); color:#fff; border-radius:6px; font-weight:700; text-transform:uppercase;">
+              <button class="btn-icon" id="joinRoomBtn">Войти</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Room Info (shown when room is created or joined) -->
+        <div id="activeRoomInfo" style="display:none; flex-direction:column; gap:14px; background:rgba(0,0,0,0.3); padding:16px; border-radius:8px; border:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div><strong>Код комнаты:</strong> <span id="displayRoomCode" style="font-size:1.2rem; color:#ffcc00; font-weight:bold; letter-spacing:2px;"></span></div>
+            <div id="displayConnStatus" style="font-size:0.85rem; color:#8b99ae;">Ожидание соперника...</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div>
+              <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:4px;">Ссылка для Капитана Dire (соперника):</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="direInviteLink" readonly style="flex:1; background:#090c10; border:1px solid var(--border-subtle); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem;">
+                <button class="btn-icon" id="copyDireLinkBtn">📋 Копировать</button>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:4px;">Ссылка для зрителей / трансляции (только просмотр):</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="specInviteLink" readonly style="flex:1; background:#090c10; border:1px solid var(--border-subtle); color:#fff; padding:6px 10px; border-radius:6px; font-size:0.8rem;">
+                <button class="btn-icon" id="copySpecLinkBtn">📋 Копировать</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-icon" id="disconnectOnlineBtn" style="display:none; color:#ff5549;">Отключиться от комнаты</button>
+        <button class="btn-icon" id="closeOnlineFooterBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="toastNotice">Уведомление</div>
+
+  <!-- WebRTC PeerJS Library -->
+  <script src="src/peerjs.min.js"></script>
+
+  <!-- Application Script (Standalone bundle compatible with file:// and http/https) -->
+  <script src="src/bundle.js"></script>
+</body>
+</html>
